@@ -1,13 +1,17 @@
 
-CS361 WEBAPP projects
+CS361 WEBAPP project
 
-Requried NPM library : <br>
-react-bootcamp@4.1.1 <br>
-react-rounter-dom <br>
-reactstrap
-
-If you guys are done setup, simply replace src directory and public directory with mine.
-Thank you
-
-Shruthi
-Required npm library: npm install --save reactstrap react react-dom
+Instructions to run project:
+1. Clone the project to local directory of choice. It will be called CS361_Team_Double_A
+2. All project files will be located in: CS361_Team_Double_A/book_webframe/
+3. In command line navigate to a NEW folder where you would like to run the website from.
+    1. Enter in terminal:  
+       npx create-react-app double_a_app (double_a_app will be the folder to run the website from).
+4. Now, copy ALL the files located in the CLONED directory (CS361_Team_Double_A/book_webframe), into the newly created folder “double_a_app/” (the copied files SHOULD CONSIST OF public directory, src directory, .gitignore, README.md and package.json). This will replace the src and public directory that was created automatically when creating the react-app, and replace it with our files.
+5. Make sure you are still in folder double_a_app/
+6. In command line npm install:
+        1. npm install react-bootstrap bootstrap
+        2. npm install react-router-dom
+        3. npm install --save reactstrap react react-dom
+7. Again make sure to still be in folder double_a_app/
+8. Enter in command line:  npm start (to launch the website)
