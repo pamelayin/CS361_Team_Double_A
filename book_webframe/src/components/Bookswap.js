@@ -11,6 +11,7 @@ export class Bookswap extends Component
                 quick description of what it does or shows.</p>
               <div className="bookswap-choices">
                 <Link to="/Bookpost"> {/* TODO add page to link to*/}
+                <Link to="/"> {/* TODO add page to link to*/}
                   <Button size="lg" block>Post Your Book</Button>
                 </Link>
                 <Link to="/"> {/* TODO add page to link to*/}
