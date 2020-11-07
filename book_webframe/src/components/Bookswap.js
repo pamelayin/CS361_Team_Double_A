@@ -14,7 +14,7 @@ export class Bookswap extends Component
                 <Link to="/"> {/* TODO add page to link to*/}
                   <Button size="lg" block>Post Your Book</Button>
                 </Link>
-                <Link to="/"> {/* TODO add page to link to*/}
+                <Link to="/Booklist"> {/* TODO add page to link to*/}
                   <Button size="lg" block>Search Books</Button>
                 </Link>
                 <Link to="/ManageRequests">
