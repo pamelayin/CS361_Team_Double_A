@@ -15,7 +15,7 @@ Instructions to run project:
 8. Enter in command line:  npm start (to launch the website)
 
 
-Alternative:
-3. Go to the local directory CS361_Team_Double_A/book_webframe/
-4. npm install
-5. Enter in command line: npm start to launch website
+Alternative:<br>
+3. Go to the local directory CS361_Team_Double_A/book_webframe/<br>
+4. npm install<br>
+5. Enter in command line: npm start to launch website<br>
