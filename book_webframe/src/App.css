@@ -28,6 +28,23 @@
   color: #61dafb;
 }
 
+{/*For disclaimer note on top of all pages*/}
+#note {
+  color: grey;
+  text-align: center;
+  margin-top: 10px;
+}
+
+{/*For Navigation*/}
+.mr-auto a:hover {
+  background-color: black;
+}
+
+{/*For Bookswap*/}
+.bookswap-choices a {
+  padding: 50px;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
