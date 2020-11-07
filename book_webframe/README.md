@@ -10,8 +10,6 @@ Instructions to run project:
 4. Now, copy ALL the files located in the CLONED directory (CS361_Team_Double_A/book_webframe), into the newly created folder “double_a_app/” (the copied files SHOULD CONSIST OF public directory, src directory, .gitignore, README.md and package.json). This will replace the src and public directory that was created automatically when creating the react-app, and replace it with our files.
 5. Make sure you are still in folder double_a_app/
 6. In command line npm install:<br>
-        1. npm install react-bootstrap bootstrap <br>
-        2. npm install react-router-dom <br>
-        3. npm install --save reactstrap react react-dom<br>
+    1. npm install --save react-bootstrap bootstrap react-router-dom reactstrap react react-dom<br>
 7. Again make sure to still be in folder double_a_app/
 8. Enter in command line:  npm start (to launch the website)
