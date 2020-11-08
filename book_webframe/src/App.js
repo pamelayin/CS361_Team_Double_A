@@ -1,3 +1,4 @@
+
 import "./App.css";
 import { Component } from "react";
 import { BrowserRouter, Route, Router, Switch } from "react-router-dom";
@@ -27,6 +28,7 @@ class App extends Component {
 		marginRight: "auto",
 		display: "block",
 	};
+
 
 	render() {
 		return (
