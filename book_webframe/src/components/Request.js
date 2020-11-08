@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import { Jumbotron, Container, Table, Row, Col, Button } from "reactstrap";
-import Button from "react-bootstrap/Button";
 import catch22Img from "./asset/catch-22.jpg";
 import { Link } from "react-router-dom";
 
