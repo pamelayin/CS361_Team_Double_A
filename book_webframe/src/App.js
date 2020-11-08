@@ -11,6 +11,9 @@ import { Request } from "./components/Request";
 import { RequestConfirmation } from "./components/RequestConfirmation";
 import { Nomatch } from "./components/Nomatch";
 import { ManageRequests } from "./components/ManageRequests";
+import { Bookpost } from "./components/Bookpost";
+import { Login } from "./components/Login";
+import { Signin } from "./components/Signin";
 import { render } from "react-dom";
 
 class App extends Component {
@@ -52,6 +55,9 @@ class App extends Component {
 						/>
 						<Route path="/ManageRequests" component={ManageRequests} exact />
 						<Route component={Nomatch} />
+						<Route path="/Bookpost" component={Bookpost} exact />
+						<Route path="/Login" component={Login} exact />
+						<Route path="/Signin" component={Signin} exact />
 					</Switch>
 				</div>
 			</BrowserRouter>
