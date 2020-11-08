@@ -42,8 +42,8 @@ class App extends Component {
           <Route path='/Booklist' component={Booklist} exact />
           <Route path='/ManageRequests' component={ManageRequests} exact />
           <Route path='/Bookpost' component={Bookpost} exact />
-          <Route path='/Login' component={Bookpost} exact />
-          <Route path='/Signin' component={Bookpost} exact />
+          <Route path='/Login' component={Login} exact />
+          <Route path='/Signin' component={Signin} exact />
           <Route component={Nomatch} />
         </Switch>
       </div>
