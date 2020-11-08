@@ -42,7 +42,7 @@ class App extends Component {
 					</div>
 					<Navigation />
 					<Switch>
-						<Route path="/Home" component={Home} exact />
+						<Route path="/" component={Home} exact />
 						<Route path="/bookswap" component={Bookswap} exact />
 						<Route path="/Myaccount" component={Myaccount} exact />
 						<Route path="/Cservice" component={Cservice} exact />
