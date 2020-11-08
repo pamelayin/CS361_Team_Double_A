@@ -17,7 +17,7 @@ export class Navigation extends Component {
 				<Navbar.Toggle aria-controls="responsive-navbar-nav" />
 				<Navbar.Collapse id="responsive-navbar-nav">
 					<Nav className="mr-auto">
-						<Nav.Link href="/Home">HOME</Nav.Link>
+						<Nav.Link href="/">HOME</Nav.Link>
 						<Nav.Link href="/Bookswap">BOOK SWAP</Nav.Link>
 						<Nav.Link href="/Myaccount">MY ACCOUNT</Nav.Link>
 						<Nav.Link href="/Cservice">Q&A</Nav.Link>
