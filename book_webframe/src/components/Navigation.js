@@ -16,8 +16,8 @@ export class Navigation extends Component{
                     <Nav.Link href="/Cservice">Q&A</Nav.Link>
                 </Nav>
                 <Nav>
-                    <Nav.Link href="#LOGIN">Log in</Nav.Link>
-                    <Nav.Link eventKey={2} href="#SIGNIN">
+                    <Nav.Link href="/Login">Log in</Nav.Link>
+                    <Nav.Link eventKey={2} href="/Signin">
                         Sign up
                     </Nav.Link>
                 </Nav>
