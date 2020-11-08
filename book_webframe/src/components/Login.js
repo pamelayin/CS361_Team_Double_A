@@ -11,7 +11,7 @@ export class Login extends Component {
 					<div class="col-md-6">
 						<div class="card">
 							<form class="box">
-								<h1>Sign In</h1>
+								<h1>Log In</h1>
 								<p class="text-muted"> Please enter your login and password!</p>
 								<input type="text" name="" placeholder="Username/Email"></input>
 								<input type="password" name="" placeholder="Password"></input>
