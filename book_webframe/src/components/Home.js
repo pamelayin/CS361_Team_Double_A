@@ -7,7 +7,7 @@ export class Home extends Component
         bannerUrl: ""
       };
       
-      imgStyle = {
+    imgStyle = {
         display: "block"
       };
 
