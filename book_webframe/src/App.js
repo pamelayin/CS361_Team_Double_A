@@ -10,6 +10,8 @@ import {Booklist} from './components/Booklist'
 import {Nomatch} from './components/Nomatch'
 import {ManageRequests} from './components/ManageRequests'
 import {Bookpost} from './components/Bookpost'
+import {Login} from './components/Login'
+import {Signin} from './components/Signin'
 import { render } from 'react-dom';
 
 class App extends Component {
@@ -40,6 +42,8 @@ class App extends Component {
           <Route path='/Booklist' component={Booklist} exact />
           <Route path='/ManageRequests' component={ManageRequests} exact />
           <Route path='/Bookpost' component={Bookpost} exact />
+          <Route path='/Login' component={Bookpost} exact />
+          <Route path='/Signin' component={Bookpost} exact />
           <Route component={Nomatch} />
         </Switch>
       </div>
