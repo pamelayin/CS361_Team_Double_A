@@ -1,4 +1,3 @@
-
 import "./App.css";
 import { Component } from "react";
 import { BrowserRouter, Route, Router, Switch } from "react-router-dom";
@@ -29,7 +28,6 @@ class App extends Component {
 		display: "block",
 	};
 
-
 	render() {
 		return (
 			<BrowserRouter>
@@ -56,10 +54,10 @@ class App extends Component {
 							exact
 						/>
 						<Route path="/ManageRequests" component={ManageRequests} exact />
-						<Route component={Nomatch} />
 						<Route path="/Bookpost" component={Bookpost} exact />
 						<Route path="/Login" component={Login} exact />
 						<Route path="/Signin" component={Signin} exact />
+						<Route component={Nomatch} />
 					</Switch>
 				</div>
 			</BrowserRouter>
