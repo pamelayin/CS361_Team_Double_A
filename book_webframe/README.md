@@ -1,9 +1,9 @@
 
 # CS361 Team double_a project - Book Swap
 ### Members: 
-Sangyun Lee
-Shruthi Ravi
-Jay Wang
+Sangyun Lee,
+Shruthi Ravi,
+Jay Wang,
 Pamela Yin
 
 
