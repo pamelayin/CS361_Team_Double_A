@@ -1,28 +1,35 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Button } from 'reactstrap';
+import './App.css'
 
 export class Login extends Component
 {
     render(){
         return(
-            <div>
-              <p id="note">Note: Hover over each feature/action to get
-                quick description of what it does or shows.</p>
-              <div className="bookswap-choices">
-                <Link to="/Bookpost"> {/* TODO add page to link to*/}
-                </Link>
-                <Link to="/"> {/* TODO add page to link to*/}
-                  <Button size="lg" block>Post Your Book</Button>
-                </Link>
-                <Link to="/Booklist"> {/* TODO add page to link to*/}
-                  <Button size="lg" block>Search Books</Button>
-                </Link>
-                <Link to="/ManageRequests">
-                  <Button size="lg" block>Manage Requests</Button>
-                </Link>
-              </div>
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <form class="box">
+                                <h1>Login</h1>
+                                <p class="text-muted"> Please enter your login and password!</p> 
+                                <input type="text" name="" placeholder="Username"></input>
+                                <input type="password" name="" placeholder="Password"></input> 
+                                <a class="forgot text-muted" href="#">Forgot password?</a> <input type="submit" name="" value="Login" href="#"></input>
+                                <div class="col-md-12">
+                                    <ul class="social-network social-circle">
+                                        <li><a href="#" class="icoFacebook" title="Facebook"><i class="fab fa-facebook-f"></i></a></li>
+                                        <li><a href="#" class="icoTwitter" title="Twitter"><i class="fab fa-twitter"></i></a></li>
+                                        <li><a href="#" class="icoGoogle" title="Google +"><i class="fab fa-google-plus"></i></a></li>
+                                    </ul>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
             </div>
+        
         )
     }
 }
