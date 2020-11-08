@@ -1,14 +1,20 @@
 
-CS361 WEBAPP project
+# CS361 Team double_a project - Book Swap
+### Members: 
+Sangyun Lee
+Shruthi Ravi
+Jay Wang
+Pamela Yin
 
-Instructions to setup and run project:
+
+## Instructions to setup and run project:
 1. Clone the project to local directory of choice. It will be called CS361_Team_Double_A
 2. Go to the cloned local directory CS361_Team_Double_A/book_webframe/<br>
 3. Enter in command line: `npm install`<br>
 4. Enter in command line: `npm start` to launch website<br>
 
 
-Alternative in case above instructions don't work:<br>
+### Alternative in case above instructions don't work:<br>
 1. In command line navigate to a NEW folder where you would like to run the website from.
     A. Enter in terminal:  
        npx create-react-app double_a_app (double_a_app will be the folder to run the website from).
