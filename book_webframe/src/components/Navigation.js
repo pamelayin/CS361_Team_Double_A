@@ -26,7 +26,7 @@ function  Navigation () {
                     >
                         <NavDropdown.Item href="/Bookpost">Post Books</NavDropdown.Item>
                         <NavDropdown.Item href="/Booklist">Search Books</NavDropdown.Item>
-                        <NavDropdown.Item href="/ManageRequests">Mange Requests</NavDropdown.Item>
+                        <NavDropdown.Item href="/ManageRequests">Manage Requests</NavDropdown.Item>
                     </NavDropdown>
                     <Nav.Link href="/Myaccount">MY ACCOUNT</Nav.Link>
                     <Nav.Link href="/Cservice">Q&A</Nav.Link>
