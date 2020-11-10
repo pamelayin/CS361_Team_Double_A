@@ -1,7 +1,7 @@
 import "./App.css";
 import { Component } from "react";
 import { BrowserRouter, Route, Router, Switch } from "react-router-dom";
-import { Navigation } from "./components/Navigation";
+import  Navigation from "./components/Navigation";
 import { Home } from "./components/Home";
 import { Bookswap } from "./components/Bookswap";
 import { Myaccount } from "./components/Myaccount";
@@ -40,9 +40,10 @@ class App extends Component {
 							className="img-fluid"
 						/>
 					</div>
-					<Navigation />
+					<Navigation/>
 					<Switch>
 						<Route path="/" component={Home} exact />
+            <Route path="/Home" component={Home} exact />
 						<Route path="/bookswap" component={Bookswap} exact />
 						<Route path="/Myaccount" component={Myaccount} exact />
 						<Route path="/Cservice" component={Cservice} exact />
