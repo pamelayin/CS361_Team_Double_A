@@ -16,7 +16,7 @@ export class Myaccount extends Component
           'Book being requested.',
           'Status of swap.']
           return headerElement.map((key, index) => {
-              return <th id={key} key={index}>{key.toUpperCase()}
+              return <th id={key + "-table"} key={index}>{key.toUpperCase()}
                 <span id={key + "-text"}>{hoverElement[index]}</span>
               </th>
           })

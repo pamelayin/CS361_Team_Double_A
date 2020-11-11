@@ -22,7 +22,7 @@
 }
 
 {/*Hover feature for ID*/}
-#id #id-text {
+#id-table #id-text {
   visibility: hidden;
   width: 100px;
   background-color: black;
@@ -36,7 +36,7 @@
   margin-top: -45px;
 }
 
-#id #id-text::after {
+#id-table #id-text::after {
   content: "";
   position: absolute;
   top: 100%;
@@ -47,13 +47,13 @@
   border-color: black transparent transparent transparent;
 }
 
-#id:hover #id-text {
+#id-table:hover #id-text {
   visibility: visible;
   opacity: 1;
 }
 
 {/*Hover feature for date*/}
-#date #date-text {
+#date-table #date-text {
   visibility: hidden;
   width: 100px;
   background-color: black;
@@ -67,7 +67,7 @@
   margin-top: -60px;
 }
 
-#date #date-text::after {
+#date-table #date-text::after {
   content: "";
   position: absolute;
   top: 100%;
@@ -78,13 +78,13 @@
   border-color: black transparent transparent transparent;
 }
 
-#date:hover #date-text {
+#date-table:hover #date-text {
   visibility: visible;
   opacity: 1;
 }
 
 {/*Hover feature for name*/}
-#name #name-text {
+#name-table #name-text {
   visibility: hidden;
   width: 110px;
   background-color: black;
@@ -98,7 +98,7 @@
   margin-top: -45px;
 }
 
-#name #name-text::after {
+#name-table #name-text::after {
   content: "";
   position: absolute;
   top: 100%;
@@ -109,13 +109,13 @@
   border-color: black transparent transparent transparent;
 }
 
-#name:hover #name-text {
+#name-table:hover #name-text {
   visibility: visible;
   opacity: 1;
 }
 
 {/*Hover feature for book*/}
-#book #book-text {
+#book-table #book-text {
   visibility: hidden;
   width: 100px;
   background-color: black;
@@ -129,7 +129,7 @@
   margin-top: -45px;
 }
 
-#book #book-text::after {
+#book-table #book-text::after {
   content: "";
   position: absolute;
   top: 100%;
@@ -140,13 +140,13 @@
   border-color: black transparent transparent transparent;
 }
 
-#book:hover #book-text {
+#book-table:hover #book-text {
   visibility: visible;
   opacity: 1;
 }
 
 {/*Hover feature for status*/}
-#status #status-text {
+#status-table #status-text {
   visibility: hidden;
   width: 100px;
   background-color: black;
@@ -160,7 +160,7 @@
   margin-top: -30px;
 }
 
-#status #status-text::after {
+#status-table #status-text::after {
   content: "";
   position: absolute;
   top: 100%;
@@ -171,7 +171,7 @@
   border-color: black transparent transparent transparent;
 }
 
-#status:hover #status-text {
+#status-table:hover #status-text {
   visibility: visible;
   opacity: 1;
 }
