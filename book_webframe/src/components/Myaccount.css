@@ -21,134 +21,12 @@
   margin-bottom: 20px;
 }
 
-{/*Hover feature for ID*/}
-#id-table #id-text {
-  visibility: hidden;
-  width: 100px;
-  background-color: black;
-  color: #fff;
-  text-align: center;
-  font-size: 10px;
-  border-radius: 6px;
-  padding: 5px;
-  position: absolute;
-  margin-left: -60px;
-  margin-top: -45px;
-}
-
-#id-table #id-text::after {
-  content: "";
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  margin-left: -5px;
-  border-width: 5px;
-  border-style: solid;
-  border-color: black transparent transparent transparent;
-}
-
-#id-table:hover #id-text {
-  visibility: visible;
-  opacity: 1;
-}
-
-{/*Hover feature for date*/}
-#date-table #date-text {
-  visibility: hidden;
-  width: 100px;
-  background-color: black;
-  color: #fff;
-  text-align: center;
-  font-size: 10px;
-  border-radius: 6px;
-  padding: 5px;
-  position: absolute;
-  margin-left: -70px;
-  margin-top: -60px;
-}
-
-#date-table #date-text::after {
-  content: "";
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  margin-left: -5px;
-  border-width: 5px;
-  border-style: solid;
-  border-color: black transparent transparent transparent;
-}
-
-#date-table:hover #date-text {
-  visibility: visible;
-  opacity: 1;
-}
-
-{/*Hover feature for name*/}
-#name-table #name-text {
-  visibility: hidden;
-  width: 110px;
-  background-color: black;
-  color: #fff;
-  text-align: center;
-  font-size: 10px;
-  border-radius: 6px;
-  padding: 5px;
-  position: absolute;
-  margin-left: -75px;
-  margin-top: -45px;
-}
-
-#name-table #name-text::after {
-  content: "";
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  margin-left: -5px;
-  border-width: 5px;
-  border-style: solid;
-  border-color: black transparent transparent transparent;
-}
-
-#name-table:hover #name-text {
-  visibility: visible;
-  opacity: 1;
-}
-
-{/*Hover feature for book*/}
-#book-table #book-text {
-  visibility: hidden;
-  width: 100px;
-  background-color: black;
-  color: #fff;
-  text-align: center;
-  font-size: 10px;
-  border-radius: 6px;
-  padding: 5px;
-  position: absolute;
-  margin-left: -75px;
-  margin-top: -45px;
-}
-
-#book-table #book-text::after {
-  content: "";
-  position: absolute;
-  top: 100%;
-  left: 50%;
-  margin-left: -5px;
-  border-width: 5px;
-  border-style: solid;
-  border-color: black transparent transparent transparent;
-}
-
-#book-table:hover #book-text {
-  visibility: visible;
-  opacity: 1;
-}
-
-{/*Hover feature for status*/}
+#id-table #id-text,
+#date-table #date-text,
+#name-table #name-text,
+#book-table #book-text,
 #status-table #status-text {
   visibility: hidden;
-  width: 100px;
   background-color: black;
   color: #fff;
   text-align: center;
@@ -156,10 +34,12 @@
   border-radius: 6px;
   padding: 5px;
   position: absolute;
-  margin-left: -80px;
-  margin-top: -30px;
 }
 
+#id-table #id-text::after,
+#date-table #date-text::after,
+#name-table #name-text::after,
+#book-table #book-text::after,
 #status-table #status-text::after {
   content: "";
   position: absolute;
@@ -171,7 +51,46 @@
   border-color: black transparent transparent transparent;
 }
 
+#id-table:hover #id-text,
+#date-table:hover #date-text,
+#name-table:hover #name-text,
+#book-table:hover #book-text,
 #status-table:hover #status-text {
   visibility: visible;
   opacity: 1;
+}
+
+{/*Hover feature for ID*/}
+#id-table #id-text {
+  width: 100px;
+  margin-left: -60px;
+  margin-top: -45px;
+}
+
+{/*Hover feature for date*/}
+#date-table #date-text {
+  width: 100px;
+  margin-left: -70px;
+  margin-top: -60px;
+}
+
+{/*Hover feature for name*/}
+#name-table #name-text {
+  width: 110px;
+  margin-left: -75px;
+  margin-top: -45px;
+}
+
+{/*Hover feature for book*/}
+#book-table #book-text {
+  width: 100px;
+  margin-left: -75px;
+  margin-top: -45px;
+}
+
+{/*Hover feature for status*/}
+#status-table #status-text {
+  width: 100px;
+  margin-left: -80px;
+  margin-top: -30px;
 }
