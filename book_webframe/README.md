@@ -11,9 +11,10 @@ Pamela Yin
 1. Clone the project to local directory of choice. It will be called CS361_Team_Double_A
 2. Go to the cloned local directory CS361_Team_Double_A/book_webframe/<br>
 3. Enter in command line: `npm install`<br>
-4. Enter in command line: `npm start` to launch website<br>
+4. Enter in command line: `cd backend` to go into backend folder <br>
+5. Enter in command line: `npm start dev` to launch the website<br>
 
-
+<!--
 ### Alternative in case above instructions don't work:<br>
 1. In command line navigate to a NEW folder where you would like to run the website from.
     A. Enter in terminal:  
@@ -26,3 +27,4 @@ Pamela Yin
     C. `npm install --save reactstrap react react-dom`<br>
 5. Again make sure to still be in folder double_a_app/
 6. Enter in command line: `npm start` (to launch the website)
+-->
