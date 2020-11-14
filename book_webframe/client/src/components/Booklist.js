@@ -11,8 +11,8 @@ import {
 import catch22Img from "./asset/catch-22.jpg";
 import ctciImg from "./asset/ctci.jpg";
 import { Link } from "react-router-dom";
+import "../App.css";
 
-// import '../App.css';
 export class Booklist extends Component {
 	// https://dev.to/abdulbasit313/an-easy-way-to-create-a-customize-dynamic-table-in-react-js-3igg
 	// renderTableHeader() {

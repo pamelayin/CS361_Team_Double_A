@@ -48,8 +48,9 @@ const bookSchema = new Schema({
 		accepted: { type: Boolean, default: false },
 		shipped: { type: Boolean, default: false },
 		received: { type: Boolean, default: false },
-		request_date: { type: Date, required: true },
-		requesting_user: { type: String, required: true },
+		//we can do timestamp for this one
+		request_date: { type: Date, default: null },
+		requesting_user: { type: String, default: null },
 	},
 });
 
