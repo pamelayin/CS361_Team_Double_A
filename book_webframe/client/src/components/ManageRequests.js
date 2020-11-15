@@ -3,9 +3,74 @@ import { Link } from 'react-router-dom';
 import { Button, ButtonGroup } from 'reactstrap';
 import { Table, Tabs, Tab, TabBar, TabContainer, Nav, Row, Col} from 'react-bootstrap';
 import './ManageRequests.css';
+import axios from 'axios';
+
+const Request = props => (
+  <tr>
+    <td>{props.book._id}</td>
+    <td>{props.book.swap.request_date.substring(0,10)}</td>
+    <td>{props.book.swap.requesting_user}</td>
+    <td>{props.book.title}</td>
+    <td>
+      <Button id="accept-button" color="success" onClick={()=> { props.acceptRequest(props.book._id) }}>Accept</Button>
+      <Button id="reject-button" color="danger" onClick={()=> { props.rejectRequest(props.book._id) }}>Reject</Button>
+    </td>
+  </tr>
+)
 
 export class ManageRequests extends Component
 {
+
+  constructor(props) {
+    super(props);
+
+    this.acceptRequest = this.acceptRequest.bind(this)
+    this.rejectRequest = this.rejectRequest.bind(this)
+
+    this.state = {books: []};
+  }
+
+  componentDidMount() {
+    axios.get('http://localhost:5000/books/')
+      .then(response => {
+        this.setState({ books: response.data })
+      })
+      .catch((error) => {
+        console.log(error);
+      })
+  }
+
+  acceptRequest(id) {
+
+    const book = {
+      // Get book field for this id
+      books: this.state.books.filter(x => x._id === id)[0]
+    }
+    console.log(book.books); // prints field of current book
+
+    book.books.swap.accepted = true; // Set accepted to true
+
+    // Update book's "accepted" field with true
+    axios.post('http://localhost:5000/books/update/'+ id, book.books)
+      .then(response => { console.log(response.data)});
+
+    // Remove this specific request from pending table
+    this.setState({
+      books: this.state.books.filter(el => el._id !== id)
+    })
+
+  }
+
+  rejectRequest(id) {
+
+  }
+
+  requestList() {
+    return this.state.books.map(currentrequest => {
+      return <Request book={currentrequest} acceptRequest={this.acceptRequest} key={currentrequest._id}/>;
+    })
+  }
+
   render(){
     const pendingReceivedHeader = () => {
         let headerElement = ['id', 'date', 'name', 'book', 'action']
@@ -98,6 +163,9 @@ export class ManageRequests extends Component
                       <thead>
                         <tr>{pendingReceivedHeader()}</tr>
                       </thead>
+                      <tbody>
+                        { this.requestList() }
+                      </tbody>
                     </Table>
                   </Tab.Pane>
                   <Tab.Pane eventKey="sent">

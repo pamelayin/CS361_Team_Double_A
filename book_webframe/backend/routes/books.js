@@ -19,6 +19,7 @@ router.route("/add").post((req, res) => {
 	const image = req.body.image;
 	const requested = Boolean(req.body.swap.requested);
 	const accepted = Boolean(req.body.swap.accepted);
+	const rejected = Boolean(req.body.swap.rejected);
 	const shipped = Boolean(req.body.swap.shipped);
 	const received = Boolean(req.body.swap.received);
 	const request_date = Date(req.body.swap.request_date);
@@ -37,6 +38,7 @@ router.route("/add").post((req, res) => {
 		swap: {
 			requested,
 			accepted,
+			rejected,
 			shipped,
 			received,
 			request_date,
@@ -48,6 +50,18 @@ router.route("/add").post((req, res) => {
 		.save()
 		.then(() => res.json("Book added!"))
 		.catch((err) => res.status(400).json("Error: " + err));
+});
+
+// Update a book field (currently used for accept and reject)
+router.route('/update/:id').post((req, res) => {
+  Book.findById(req.params.id)
+    .then(book => {
+      book.swap.accepted = req.body.swap.accepted;
+      book.save()
+        .then(() => res.json('Book updated!'))
+        .catch(err => res.status(400).json('Error: ' + err));
+    })
+    .catch(err => res.status(400).json('Error: ' + err));
 });
 
 module.exports = router;
