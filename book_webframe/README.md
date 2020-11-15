@@ -13,7 +13,7 @@ Pamela Yin
 3. Enter in command line: `cd client` to go into backend folder <br>
 4. Enter in command line: `npm install`<br>
 5. Enter in command line: `cd ../backend` to go into backend folder <br>
-6. Enter in command line: `npm start dev` to launch the website<br>
+6. Enter in command line: `npm run dev` to launch the website<br>
 
 
 <!--
