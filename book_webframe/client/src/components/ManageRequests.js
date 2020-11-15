@@ -1,19 +1,32 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import { Button, ButtonGroup } from 'reactstrap';
+import { Button, ButtonGroup, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { Table, Tabs, Tab, TabBar, TabContainer, Nav, Row, Col} from 'react-bootstrap';
 import './ManageRequests.css';
 import axios from 'axios';
 
 const Request = props => (
   <tr>
-    <td>{props.book._id}</td>
+    <td>{props.book._id.substring(props.book._id.length - 3, props.book._id.length)}</td>
     <td>{props.book.swap.request_date.substring(0,10)}</td>
     <td>{props.book.swap.requesting_user}</td>
     <td>{props.book.title}</td>
     <td>
+
       <Button id="accept-button" color="success" onClick={()=> { props.acceptRequest(props.book._id) }}>Accept</Button>
       <Button id="reject-button" color="danger" onClick={()=> { props.rejectRequest(props.book._id) }}>Reject</Button>
+    </td>
+  </tr>
+)
+
+const AReceived = props => (
+  <tr>
+    <td>{props.book._id.substring(props.book._id.length - 3, props.book._id.length)}</td>
+    <td>{props.book.swap.request_date.substring(0,10)}</td>
+    <td>{"Name: " + props.book.swap.requesting_user} <br/> {"Book Title:" + props.book.title}</td>
+    <td>
+      <Button id="shipped-button" color="warning" onClick={()=> { props.shipped() }}>Shipped</Button>
+      <Button id="cancel-button" color="danger" onClick={()=> { props.cancel(props.book._id) }}>Cancel</Button>
     </td>
   </tr>
 )
@@ -26,8 +39,12 @@ export class ManageRequests extends Component
 
     this.acceptRequest = this.acceptRequest.bind(this)
     this.rejectRequest = this.rejectRequest.bind(this)
+    this.shipped = this.shipped.bind(this)
+    this.cancel = this.cancel.bind(this)
 
-    this.state = {books: []};
+    this.state = {
+      books: [],
+    };
   }
 
   componentDidMount() {
@@ -62,12 +79,59 @@ export class ManageRequests extends Component
   }
 
   rejectRequest(id) {
+    const book = {
+      // Get book field for this id
+      books: this.state.books.filter(x => x._id === id)[0]
+    }
+    console.log(book.books); // prints field of current book
 
+    book.books.swap.rejected = true; // Set accepted to true
+
+    // Update book's "accepted" field with true
+    axios.post('http://localhost:5000/books/update/'+ id, book.books)
+      .then(response => { console.log(response.data)});
+
+    // Remove this specific request from pending table
+    this.setState({
+      books: this.state.books.filter(el => el._id !== id)
+    })
+  }
+
+  shipped() {
+
+  }
+
+  cancel(id) {
+    const book = {
+      // Get book field for this id
+      books: this.state.books.filter(x => x._id === id)[0]
+    }
+    console.log(book.books); // prints field of current book
+
+    book.books.swap.rejected = true; // Set rejected to true
+    book.books.swap.accepted = false; // Set accepted to false
+
+    // Update book's "accepted" field with true
+    axios.post('http://localhost:5000/books/update/'+ id, book.books)
+      .then(response => { console.log(response.data)});
+
+    // Remove this specific request from pending table
+    this.setState({
+      books: this.state.books.filter(el => el._id !== id)
+    })
   }
 
   requestList() {
     return this.state.books.map(currentrequest => {
-      return <Request book={currentrequest} acceptRequest={this.acceptRequest} key={currentrequest._id}/>;
+      if(currentrequest.swap.accepted == false && currentrequest.swap.rejected == false)
+        return <Request book={currentrequest} acceptRequest={this.acceptRequest} rejectRequest={this.rejectRequest} key={currentrequest._id}/>;
+    })
+  }
+
+  acceptedList() {
+    return this.state.books.map(currentrequest => {
+      if(currentrequest.swap.accepted == true)
+        return <AReceived book={currentrequest} shipped={this.shipped} cancel={this.cancel} key={currentrequest._id}/>;
     })
   }
 
@@ -204,6 +268,9 @@ export class ManageRequests extends Component
                       <thead>
                         <tr>{acceptedReceivedHeader()}</tr>
                       </thead>
+                      <tbody>
+                        { this.acceptedList() }
+                      </tbody>
                     </Table>
                   </Tab.Pane>
                   <Tab.Pane eventKey="sent">
