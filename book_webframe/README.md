@@ -12,8 +12,10 @@ Pamela Yin
 2. Go to the cloned local directory CS361_Team_Double_A/book_webframe/<br>
 3. Enter in command line: `cd client` to go into backend folder <br>
 4. Enter in command line: `npm install`<br>
-5. Enter in command line: `cd ../backend` to go into backend folder <br>
-6. Enter in command line: `npm run dev` to launch the website<br>
+5. Enter in command line: `npm install @auth0/auth0-react`<br>
+6. Enter in command line: `cd ../backend` to go into backend folder <br>
+7. 5. Enter in command line: `npm install @auth0/auth0-react`<br>
+8. Enter in command line: `npm run dev` to launch the website<br>
 
 
 <!--
