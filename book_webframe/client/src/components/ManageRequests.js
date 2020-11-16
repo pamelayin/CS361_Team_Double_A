@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React, { Component,  useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Button, ButtonGroup, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { Button, ButtonGroup } from 'reactstrap';
 import { Table, Tabs, Tab, TabBar, TabContainer, Nav, Row, Col} from 'react-bootstrap';
 import './ManageRequests.css';
 import axios from 'axios';
@@ -12,9 +12,8 @@ const Request = props => (
     <td>{props.book.swap.requesting_user}</td>
     <td>{props.book.title}</td>
     <td>
-
-      <Button id="accept-button" color="success" onClick={()=> { props.acceptRequest(props.book._id) }}>Accept</Button>
-      <Button id="reject-button" color="danger" onClick={()=> { props.rejectRequest(props.book._id) }}>Reject</Button>
+      <Button id="accept-button" color="success" onClick={()=> {props.acceptAlert(props.book._id) }}>Accept</Button>
+      <Button id="reject-button" color="danger" onClick={()=> { props.rejectAlert(props.book._id) }}>Reject</Button>
     </td>
   </tr>
 )
@@ -25,8 +24,20 @@ const AReceived = props => (
     <td>{props.book.swap.request_date.substring(0,10)}</td>
     <td>{"Name: " + props.book.swap.requesting_user} <br/> {"Book Title:" + props.book.title}</td>
     <td>
-      <Button id="shipped-button" color="warning" onClick={()=> { props.shipped() }}>Shipped</Button>
+      <Button id="shipped-button" color="warning" disabled={props.book.swap.shipped} onClick={()=> {props.shipped(props.book._id) }}>Shipped</Button>
       <Button id="cancel-button" color="danger" onClick={()=> { props.cancel(props.book._id) }}>Cancel</Button>
+    </td>
+  </tr>
+)
+
+const PSent = props => (
+  <tr>
+    <td>{props.book._id.substring(props.book._id.length - 3, props.book._id.length)}</td>
+    <td>{props.book.swap.request_date.substring(0,10)}</td>
+      <td>{props.book.posting_user}</td>
+      <td>{props.book.title}</td>
+    <td>
+      <Button id="shipped-button" color="primary" disabled={true}>Pending</Button>
     </td>
   </tr>
 )
@@ -41,6 +52,8 @@ export class ManageRequests extends Component
     this.rejectRequest = this.rejectRequest.bind(this)
     this.shipped = this.shipped.bind(this)
     this.cancel = this.cancel.bind(this)
+    this.acceptAlert = this.acceptAlert.bind(this)
+    this.rejectAlert = this.rejectAlert.bind(this)
 
     this.state = {
       books: [],
@@ -76,6 +89,18 @@ export class ManageRequests extends Component
       books: this.state.books.filter(el => el._id !== id)
     })
 
+    window.location.reload(true); //upload the page immediately in accepted tab
+  }
+
+
+  acceptAlert(id) {
+    alert("You have accepted the swap request!\nYou can cancel this request under the accepted tab.");
+    this.acceptRequest(id);
+  }
+
+  rejectAlert(id) {
+    alert("You have rejected the swap request. Don't worry, no transaction will occur.");
+    this.rejectRequest(id);
   }
 
   rejectRequest(id) {
@@ -85,7 +110,7 @@ export class ManageRequests extends Component
     }
     console.log(book.books); // prints field of current book
 
-    book.books.swap.rejected = true; // Set accepted to true
+    book.books.swap.rejected = true; // Set rejected to true
 
     // Update book's "accepted" field with true
     axios.post('http://localhost:5000/books/update/'+ id, book.books)
@@ -95,9 +120,23 @@ export class ManageRequests extends Component
     this.setState({
       books: this.state.books.filter(el => el._id !== id)
     })
+
   }
 
-  shipped() {
+  shipped(id) {
+    alert("It has shipped!");
+    const book = {
+      // Get book field for this id
+      books: this.state.books.filter(x => x._id === id)[0]
+    }
+
+    book.books.swap.shipped = true; // Set shipped to true
+
+    // Update book's "accepted" field with true
+    axios.post('http://localhost:5000/books/update/'+ id, book.books)
+      .then(response => { console.log(response.data)});
+
+    window.location.reload(true); //upload the page immediately
 
   }
 
@@ -121,17 +160,27 @@ export class ManageRequests extends Component
     })
   }
 
+  // Populate table for pending received tab
   requestList() {
     return this.state.books.map(currentrequest => {
-      if(currentrequest.swap.accepted == false && currentrequest.swap.rejected == false)
-        return <Request book={currentrequest} acceptRequest={this.acceptRequest} rejectRequest={this.rejectRequest} key={currentrequest._id}/>;
+      if(currentrequest.swap.accepted == false && currentrequest.swap.rejected == false && currentrequest.posting_user == "Me")
+        return <Request book={currentrequest} acceptAlert={this.acceptAlert} rejectAlert={this.rejectAlert} key={currentrequest._id}/>;
     })
   }
 
+  // Populate table for accepted received tab
   acceptedList() {
     return this.state.books.map(currentrequest => {
       if(currentrequest.swap.accepted == true)
         return <AReceived book={currentrequest} shipped={this.shipped} cancel={this.cancel} key={currentrequest._id}/>;
+    })
+  }
+
+  // Populate table for pending sent tab
+  sentList() {
+    return this.state.books.map(currentrequest => {
+      if(currentrequest.swap.accepted == false && currentrequest.swap.rejected == false && currentrequest.swap.requesting_user == "Me")
+        return <PSent book={currentrequest} key={currentrequest._id}/>;
     })
   }
 
@@ -201,7 +250,7 @@ export class ManageRequests extends Component
             quick description of what it does or shows.</p>
           <h1 id="requestTitle">Manage Requests</h1>
           {/*pending and accepted tab*/}
-          <Tabs className="top" defaultActiveKey="pending">
+          <Tabs className="top">
             {/*pending tab*/}
             <Tab eventKey="pending" title="Pending">
               <Tab.Container id="pendingRequest" defaultActiveKey="received">
@@ -237,6 +286,9 @@ export class ManageRequests extends Component
                       <thead>
                         <tr>{pendingSentHeader()}</tr>
                       </thead>
+                      <tbody>
+                        { this.sentList() }
+                      </tbody>
                     </Table>
                   </Tab.Pane>
                 </Tab.Content>

@@ -58,6 +58,8 @@ router.route('/update/:id').post((req, res) => {
     .then(book => {
       book.swap.accepted = req.body.swap.accepted;
 			book.swap.rejected = req.body.swap.rejected;
+			book.swap.shipped  = req.body.swap.shipped;
+			book.swap.received = req.body.swap.received;
       book.save()
         .then(() => res.json('Book updated!'))
         .catch(err => res.status(400).json('Error: ' + err));
