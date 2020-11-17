@@ -27,7 +27,8 @@ export class RequestConfirmation extends Component {
 						<br />
 						<br />
 						You can check status of your swap at{" "}
-						<Link to="ManageRequests">Manage Requests</Link>.<br />
+						<Link to="ManageRequests">Manage Requests</Link>
+						<br />
 						<br />
 						<Link to="/Booklist">
 							<Button className="btn btn-dark">Go Back to Book List</Button>

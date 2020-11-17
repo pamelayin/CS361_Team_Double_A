@@ -16,7 +16,7 @@
   },
   "devDependencies": {},
   "scripts": {
-    "start": "nodemon server.js",
+    "start": "node server.js",
     "client": "cd ../client && npm start",
     "dev": "concurrently \"nodemon server.js\" \"npm run client\""
   },

@@ -1,9 +1,59 @@
 import React, { Component } from "react";
 import { Jumbotron, Container, Table, Row, Col, Button } from "reactstrap";
 import catch22Img from "./asset/catch-22.jpg";
-import { Link } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
+import axios from "axios";
+
+// const bookInfo = (props) => {
+// 	const { state } = useLocation();
+// 	return (
+// 		<tr>
+// 			<th>ISBN</th>
+// 			<td>(state.books.isbn)</td>
+// 		</tr>
+// 	);
+// };
+{
+	/* <tr>
+	<th>Title</th>
+	<td>Catch-22</td>
+</tr>
+<tr>
+	<th>Author</th>
+	<td>Joseph Heller</td>
+</tr>
+<tr>
+	<th>Year</th>
+	<td>2011</td>
+</tr>
+<tr>
+	<th>Posting User</th>
+	<td>pam</td>
+</tr>
+<tr>
+	<th>Condition</th>
+	<td>Acceptable</td>
+</tr> */
+}
 
 export class Request extends Component {
+	// constructor(props) {
+	// 	super(props);
+
+	// 	this.state = { books: [] };
+	// }
+
+	// componentDidMount() {
+	// 	axios
+	// 		.get("http://localhost:5000/request/" + id)
+	// 		.then((response) => {
+	// 			this.setState({ exercises: response.data });
+	// 		})
+	// 		.catch((error) => {
+	// 			console.log(error);
+	// 		});
+	// }
+
 	JumboStyle = {
 		bannerUrl: "",
 		padding: "30px 30px",
@@ -12,6 +62,7 @@ export class Request extends Component {
 	};
 
 	render() {
+		console.log(this.props.location.state.book, 'this.props')
 		return (
 			<div>
 				<Jumbotron style={this.JumboStyle} fluid>
@@ -24,34 +75,36 @@ export class Request extends Component {
 				<Container>
 					<Row>
 						<Col xs={2}>
-							<img src={catch22Img} alt="bookimage" className="py-5" />
+							<img src={this.props.location.state.book.image} className="py-5" />
 						</Col>
 						<Col>
 							<Table className="table-borderless">
+								<tbody>
 								<tr>
 									<th>ISBN</th>
-									<td>978-0-09952-912-5</td>
+									<td>{this.props.location.state.book.isbn}</td>
 								</tr>
 								<tr>
 									<th>Title</th>
-									<td>Catch-22</td>
+									<td>{this.props.location.state.book.title}</td>
 								</tr>
 								<tr>
 									<th>Author</th>
-									<td>Joseph Heller</td>
+									<td>{this.props.location.state.book.author}</td>
 								</tr>
 								<tr>
 									<th>Year</th>
-									<td>2011</td>
+									<td>{this.props.location.state.book.publishing_date.substring(0, 4)}</td>
 								</tr>
 								<tr>
 									<th>Posting User</th>
-									<td>pam</td>
+									<td>{this.props.location.state.book.posting_user}</td>
 								</tr>
 								<tr>
 									<th>Condition</th>
-									<td>Acceptable</td>
+									<td>{this.props.location.state.book.condition}</td>
 								</tr>
+								</tbody>
 							</Table>
 						</Col>
 						<Col>
@@ -79,6 +132,7 @@ export class Request extends Component {
 						</Col>
 					</Row>
 				</Container>
+
 				<div className="d-flex justify-content-center pt-5">
 					<Link to="/RequestConfirmation">
 						<Button
