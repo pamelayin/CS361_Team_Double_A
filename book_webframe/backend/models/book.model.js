@@ -46,6 +46,7 @@ const bookSchema = new Schema({
 	swap: {
 		requested: { type: Boolean, default: false },
 		accepted: { type: Boolean, default: false },
+		rejected: { type: Boolean, default: false },
 		shipped: { type: Boolean, default: false },
 		received: { type: Boolean, default: false },
 		//we can do timestamp for this one

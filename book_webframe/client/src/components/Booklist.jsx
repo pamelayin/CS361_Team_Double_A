@@ -11,9 +11,41 @@ import {
 import catch22Img from "./asset/catch-22.jpg";
 import ctciImg from "./asset/ctci.jpg";
 import { Link } from "react-router-dom";
+import axios from "axios";
 import "../App.css";
 
+// const Book = props => (
+// 	<tr>
+// 	  <td>{props.exercise.username}</td>
+// 	  <td>{props.exercise.description}</td>
+// 	  <td>{props.exercise.duration}</td>
+// 	  <td>{props.exercise.date.substring(0,10)}</td>
+// 	  <td>
+// 		<Link to={"/edit/"+props.exercise._id}>edit</Link> | <a href="#" onClick={() => { props.deleteExercise(props.exercise._id) }}>delete</a>
+// 	  </td>
+// 	</tr>
+//   )
+
 export class Booklist extends Component {
+	constructor(props) {
+		super(props);
+
+		// this.requestBook = this.requestBook.bind(this);
+
+		this.state = { books: [], available_books: [] };
+	}
+
+	componentDidMount() {
+		axios
+			.get("http://localhost:5000/books/")
+			.then((response) => {
+				this.setState({ books: response.data });
+				this.setState({ available_books: this.state.books.filter(book => book.available === true)})
+			})
+			.catch((error) => {
+				console.log(error);
+			});
+	}
 	// https://dev.to/abdulbasit313/an-easy-way-to-create-a-customize-dynamic-table-in-react-js-3igg
 	// renderTableHeader() {
 	// 	let header = Object.keys(this.state.books[0]);
@@ -21,32 +53,55 @@ export class Booklist extends Component {
 	// 		return <th key={index}>{key.toUpperCase()}</th>;
 	// 	});
 	// }
-	// renderTableData() {
-	// 	return this.state.books.map((books, index) => {
-	// 		const {
-	// 			id,
-	// 			isbn,
-	// 			title,
-	// 			author,
-	// 			year,
-	// 			postUser,
-	// 			condition,
-	// 			points,
-	// 		} = books; //destructuring
-	// 		return (
-	// 			<tr key={id}>
-	// 				<td>{isbn}</td>
-	// 				<td>{title}</td>
-	// 				<td>{author}</td>
-	// 				<td>{year}</td>
-	// 				<td>{postUser}</td>
-	// 				<td>{condition}</td>
-	// 				<td>{points}</td>
-	// 				<td>{action}</td>
-	// 			</tr>
-	// 		);
-	// 	});
-	// }
+	renderTableData() {
+		return this.state.books.map((book, index) => {
+			const {
+				_id,
+				isbn,
+				title,
+				author,
+				publishing_date,
+				posting_user,
+				condition,
+				book_points,
+				image,
+				available
+			} = book; //destructuring
+			return (
+				available && <tr key={_id}>
+					<td><img src={image} /></td>
+					<td>{isbn}</td>
+					<td>{title}</td>
+					<td>{author}</td>
+					<td>{publishing_date.substring(0, 4)}</td>
+					<td>{posting_user}</td>
+					<td>{condition}</td>
+					<td>{book_points}</td>
+					<td>
+						{/* <Link
+						to={{
+						pathname: `/Request/{_id}`,
+						state: { key: book },
+						}}
+						> */}
+							<Button
+								className="btn btn-dark"
+								onClick={() => {
+									this.props.history.push({
+										pathname: `/Request`,
+										state: { book },
+						
+									});
+								}}
+							>
+								Request
+							</Button>
+						{/* </Link> */}
+					</td>
+				</tr>
+			);
+		});
+	}
 
 	JumboStyle = {
 		bannerUrl: "",
@@ -54,6 +109,14 @@ export class Booklist extends Component {
 		background: "white",
 		textAlign: "center",
 	};
+
+	// requestBook(id) {
+	// 	this.props.history.push({
+	// 		state: {
+	// 			key: id
+	// 		}
+	// 	})
+	// }
 	render() {
 		return (
 			<div>
@@ -83,14 +146,12 @@ export class Booklist extends Component {
 
 				<table className="table table-bordered table-hover">
 					<thead className="table-success">
-						{/* <tr>{this.renderTableHeader()}</tr> 
-						 {this.renderTableData()}  */}
 						<tr>
 							<th>Image</th>
 							<th>ISBN</th>
 							<th>Title</th>
 							<th>Author</th>
-							<th>Year</th>
+							<th>Publishing Year</th>
 							<th>Posting User</th>
 							<th>Condition</th>
 							<th>Points</th>
@@ -98,7 +159,7 @@ export class Booklist extends Component {
 						</tr>
 					</thead>
 					<tbody>
-						<tr>
+						{/*<tr>
 							<td>
 								<img src={catch22Img} />
 							</td>
@@ -131,17 +192,9 @@ export class Booklist extends Component {
 									Request
 								</Button>
 							</td>
-						</tr>
-						{/* <tr>
-							<td>{isbn}</td>
-							<td>{title}</td>
-							<td>{author}</td>
-							<td>{year}</td>
-							<td>{postUser}</td>
-							<td>{condition}</td>
-							<td>{points}</td>
-							<td>{action}</td>
-						</tr> */}
+						</tr>{" "}
+						*/}
+						{this.renderTableData()}
 					</tbody>
 				</table>
 			</div>
