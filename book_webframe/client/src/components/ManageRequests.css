@@ -25,9 +25,17 @@ Table th {
   color: black;
 }
 
+.preceived_table,
+.areceived_table,
+.psent_table,
+.asent_table {
+  border-bottom: 1px solid #ddd;
+}
+
 #id #id-text,
 #date #date-text,
-#name #name-text,
+#requesting-user #requesting-user-text,
+#posting-user #posting-user-text,
 #book #book-text,
 #action #action-text,
 #details #details-text {
@@ -43,7 +51,8 @@ Table th {
 
 #id #id-text::after,
 #date #date-text::after,
-#name #name-text::after,
+#requesting-user #requesting-user-text::after,
+#posting-user #posting-user-text::after,
 #book #book-text::after,
 #action #action-text::after,
 #details #details-text::after {
@@ -59,7 +68,8 @@ Table th {
 
 #id:hover #id-text,
 #date:hover #date-text,
-#name:hover #name-text,
+#requesting-user:hover #requesting-user-text,
+#posting-user:hover #posting-user-text,
 #book:hover #book-text,
 #action:hover #action-text,
 #details:hover #details-text {
@@ -82,15 +92,15 @@ Table th {
 }
 
 {/*Hover feature for name*/}
-.pr-requests #name-text {
+.pr-requests #requesting-user-text {
   width: 110px;
-  margin-left: -75px;
+  margin-left: -130px;
   margin-top: -45px;
 }
 
-.ps-requests #name-text {
+.ps-requests #posting-user-text {
   width: 120px;
-  margin-left: -85px;
+  margin-left: -120px;
   margin-top: -60px;
 }
 
@@ -135,7 +145,7 @@ Table th {
 }
 
 .as-requests #details-text {
-  width: 100px;
-  margin-left: -85px;
-  margin-top: -45px;
+  width: 150px;
+  margin-left: -110px;
+  margin-top: -75px;
 }

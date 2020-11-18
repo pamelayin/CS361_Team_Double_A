@@ -5,24 +5,28 @@ import { Table, Tabs, Tab, TabBar, TabContainer, Nav, Row, Col} from 'react-boot
 import './ManageRequests.css';
 import axios from 'axios';
 
-const Request = props => (
-  <tr>
+const PReceived = props => (
+  <tr className="preceived_table">
     <td>{props.book._id.substring(props.book._id.length - 3, props.book._id.length)}</td>
     <td>{props.book.swap.request_date.substring(0,10)}</td>
     <td>{props.book.swap.requesting_user}</td>
     <td>{props.book.title}</td>
     <td>
-      <Button id="accept-button" color="success" onClick={()=> {props.acceptAlert(props.book._id) }}>Accept</Button>
-      <Button id="reject-button" color="danger" onClick={()=> { props.rejectAlert(props.book._id) }}>Reject</Button>
+      <Button id="accept-button" color="success" onClick={()=> {props.acceptRequest(props.book._id) }}>Accept</Button>
+      <Button id="reject-button" color="danger" onClick={()=> { props.rejectRequest(props.book._id) }}>Reject</Button>
     </td>
   </tr>
 )
 
 const AReceived = props => (
-  <tr>
+  <tr className="areceived_table">
     <td>{props.book._id.substring(props.book._id.length - 3, props.book._id.length)}</td>
     <td>{props.book.swap.request_date.substring(0,10)}</td>
-    <td>{"Name: " + props.book.swap.requesting_user} <br/> {"Book Title:" + props.book.title}</td>
+    <td>
+      {"Requesting User: " + props.book.swap.requesting_user} <br/>
+      {"Posting User: " + props.book.posting_user} <br/>
+      {"Book Title: " + props.book.title}
+    </td>
     <td>
       <Button id="shipped-button" color="warning" disabled={props.book.swap.shipped} onClick={()=> {props.shipped(props.book._id) }}>Shipped</Button>
       <Button id="cancel-button" color="danger" onClick={()=> { props.cancel(props.book._id) }}>Cancel</Button>
@@ -31,13 +35,28 @@ const AReceived = props => (
 )
 
 const PSent = props => (
-  <tr>
+  <tr className="psent_table">
     <td>{props.book._id.substring(props.book._id.length - 3, props.book._id.length)}</td>
     <td>{props.book.swap.request_date.substring(0,10)}</td>
       <td>{props.book.posting_user}</td>
       <td>{props.book.title}</td>
     <td>
-      <Button id="shipped-button" color="primary" disabled={true}>Pending</Button>
+      <Button id="shipped-button" color="info" disabled={true}>Pending</Button>
+    </td>
+  </tr>
+)
+
+const ASent = props => (
+  <tr className="asent_table">
+    <td>{props.book._id.substring(props.book._id.length - 3, props.book._id.length)}</td>
+    <td>{props.book.swap.request_date.substring(0,10)}</td>
+    <td>
+      {"Posting User: " + props.book.posting_user} <br/>
+      {"Requesting User: " + props.book.swap.requesting_user} <br/>
+      {"Book Title: " + props.book.title}
+    </td>
+    <td>
+      <Button id="received-button" color="warning" disabled={props.book.swap.received} onClick={()=> {props.received(props.book._id) }}>Received</Button>
     </td>
   </tr>
 )
@@ -51,9 +70,8 @@ export class ManageRequests extends Component
     this.acceptRequest = this.acceptRequest.bind(this)
     this.rejectRequest = this.rejectRequest.bind(this)
     this.shipped = this.shipped.bind(this)
+    this.received = this.received.bind(this)
     this.cancel = this.cancel.bind(this)
-    this.acceptAlert = this.acceptAlert.bind(this)
-    this.rejectAlert = this.rejectAlert.bind(this)
 
     this.state = {
       books: [],
@@ -71,7 +89,7 @@ export class ManageRequests extends Component
   }
 
   acceptRequest(id) {
-
+    alert("You have accepted the swap request!\nYou can cancel this request under the accepted tab.");
     const book = {
       // Get book field for this id
       books: this.state.books.filter(x => x._id === id)[0]
@@ -92,18 +110,8 @@ export class ManageRequests extends Component
     window.location.reload(true); //upload the page immediately in accepted tab
   }
 
-
-  acceptAlert(id) {
-    alert("You have accepted the swap request!\nYou can cancel this request under the accepted tab.");
-    this.acceptRequest(id);
-  }
-
-  rejectAlert(id) {
-    alert("You have rejected the swap request. Don't worry, no transaction will occur.");
-    this.rejectRequest(id);
-  }
-
   rejectRequest(id) {
+    alert("You have rejected the swap request. Don't worry, no transaction will occur.");
     const book = {
       // Get book field for this id
       books: this.state.books.filter(x => x._id === id)[0]
@@ -124,13 +132,30 @@ export class ManageRequests extends Component
   }
 
   shipped(id) {
-    alert("It has shipped!");
+    alert("You have let the requesting user know that the book has shipped!");
     const book = {
       // Get book field for this id
       books: this.state.books.filter(x => x._id === id)[0]
     }
 
     book.books.swap.shipped = true; // Set shipped to true
+
+    // Update book's "accepted" field with true
+    axios.post('http://localhost:5000/books/update/'+ id, book.books)
+      .then(response => { console.log(response.data)});
+
+    window.location.reload(true); //upload the page immediately
+
+  }
+
+  received(id) {
+    alert("You have let the posting user know that the book has been received!");
+    const book = {
+      // Get book field for this id
+      books: this.state.books.filter(x => x._id === id)[0]
+    }
+
+    book.books.swap.received = true; // Set received to true
 
     // Update book's "accepted" field with true
     axios.post('http://localhost:5000/books/update/'+ id, book.books)
@@ -161,32 +186,40 @@ export class ManageRequests extends Component
   }
 
   // Populate table for pending received tab
-  requestList() {
+  pReceivedList() {
     return this.state.books.map(currentrequest => {
       if(currentrequest.swap.accepted == false && currentrequest.swap.rejected == false && currentrequest.posting_user == "Me")
-        return <Request book={currentrequest} acceptAlert={this.acceptAlert} rejectAlert={this.rejectAlert} key={currentrequest._id}/>;
+        return <PReceived book={currentrequest} acceptRequest={this.acceptRequest} rejectRequest={this.rejectRequest} key={currentrequest._id}/>;
     })
   }
 
   // Populate table for accepted received tab
-  acceptedList() {
+  aReceivedList() {
     return this.state.books.map(currentrequest => {
-      if(currentrequest.swap.accepted == true)
+      if(currentrequest.swap.accepted == true && currentrequest.posting_user == "Me")
         return <AReceived book={currentrequest} shipped={this.shipped} cancel={this.cancel} key={currentrequest._id}/>;
     })
   }
 
   // Populate table for pending sent tab
-  sentList() {
+  pSentList() {
     return this.state.books.map(currentrequest => {
-      if(currentrequest.swap.accepted == false && currentrequest.swap.rejected == false && currentrequest.swap.requesting_user == "Me")
+      if(currentrequest.swap.requested == true && currentrequest.swap.accepted == false && currentrequest.swap.rejected == false && currentrequest.swap.requesting_user == "Me")
         return <PSent book={currentrequest} key={currentrequest._id}/>;
+    })
+  }
+
+  // Populate table for accepted sent tab (received button)
+  aSentList() {
+    return this.state.books.map(currentrequest => {
+      if(currentrequest.swap.accepted == true && currentrequest.swap.rejected == false && currentrequest.swap.requesting_user == "Me")
+        return <ASent book={currentrequest} received={this.received} key={currentrequest._id}/>;
     })
   }
 
   render(){
     const pendingReceivedHeader = () => {
-        let headerElement = ['id', 'date', 'name', 'book', 'action']
+        let headerElement = ['id', 'date', 'requesting-user', 'book', 'action']
         let hoverElement = [
         'Unique request number.',
         'Date the swap request was requested.',
@@ -201,7 +234,7 @@ export class ManageRequests extends Component
     }
 
     const pendingSentHeader = () => {
-        let headerElement = ['id', 'date', 'name', 'book', 'action']
+        let headerElement = ['id', 'date', 'posting-user', 'book', 'action']
         let hoverElement = [
         'Unique request number.',
         'Date the swap request was requested.',
@@ -220,8 +253,8 @@ export class ManageRequests extends Component
         let hoverElement = [
         'Unique request number.',
         'Date the swap request was requested.',
-        'Provides name of requester, book being requested, and mailing address to ship to.',
-        'Click "Send" when you have shipped the book.\
+        'Provides name of requester, name of poster, book being requested, and mailing address to ship to.',
+        'Click "Shipped" when you have shipped the book.\
         Click "Cancel request" if you want to cancel this request.']
         return headerElement.map((key, index) => {
             return <th id={key} key={index}>{key.toUpperCase()}
@@ -235,7 +268,7 @@ export class ManageRequests extends Component
         let hoverElement = [
         'Unique request number.',
         'Date the swap request was requested.',
-        'Provides book you requested.',
+        'Provides name of poster, name of requester, book being requested, and mailing address to ship to.',
         'Click "Received" when you have received the book.']
         return headerElement.map((key, index) => {
             return <th id={key} key={index}>{key.toUpperCase()}
@@ -277,7 +310,7 @@ export class ManageRequests extends Component
                         <tr>{pendingReceivedHeader()}</tr>
                       </thead>
                       <tbody>
-                        { this.requestList() }
+                        { this.pReceivedList() }
                       </tbody>
                     </Table>
                   </Tab.Pane>
@@ -287,7 +320,7 @@ export class ManageRequests extends Component
                         <tr>{pendingSentHeader()}</tr>
                       </thead>
                       <tbody>
-                        { this.sentList() }
+                        { this.pSentList() }
                       </tbody>
                     </Table>
                   </Tab.Pane>
@@ -321,7 +354,7 @@ export class ManageRequests extends Component
                         <tr>{acceptedReceivedHeader()}</tr>
                       </thead>
                       <tbody>
-                        { this.acceptedList() }
+                        { this.aReceivedList() }
                       </tbody>
                     </Table>
                   </Tab.Pane>
@@ -330,6 +363,9 @@ export class ManageRequests extends Component
                       <thead>
                         <tr>{acceptedSentHeader()}</tr>
                       </thead>
+                      <tbody>
+                        { this.aSentList() }
+                      </tbody>
                     </Table>
                   </Tab.Pane>
                 </Tab.Content>

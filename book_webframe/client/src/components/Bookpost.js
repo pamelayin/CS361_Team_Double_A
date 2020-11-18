@@ -1,5 +1,5 @@
 import React, { Component, useState } from 'react';
-import {Jumbotron, Container, Form, Row, Col, Button} from 'react-bootstrap';
+import {Jumbotron, Container, Form, Row, Col, Button, Tab, Tabs} from 'react-bootstrap';
 import {Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap'
 import axios from 'axios';
 
@@ -21,15 +21,15 @@ export class Bookpost extends Component
         bookTitle:'',
         bookAuthor:'',
         bookPublish:'',
-        bookcondition:'',
-        bookPrice:'',
-        bookAvail:'',
+        bookCondition:'Fair',
+        bookPrice:'10',
+        bookAvail:true,
         bookImg:'',
         swap: {
-            requested:'',
-            accepted:'',
-            shipped:'',
-            received:'',
+            requested:false,
+            accepted:false,
+            shipped:false,
+            received:false,
             request_date:'',
             requesting_user:''
         } 
@@ -86,6 +86,64 @@ export class Bookpost extends Component
         })        
     }
 
+    onChangeCondition(e){
+        if(e.target.value === 'As New'){
+            this.setState({
+                bookCondition: e.target.value,
+                bookPrice: "30"
+            })    
+        };
+        
+        if(e.target.value === 'Very Good'){
+            this.setState({
+                bookCondition: e.target.value,
+                bookPrice: "25"
+            })    
+        };
+
+        if(e.target.value === 'Good'){
+            this.setState({
+                bookCondition: e.target.value,
+                bookPrice: "20"
+            })    
+        };
+
+        if(e.target.value === 'Fair'){
+            this.setState({
+                bookCondition: e.target.value,
+            })    
+        };
+        //console.log(this.state.bookcondition);
+    }
+
+    onSubmit(e) {
+        e.preventDefault();
+
+        const book = {
+        isbn : this.state.getIsbn,
+		title : this.state.bookTitle,
+		author : this.state.bookAuthor,
+		publishing_date : this.state.bookPublish,
+		posting_user : "testUser",
+		condition : this.state.bookCondition,
+		book_points : this.state.bookPrice,
+		available : this.state.bookAvail,
+		image : this.state.bookImg,
+		swap: {
+			requested: this.state.swap.requested,
+			accepted: this.state.swap.accepted,
+			shipped: this.state.swap.requested,
+			received: this.state.swap.requested,
+			request_date: this.state.swap.requested,
+			requesting_user: this.state.swap.requested,
+		},
+        }
+        //console.log(book);
+
+        axios.post('http://localhost:5000/books/add', book)
+        .then(res => console.log(res.data));
+        //window.location = '/';
+    }
 
     render(){
         if(!this.state.book){
@@ -145,6 +203,25 @@ export class Bookpost extends Component
                                 </Form.Group>
                             </Form>
                         </div>
+                        <div style={{float:"left", width:"50%", paddingLeft:"30px", marginTop:"-10px"}}>
+                            <Tabs className="top-accountpage" defaultActiveKey="question">
+                                {/*my books tab*/}
+                                <Tab eventKey="question" title="How it works?">
+                                    <Tab.Container id="question-tab" defaultActiveKey="question">
+                                        <p>Test 2</p>
+                                    </Tab.Container>
+                                </Tab> {/*my books tab END*/}
+
+                                {/*history tab*/}
+                                <Tab eventKey="faq" title="FAQ">
+                                    <Tab.Container id="faq-tab" defaultActiveKey="question">
+                                        <Tab.Content>
+                                            <p>Test</p>
+                                        </Tab.Content>
+                                    </Tab.Container>
+                                </Tab> 
+                            </Tabs> 
+                        </div>
                     </div>    
                 </div>
             )}
@@ -164,7 +241,7 @@ export class Bookpost extends Component
                         </div>
                         <div style={{float:"left", width:"45%", paddingLeft:"15px"}}> 
                             <h2>Post Form</h2>
-                            <Form>
+                            <Form onSubmit={this.onSubmit.bind(this)}>
                                 <Form.Group as={Row}>
                                     <Form.Label column sm={2}> Title </Form.Label>
                                     <Col sm={10}>
@@ -193,34 +270,72 @@ export class Bookpost extends Component
                                 <Form.Group as={Row}>
                                     <Form.Label as="legend" column sm={2}>Book Condition</Form.Label>
                                     <Col sm={10}>
-                                        <Form.Check
+                                        <Form.Check 
                                         type="radio"
-                                        label="Great"
+                                        label="As New"
                                         name="condition"
                                         id="condition1"
+                                        value="As New"
+                                        checked = {this.state.bookCondition === 'As New'}
+                                        onChange={this.onChangeCondition.bind(this)}
                                         />
-                                        <Form.Check
+                                        <Form.Check 
+                                        type="radio"
+                                        label="Very Good"
+                                        name="condition"
+                                        id="condition2"
+                                        value="Very Good"
+                                        checked = {this.state.bookCondition === 'Very Good'}
+                                        onChange={this.onChangeCondition.bind(this)}
+                                        />
+                                        <Form.Check 
                                         type="radio"
                                         label="Good"
                                         name="condition"
-                                        id="condition2"
+                                        id="condition3"
+                                        value="Good"
+                                        checked = {this.state.bookCondition === 'Good'}
+                                        onChange={this.onChangeCondition.bind(this)}
                                         />
-                                        <Form.Check
+                                        <Form.Check 
                                         type="radio"
-                                        label="Acceptable"
+                                        label="Fair"
                                         name="condition"
                                         id="condition3"
+                                        value="Fair"
+                                        checked = {this.state.bookCondition === 'Fair'}
+                                        onChange={this.onChangeCondition.bind(this)}
                                         />
                                     </Col>
                                     </Form.Group>
                                 </fieldset>
                                 <Form.Group as={Row}>
                                     <Col sm={{ span: 10, offset: 2 }}>
-                                    <Button type="submit" style={{marginRight:"15px", backgroundColor:"#dc3545"}}>Cancel</Button>
+                                    <Button type="cancel" style={{marginRight:"15px", backgroundColor:"#dc3545"}}>Cancel</Button>
                                     <Button type="submit">Post</Button>
                                     </Col>
                                 </Form.Group>
                             </Form>
+                        </div>
+                        <div style={{float:"left", width:"50%", paddingLeft:"30px", marginTop:"-10px"}}>
+
+                            <Tabs className="top-accountpage" defaultActiveKey="question">
+                                {/*my books tab*/}
+                                <Tab eventKey="question" title="How it works?">
+                                    <Tab.Container id="question-tab" defaultActiveKey="question">
+                                        <p>Test 2</p>
+                                    </Tab.Container>
+                                </Tab> {/*my books tab END*/}
+
+                                {/*history tab*/}
+                                <Tab eventKey="faq" title="FAQ">
+                                    <Tab.Container id="faq-tab" defaultActiveKey="question">
+                                        <Tab.Content>
+                                            <p>Test</p>
+                                        </Tab.Content>
+                                    </Tab.Container>
+                                </Tab> 
+                            </Tabs> 
                         </div>
                     </div>   
                 )
