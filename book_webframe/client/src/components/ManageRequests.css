@@ -25,6 +25,13 @@ Table th {
   color: black;
 }
 
+.preceived_table,
+.areceived_table,
+.psent_table,
+.asent_table {
+  border-bottom: 1px solid #ddd;
+}
+
 #id #id-text,
 #date #date-text,
 #requesting-user #requesting-user-text,
@@ -138,7 +145,7 @@ Table th {
 }
 
 .as-requests #details-text {
-  width: 100px;
-  margin-left: -85px;
-  margin-top: -45px;
+  width: 150px;
+  margin-left: -110px;
+  margin-top: -75px;
 }
