@@ -1,58 +1,8 @@
 import React, { Component } from "react";
 import { Jumbotron, Container, Table, Row, Col, Button } from "reactstrap";
-import catch22Img from "./asset/catch-22.jpg";
-import { useLocation, Link } from "react-router-dom";
-import axios from "axios";
-
-// const bookInfo = (props) => {
-// 	const { state } = useLocation();
-// 	return (
-// 		<tr>
-// 			<th>ISBN</th>
-// 			<td>(state.books.isbn)</td>
-// 		</tr>
-// 	);
-// };
-{
-	/* <tr>
-	<th>Title</th>
-	<td>Catch-22</td>
-</tr>
-<tr>
-	<th>Author</th>
-	<td>Joseph Heller</td>
-</tr>
-<tr>
-	<th>Year</th>
-	<td>2011</td>
-</tr>
-<tr>
-	<th>Posting User</th>
-	<td>pam</td>
-</tr>
-<tr>
-	<th>Condition</th>
-	<td>Acceptable</td>
-</tr> */
-}
+import { Link } from "react-router-dom";
 
 export class Request extends Component {
-	// constructor(props) {
-	// 	super(props);
-
-	// 	this.state = { books: [] };
-	// }
-
-	// componentDidMount() {
-	// 	axios
-	// 		.get("http://localhost:5000/request/" + id)
-	// 		.then((response) => {
-	// 			this.setState({ exercises: response.data });
-	// 		})
-	// 		.catch((error) => {
-	// 			console.log(error);
-	// 		});
-	// }
 
 	JumboStyle = {
 		bannerUrl: "",
@@ -60,9 +10,11 @@ export class Request extends Component {
 		background: "white",
 		textAlign: "center",
 	};
-
+	
 	render() {
+		const { image, isbn, title, author, publishing_date, posting_user, condition, book_points } = this.props.location.state.book; 
 		console.log(this.props.location.state.book, 'this.props')
+
 		return (
 			<div>
 				<Jumbotron style={this.JumboStyle} fluid>
@@ -75,34 +27,34 @@ export class Request extends Component {
 				<Container>
 					<Row>
 						<Col xs={2}>
-							<img src={this.props.location.state.book.image} className="py-5" />
+							<img src={image} onError={(e)=>{e.target.src="http://zldzksk1.dothome.co.kr/image/noimage.jpg"}}className="py-5" />
 						</Col>
 						<Col>
 							<Table className="table-borderless">
 								<tbody>
 								<tr>
 									<th>ISBN</th>
-									<td>{this.props.location.state.book.isbn}</td>
+									<td>{isbn}</td>
 								</tr>
 								<tr>
 									<th>Title</th>
-									<td>{this.props.location.state.book.title}</td>
+									<td>{title}</td>
 								</tr>
 								<tr>
 									<th>Author</th>
-									<td>{this.props.location.state.book.author}</td>
+									<td>{author}</td>
 								</tr>
 								<tr>
 									<th>Year</th>
-									<td>{this.props.location.state.book.publishing_date.substring(0, 4)}</td>
+									<td>{publishing_date.substring(0, 4)}</td>
 								</tr>
 								<tr>
 									<th>Posting User</th>
-									<td>{this.props.location.state.book.posting_user}</td>
+									<td>{posting_user}</td>
 								</tr>
 								<tr>
 									<th>Condition</th>
-									<td>{this.props.location.state.book.condition}</td>
+									<td>{condition}</td>
 								</tr>
 								</tbody>
 							</Table>
@@ -115,7 +67,7 @@ export class Request extends Component {
 								</tr>
 								<tr>
 									<th>
-										- <span className="text-danger">5</span>
+										- <span className="text-danger">{book_points}</span>
 									</th>
 									<td>Points for Request</td>
 								</tr>
