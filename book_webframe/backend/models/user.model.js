@@ -39,9 +39,11 @@ const userSchema = new Schema({
 	},
 	points: {
 		type: Float,
+		default: 0,
 	},
 	pending_points: {
 		type: Float,
+		default: 0,
 	},
 });
 
