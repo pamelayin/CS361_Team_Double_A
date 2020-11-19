@@ -145,6 +145,29 @@ export class Bookpost extends Component
         //window.location = '/';
     }
 
+
+    isQnaSection(){
+        return (
+            <Tabs className="top-accountpage" defaultActiveKey="question">
+            {/*my books tab*/}
+            <Tab eventKey="question" title="How it works?">
+                <Tab.Container id="question-tab" defaultActiveKey="question">
+                    <p>Test 2</p>
+                </Tab.Container>
+            </Tab> {/*my books tab END*/}
+
+            {/*history tab*/}
+            <Tab eventKey="faq" title="FAQ">
+                <Tab.Container id="faq-tab" defaultActiveKey="question">
+                    <Tab.Content>
+                        <p>Test</p>
+                    </Tab.Content>
+                </Tab.Container>
+            </Tab> 
+        </Tabs> 
+        )                           
+    }
+
     render(){
         if(!this.state.book){
             return (
@@ -204,23 +227,7 @@ export class Bookpost extends Component
                             </Form>
                         </div>
                         <div style={{float:"left", width:"50%", paddingLeft:"30px", marginTop:"-10px"}}>
-                            <Tabs className="top-accountpage" defaultActiveKey="question">
-                                {/*my books tab*/}
-                                <Tab eventKey="question" title="How it works?">
-                                    <Tab.Container id="question-tab" defaultActiveKey="question">
-                                        <p>Test 2</p>
-                                    </Tab.Container>
-                                </Tab> {/*my books tab END*/}
-
-                                {/*history tab*/}
-                                <Tab eventKey="faq" title="FAQ">
-                                    <Tab.Container id="faq-tab" defaultActiveKey="question">
-                                        <Tab.Content>
-                                            <p>Test</p>
-                                        </Tab.Content>
-                                    </Tab.Container>
-                                </Tab> 
-                            </Tabs> 
+                            {this.isQnaSection()}
                         </div>
                     </div>    
                 </div>
@@ -318,24 +325,7 @@ export class Bookpost extends Component
                             </Form>
                         </div>
                         <div style={{float:"left", width:"50%", paddingLeft:"30px", marginTop:"-10px"}}>
-
-                            <Tabs className="top-accountpage" defaultActiveKey="question">
-                                {/*my books tab*/}
-                                <Tab eventKey="question" title="How it works?">
-                                    <Tab.Container id="question-tab" defaultActiveKey="question">
-                                        <p>Test 2</p>
-                                    </Tab.Container>
-                                </Tab> {/*my books tab END*/}
-
-                                {/*history tab*/}
-                                <Tab eventKey="faq" title="FAQ">
-                                    <Tab.Container id="faq-tab" defaultActiveKey="question">
-                                        <Tab.Content>
-                                            <p>Test</p>
-                                        </Tab.Content>
-                                    </Tab.Container>
-                                </Tab> 
-                            </Tabs> 
+                            {this.isQnaSection()}
                         </div>
                     </div>   
                 )
