@@ -53,3 +53,19 @@
     transform: rotate(360deg);
   }
 }
+
+.nav-item {
+  margin-right: 10px;
+  }
+
+.nav-link {
+    color: white !important;
+    }
+
+#qsLoginBtn {     
+      background-color: Transparent;
+      background-repeat:no-repeat;
+      border: none;
+      cursor:pointer;
+      overflow: hidden;        
+  }
