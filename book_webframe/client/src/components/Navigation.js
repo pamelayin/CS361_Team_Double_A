@@ -45,7 +45,7 @@ const NavBar = () => {
 
   return (
     <div className="nav-container">
-      <Navbar color="light" light expand="md">
+      <Navbar expand="md" style={{ backgroundColor: "#000000" }}>
         <Container>
           <NavbarBrand className="logo" />
           <NavbarToggler onClick={toggle} />
@@ -63,6 +63,32 @@ const NavBar = () => {
                     </NavDropdown>
                     <NavLink href="/Myaccount">MY ACCOUNT</NavLink>
                     <NavLink href="/Cservice">Q&A</NavLink>
+                    {isAuthenticated && (
+                <NavItem>
+                  <NavLink
+                    tag={RouterNavLink}
+                    to="/external-api"
+                    exact
+                    activeClassName="router-link-exact-active"
+                  >
+                    External API
+                  </NavLink>
+                </NavItem>
+              )}
+            </Nav>
+            <Nav className="d-none d-md-block" navbar>
+              {!isAuthenticated && (
+                <NavItem >
+                  <Button 
+                    id="qsLoginBtn"
+                    color="primary"
+                    className="btn-margin"
+                    onClick={() => loginWithRedirect()}
+                  >
+                    Sign Up
+                  </Button>
+                </NavItem>
+              )}
               {isAuthenticated && (
                 <NavItem>
                   <NavLink
