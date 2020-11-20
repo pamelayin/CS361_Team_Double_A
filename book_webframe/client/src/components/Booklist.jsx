@@ -80,13 +80,6 @@ export class Booklist extends Component {
 		textAlign: "center",
 	};
 
-	// requestBook(id) {
-	// 	this.props.history.push({
-	// 		state: {
-	// 			key: id
-	// 		}
-	// 	})
-	// }
 	render() {
 		return (
 			<div>
@@ -129,41 +122,7 @@ export class Booklist extends Component {
 						</tr>
 					</thead>
 					<tbody>
-						{/*<tr>
-							<td>
-								<img src={catch22Img} />
-							</td>
-							<td>978-0-09952-912-5</td>
-							<td>Catch-22</td>
-							<td>Joseph Heller</td>
-							<td>2011</td>
-							<td>pam</td>
-							<td>Acceptable</td>
-							<td>5</td>
-							<td>
-								<Link to="/Request">
-									<Button className="btn btn-success btn-sm">Request</Button>
-								</Link>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<img src={ctciImg} />
-							</td>
-							<td>978-0-98478-285-7</td>
-							<td>Cracking the Coding Interview</td>
-							<td>Gayle Laakmann McDowell</td>
-							<td>2015</td>
-							<td>codingPam</td>
-							<td>Like New</td>
-							<td>20</td>
-							<td>
-								<Button className="btn btn-dark btn-sm disabled">
-									Request
-								</Button>
-							</td>
-						</tr>{" "}
-						*/}
+
 						{this.renderTableData()}
 					</tbody>
 				</table>

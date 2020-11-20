@@ -36,4 +36,17 @@ router.route("/add").post((req, res) => {
 		.catch((err) => res.status(400).json("Error: " + err));
 });
 
+router.route("/update/:id").post((req, res) => {
+	User.findById(req.params.id)
+		.then((user) => {
+			user.points = req.body.points;
+			user.pending_points = req.body.pending_points;
+			user
+				.save()
+				.then(() => res.json("User updated!"))
+				.catch((err) => res.status(400).json("Error: " + err));
+		})
+		.catch((err) => res.status(400).json("Error: " + err));
+});
+
 module.exports = router;
