@@ -1,4 +1,4 @@
-import React, { Component,  useState } from 'react';
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Button, ButtonGroup } from 'reactstrap';
 import { Table, Tabs, Tab, TabBar, TabContainer, Nav, Row, Col} from 'react-bootstrap';
@@ -188,7 +188,7 @@ export class ManageRequests extends Component
   // Populate table for pending received tab
   pReceivedList() {
     return this.state.books.map(currentrequest => {
-      if(currentrequest.swap.accepted == false && currentrequest.swap.rejected == false && currentrequest.posting_user == "Me")
+      if(currentrequest.swap.accepted == false && currentrequest.swap.rejected == false && currentrequest.posting_user == "user1")
         return <PReceived book={currentrequest} acceptRequest={this.acceptRequest} rejectRequest={this.rejectRequest} key={currentrequest._id}/>;
     })
   }
@@ -196,7 +196,7 @@ export class ManageRequests extends Component
   // Populate table for accepted received tab
   aReceivedList() {
     return this.state.books.map(currentrequest => {
-      if(currentrequest.swap.accepted == true && currentrequest.posting_user == "Me")
+      if(currentrequest.swap.accepted == true && currentrequest.posting_user == "user1")
         return <AReceived book={currentrequest} shipped={this.shipped} cancel={this.cancel} key={currentrequest._id}/>;
     })
   }
@@ -204,7 +204,7 @@ export class ManageRequests extends Component
   // Populate table for pending sent tab
   pSentList() {
     return this.state.books.map(currentrequest => {
-      if(currentrequest.swap.requested == true && currentrequest.swap.accepted == false && currentrequest.swap.rejected == false && currentrequest.swap.requesting_user == "Me")
+      if(currentrequest.swap.requested == true && currentrequest.swap.accepted == false && currentrequest.swap.rejected == false && currentrequest.swap.requesting_user == "user1")
         return <PSent book={currentrequest} key={currentrequest._id}/>;
     })
   }

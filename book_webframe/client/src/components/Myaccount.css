@@ -1,6 +1,24 @@
+#accountTitle {
+  text-align: center;
+  margin-top: 10px;
+}
 #line {
   margin-top: 5px;
   color: grey;
+}
+
+#fname-account,
+#lname-account,
+#username-account,
+#dob-account,
+#email-account,
+#pendingpoints-account,
+#points-account {
+  margin-top: 20px;
+}
+
+#history-table {
+  border-bottom: 1px solid #ddd;
 }
 
 .top-accountpage {
