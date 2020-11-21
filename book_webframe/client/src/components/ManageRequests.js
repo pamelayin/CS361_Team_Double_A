@@ -1,4 +1,4 @@
-import React, { Component, useState } from "react";
+import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import { Button, ButtonGroup } from "reactstrap";
 import {
@@ -399,7 +399,7 @@ export class ManageRequests extends Component {
 			if (
 				currentrequest.swap.accepted == false &&
 				currentrequest.swap.rejected == false &&
-				currentrequest.posting_user == "Me"
+				currentrequest.posting_user == "user1"
 			)
 				return (
 					<PReceived
@@ -417,7 +417,7 @@ export class ManageRequests extends Component {
 		return this.state.books.map((currentrequest) => {
 			if (
 				currentrequest.swap.accepted == true &&
-				currentrequest.posting_user == "Me"
+				currentrequest.posting_user == "user1"
 			)
 				return (
 					<AReceived
@@ -437,7 +437,7 @@ export class ManageRequests extends Component {
 				currentrequest.swap.requested == true &&
 				currentrequest.swap.accepted == false &&
 				currentrequest.swap.rejected == false &&
-				currentrequest.swap.requesting_user == "Me"
+				currentrequest.swap.requesting_user == "user1"
 			)
 				return <PSent book={currentrequest} key={currentrequest._id} />;
 		});
@@ -449,7 +449,7 @@ export class ManageRequests extends Component {
 			if (
 				currentrequest.swap.accepted == true &&
 				currentrequest.swap.rejected == false &&
-				currentrequest.swap.requesting_user == "Me"
+				currentrequest.swap.requesting_user == "user1"
 			)
 				return (
 					<ASent
