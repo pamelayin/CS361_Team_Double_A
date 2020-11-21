@@ -19,15 +19,14 @@ export class RequestConfirmation extends Component {
 					</Container>
 				</Jumbotron>
 				<div className="d-flex justify-content-center">
-					<p style={{ textAlign: "center" }}>
-						<strong>Request ID: 1</strong>
-						<br />
-						<br />
+					<p style={{ textAlign: "center", fontSize: "1.25rem" }}>
 						Your request has been sent successfully.
 						<br />
 						<br />
 						You can check status of your swap at{" "}
 						<Link to="ManageRequests">Manage Requests</Link>
+						<br />
+						<br />
 						<br />
 						<br />
 						<Link to="/Booklist">

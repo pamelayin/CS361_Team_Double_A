@@ -38,10 +38,12 @@ const userSchema = new Schema({
 		lowercaes: true,
 	},
 	points: {
-		type: Float,
+		type: Number,
+		default: 0,
 	},
 	pending_points: {
-		type: Float,
+		type: Number,
+		default: 0,
 	},
 });
 

@@ -8,30 +8,13 @@ import {
 	Label,
 	Input,
 } from "reactstrap";
-import catch22Img from "./asset/catch-22.jpg";
-import ctciImg from "./asset/ctci.jpg";
-import { Link } from "react-router-dom";
 import axios from "axios";
 import "../App.css";
 
-// const Book = props => (
-// 	<tr>
-// 	  <td>{props.exercise.username}</td>
-// 	  <td>{props.exercise.description}</td>
-// 	  <td>{props.exercise.duration}</td>
-// 	  <td>{props.exercise.date.substring(0,10)}</td>
-// 	  <td>
-// 		<Link to={"/edit/"+props.exercise._id}>edit</Link> | <a href="#" onClick={() => { props.deleteExercise(props.exercise._id) }}>delete</a>
-// 	  </td>
-// 	</tr>
-//   )
 
 export class Booklist extends Component {
 	constructor(props) {
 		super(props);
-
-		// this.requestBook = this.requestBook.bind(this);
-
 		this.state = { books: [], available_books: [] };
 	}
 
@@ -47,12 +30,6 @@ export class Booklist extends Component {
 			});
 	}
 	// https://dev.to/abdulbasit313/an-easy-way-to-create-a-customize-dynamic-table-in-react-js-3igg
-	// renderTableHeader() {
-	// 	let header = Object.keys(this.state.books[0]);
-	// 	return header.map((key, index) => {
-	// 		return <th key={index}>{key.toUpperCase()}</th>;
-	// 	});
-	// }
 	renderTableData() {
 		return this.state.books.map((book, index) => {
 			const {
@@ -69,7 +46,7 @@ export class Booklist extends Component {
 			} = book; //destructuring
 			return (
 				available && <tr key={_id}>
-					<td><img src={image} /></td>
+					<td><img src={image} onError={(e)=>{e.target.src="http://zldzksk1.dothome.co.kr/image/noimage.jpg"}}/></td>
 					<td>{isbn}</td>
 					<td>{title}</td>
 					<td>{author}</td>
@@ -78,12 +55,6 @@ export class Booklist extends Component {
 					<td>{condition}</td>
 					<td>{book_points}</td>
 					<td>
-						{/* <Link
-						to={{
-						pathname: `/Request/{_id}`,
-						state: { key: book },
-						}}
-						> */}
 							<Button
 								className="btn btn-dark"
 								onClick={() => {
@@ -96,7 +67,6 @@ export class Booklist extends Component {
 							>
 								Request
 							</Button>
-						{/* </Link> */}
 					</td>
 				</tr>
 			);
@@ -110,13 +80,6 @@ export class Booklist extends Component {
 		textAlign: "center",
 	};
 
-	// requestBook(id) {
-	// 	this.props.history.push({
-	// 		state: {
-	// 			key: id
-	// 		}
-	// 	})
-	// }
 	render() {
 		return (
 			<div>
@@ -159,41 +122,7 @@ export class Booklist extends Component {
 						</tr>
 					</thead>
 					<tbody>
-						{/*<tr>
-							<td>
-								<img src={catch22Img} />
-							</td>
-							<td>978-0-09952-912-5</td>
-							<td>Catch-22</td>
-							<td>Joseph Heller</td>
-							<td>2011</td>
-							<td>pam</td>
-							<td>Acceptable</td>
-							<td>5</td>
-							<td>
-								<Link to="/Request">
-									<Button className="btn btn-success btn-sm">Request</Button>
-								</Link>
-							</td>
-						</tr>
-						<tr>
-							<td>
-								<img src={ctciImg} />
-							</td>
-							<td>978-0-98478-285-7</td>
-							<td>Cracking the Coding Interview</td>
-							<td>Gayle Laakmann McDowell</td>
-							<td>2015</td>
-							<td>codingPam</td>
-							<td>Like New</td>
-							<td>20</td>
-							<td>
-								<Button className="btn btn-dark btn-sm disabled">
-									Request
-								</Button>
-							</td>
-						</tr>{" "}
-						*/}
+
 						{this.renderTableData()}
 					</tbody>
 				</table>
