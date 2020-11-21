@@ -56,6 +56,7 @@ class App extends Component {
 						/>
 						<Route path="/ManageRequests" component={ManageRequests} exact />
 						<Route path="/Bookpost" component={Bookpost} exact />
+						<Route path="/PostConfirm" component={PostConfirm} exact />
 						<Route path="/Login" component={Login} exact />
 						<Route path="/Signin" component={Signin} exact />
 						<Route component={Nomatch} />
