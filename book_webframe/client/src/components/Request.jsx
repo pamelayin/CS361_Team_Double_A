@@ -48,25 +48,45 @@ export class Request extends Component {
 			.catch((error) => {
 				console.log(error);
 			});
+		axios
+			.get("http://localhost:5000/books/")
+			.then((response) => {
+				this.setState({ books: response.data });
+				this.setState({ book: this.state.books.filter(book => book._id === this.props.location.state.book._id)[0]})
+				console.log(this.state.book)
+			})
+			.catch((error) => {
+				console.log(error);
+			});
 	}
 
 	updateUserPoints(book_points) {
 		
 		const user = 
-		this.state.users.filter(user => user._id === user_id)[0]
-
+		// this.state.users.filter(user => user._id === user_id)[0]
+		this.state.user
 		const updatedPoints = user.points - book_points;
 		return updatedPoints;
 	}
 
 	requestConfirm(book_points) {
-		const user = 
-			this.state.users.filter(user => user._id === user_id)[0]
+		const user = this.state.user;
+			// this.state.users.filter(user => user._id === user_id)[0]
+		const book = 
+			// this.state.books.filter(book => book._id === this.props.location.state.book._id)[0]
+			this.state.book
 			const updatedPoints = user.points - book_points;
 			const updatedPendingPoints = user.pending_points - book_points;
 			user.points = updatedPoints;
 			user.pending_points = updatedPendingPoints;
-		axios.post('http://localhost:5000/users/update/'+ user_id, user)
+			book.available = false;
+			book.swap.requested = true;
+			book.swap.requesting_user = user.username;
+			book.swap.request_date = Date.now();
+			console.log(book)
+		axios.post('http://localhost:5000/users/update/'+ user._id, user)
+		.then(response => { console.log(response.data)});
+		axios.post('http://localhost:5000/books/update/'+ book._id, book)
 		.then(response => { console.log(response.data)});
 	}
 

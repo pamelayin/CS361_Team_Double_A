@@ -10,12 +10,14 @@ import {
 } from "reactstrap";
 import axios from "axios";
 import "../App.css";
-
+//final db
+// const user_id = "5fb885beded3a615b4f96aa9";
+const user_id = "5fac8ee81577ff48d4652a82";
 
 export class Booklist extends Component {
 	constructor(props) {
 		super(props);
-		this.state = { books: [], available_books: [] };
+		this.state = { books: [], available_books: [], users: [], user: [] };
 	}
 
 	componentDidMount() {
@@ -24,6 +26,15 @@ export class Booklist extends Component {
 			.then((response) => {
 				this.setState({ books: response.data });
 				this.setState({ available_books: this.state.books.filter(book => book.available === true)})
+			})
+			.catch((error) => {
+				console.log(error);
+			});
+		axios
+			.get("http://localhost:5000/users/")
+			.then((response) => {
+				this.setState({ users: response.data });
+				this.setState({ user: this.state.users.filter(user => user._id === user_id)[0]})
 			})
 			.catch((error) => {
 				console.log(error);
@@ -45,7 +56,8 @@ export class Booklist extends Component {
 				available
 			} = book; //destructuring
 			return (
-				available && <tr key={_id}>
+				//show books that are available and not posted by me
+				available && (posting_user != this.state.user.username) && <tr key={_id}>
 					<td><img src={image} onError={(e)=>{e.target.src="http://zldzksk1.dothome.co.kr/image/noimage.jpg"}}/></td>
 					<td>{isbn}</td>
 					<td>{title}</td>
