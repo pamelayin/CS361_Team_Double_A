@@ -1,16 +1,20 @@
-import React, { Component, useState } from 'react';
+import React, { Component } from 'react';
 import {Jumbotron, Container, Form, Row, Col, Button, Tab, Tabs} from 'react-bootstrap';
 import {Modal, ModalHeader, ModalBody, ModalFooter} from 'reactstrap'
+import {Link} from 'react-router-dom'
 import axios from 'axios';
 
 export class Bookpost extends Component
 {
     JumboStyle = {
-        bannerUrl: "",
         padding: "30px 30px",
-
+        background: "linear-gradient(to right, #57d073, #0054d6)",
+        color:"white"
       };
-
+    image = 
+    {
+        imgUrl:"http://zldzksk1.dothome.co.kr/image/howitworks3.jpg"
+    }  
     state={
         googleApi: 'AIzaSyBQfQo2qfxzIoUcw6fE6ShJdZFJDGBgwFU',
         
@@ -43,39 +47,42 @@ export class Bookpost extends Component
     }
 
     async getbook(){
-        axios.get("https://www.googleapis.com/books/v1/volumes?q=isbn:"+this.state.getIsbn + "&key=" + this.state.googleApi).then((response) => {
-            //console.log(response.data.items[0]);
-            //console.log(response.data.items[0].volumeInfo.title);
-            //console.log(response.data.items[0].volumeInfo.authors[0]);
-            //console.log(response.data.items[0].volumeInfo.publishedDate);
-            //console.log(!response.data.items[0].volumeInfo.imageLinks.smallThumbnail.isEmpty);
-           // console.log(response.data.items[0].volumeInfo.imageLinks.smallThumbnail.isEmpty));
-
-            if(response.data.items[0].volumeInfo.imageLinks !== undefined)
-            {
-                this.setState({
-                    bookTitle: response.data.items[0].volumeInfo.title,
-                    bookAuthor: response.data.items[0].volumeInfo.authors[0],
-                    bookPublish: response.data.items[0].volumeInfo.publishedDate,
-                    bookImg: response.data.items[0].volumeInfo.imageLinks.smallThumbnail,
-                    button: true,
-                })
-            } else{
-                this.setState({
-                    bookTitle: response.data.items[0].volumeInfo.title,
-                    bookAuthor: response.data.items[0].volumeInfo.authors[0],
-                    bookPublish: response.data.items[0].volumeInfo.publishedDate,
-                    bookImg: "http://zldzksk1.dothome.co.kr/image/noimage.jpg",
-                    button: true,
-                })                
-            }
-
-        }).catch(error => {
+        if(this.state.getIsbn ==='')
+        {
             this.setState({
-                bookTitle: "Something went wrong, please check your ISBN#. If you are continuously getting this error, please contact us",
-                bookImg: "http://zldzksk1.dothome.co.kr/image/noimage.jpg",
+                bookTitle:"Please enter ISBN#"
             })
-        })
+        }
+        else{
+            axios.get("https://www.googleapis.com/books/v1/volumes?q=isbn:"+this.state.getIsbn + "&key=" + this.state.googleApi).then((response) => {
+    
+                if(response.data.items[0].volumeInfo.imageLinks !== undefined)
+                {
+                    this.setState({
+                        bookTitle: response.data.items[0].volumeInfo.title,
+                        bookAuthor: response.data.items[0].volumeInfo.authors[0],
+                        bookPublish: response.data.items[0].volumeInfo.publishedDate,
+                        bookImg: response.data.items[0].volumeInfo.imageLinks.smallThumbnail,
+                        button: true,
+                    })
+                } else{
+                    this.setState({
+                        bookTitle: response.data.items[0].volumeInfo.title,
+                        bookAuthor: response.data.items[0].volumeInfo.authors[0],
+                        bookPublish: response.data.items[0].volumeInfo.publishedDate,
+                        bookImg: "http://zldzksk1.dothome.co.kr/image/noimage.jpg",
+                        button: true,
+                    })                
+                }
+    
+            }).catch(error => {
+                this.setState({
+                    bookTitle: "Something went wrong, please check your ISBN#. If you are continuously getting this error, please contact us",
+                    bookImg: "http://zldzksk1.dothome.co.kr/image/noimage.jpg",
+                })
+            })
+        }
+
     }
 
     fillForm(){
@@ -141,21 +148,52 @@ export class Bookpost extends Component
         //console.log(book);
 
         axios.post('http://localhost:5000/books/add', book)
-        .then(res => console.log(res.data));
-        //window.location = '/';
+        .then(res => console.log(res.data))
+        .then(
+            this.setState({
+                isbn:'',
+            })
+        );
+        window.location = '/PostConfirm';
+    }
+
+
+    isQnaSection(){
+        return (
+            <Tabs className="top-accountpage" defaultActiveKey="question">
+            {/*my books tab*/}
+            <Tab eventKey="question" title="How it works?">
+                <Tab.Container id="question-tab" defaultActiveKey="question">
+                    <img src={this.image.imgUrl} style={{width:"100%", marginTop:"15px"}} fluid/>
+                </Tab.Container>
+            </Tab> {/*my books tab END*/}
+
+            {/*history tab*/}
+            <Tab eventKey="faq" title="FAQ" >
+                <Tab.Container id="faq-tab" defaultActiveKey="question">
+                    <Tab.Content>
+                        <p style={{padding:"10px"}}> <strong>It seems you have more questions!</strong></p>
+                        <p style={{paddingLeft:"10px"}}>Please check out the "Frequently Asked Question" in order to find your answer! 
+                            You can click the Q&A tap on the navigation bar or 
+                            please click a link below to access the FAQ page!</p>
+                        <a style={{paddingLeft:"10px"}}href="/Cservice">Please click here</a>
+                    </Tab.Content>
+                </Tab.Container>
+            </Tab> 
+        </Tabs> 
+        )                           
     }
 
     render(){
         if(!this.state.book){
             return (
-                <div>
+                <div fluid>
                     <div>
                         <Jumbotron style={this.JumboStyle} fluid>
                         <Container>
                             <h1>Post your book</h1>
                             <p>
-                            This is a modified jumbotron that occupies the entire horizontal space of
-                            its parent.
+                            You can post your book in public and share it with users. Start posting your book by entering ISBN# here!
                             </p>
                         </Container>
                         </Jumbotron>
@@ -186,7 +224,7 @@ export class Bookpost extends Component
                                                     <img src={this.state.bookImg}></img>
                                                 </div>
                                                 <div style={{float:"right", width:"60%"}}>
-                                                    <p><strong>[Book Info]</strong></p>
+                                                    <p><strong>Book Info</strong></p>
                                                     <p>{this.state.bookTitle}</p>
                                                     <p>{this.state.bookAuthor}</p>
                                                     <p>{this.state.bookPublish}</p>
@@ -203,31 +241,15 @@ export class Bookpost extends Component
                                 </Form.Group>
                             </Form>
                         </div>
-                        <div style={{float:"left", width:"50%", paddingLeft:"30px", marginTop:"-10px"}}>
-                            <Tabs className="top-accountpage" defaultActiveKey="question">
-                                {/*my books tab*/}
-                                <Tab eventKey="question" title="How it works?">
-                                    <Tab.Container id="question-tab" defaultActiveKey="question">
-                                        <p>Test 2</p>
-                                    </Tab.Container>
-                                </Tab> {/*my books tab END*/}
-
-                                {/*history tab*/}
-                                <Tab eventKey="faq" title="FAQ">
-                                    <Tab.Container id="faq-tab" defaultActiveKey="question">
-                                        <Tab.Content>
-                                            <p>Test</p>
-                                        </Tab.Content>
-                                    </Tab.Container>
-                                </Tab> 
-                            </Tabs> 
+                        <div style={{float:"left", width:"50%", paddingLeft:"30px", marginTop:"-10px"}} fluid>
+                            {this.isQnaSection()}
                         </div>
                     </div>    
                 </div>
             )}
             else if(this.state.book){
                 return(
-                    <div>  
+                    <div fluid>  
                         <div>
                             <Jumbotron style={this.JumboStyle} fluid>
                             <Container>
@@ -311,31 +333,16 @@ export class Bookpost extends Component
                                 </fieldset>
                                 <Form.Group as={Row}>
                                     <Col sm={{ span: 10, offset: 2 }}>
-                                    <Button type="cancel" style={{marginRight:"15px", backgroundColor:"#dc3545"}}>Cancel</Button>
-                                    <Button type="submit">Post</Button>
+                                        <Link to='/Home'>
+                                            <Button type="Button" style={{marginRight:"15px", backgroundColor:"#dc3545"}} onClick={()=>window.location.reload()}>Cancel</Button>
+                                        </Link>
+                                        <Button type="submit">Post</Button>
                                     </Col>
                                 </Form.Group>
                             </Form>
                         </div>
-                        <div style={{float:"left", width:"50%", paddingLeft:"30px", marginTop:"-10px"}}>
-
-                            <Tabs className="top-accountpage" defaultActiveKey="question">
-                                {/*my books tab*/}
-                                <Tab eventKey="question" title="How it works?">
-                                    <Tab.Container id="question-tab" defaultActiveKey="question">
-                                        <p>Test 2</p>
-                                    </Tab.Container>
-                                </Tab> {/*my books tab END*/}
-
-                                {/*history tab*/}
-                                <Tab eventKey="faq" title="FAQ">
-                                    <Tab.Container id="faq-tab" defaultActiveKey="question">
-                                        <Tab.Content>
-                                            <p>Test</p>
-                                        </Tab.Content>
-                                    </Tab.Container>
-                                </Tab> 
-                            </Tabs> 
+                        <div style={{float:"left", width:"50%", paddingLeft:"30px", marginTop:"-10px"}} fluid>
+                            {this.isQnaSection()}
                         </div>
                     </div>   
                 )
