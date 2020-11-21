@@ -12,6 +12,7 @@ import { RequestConfirmation } from "./components/RequestConfirmation";
 import { Nomatch } from "./components/Nomatch";
 import { ManageRequests } from "./components/ManageRequests";
 import { Bookpost } from "./components/Bookpost";
+import {PostConfirm} from "./components/PostConfirm"
 import { Login } from "./components/Login";
 import { Signin } from "./components/Signin";
 import { render } from "react-dom";
