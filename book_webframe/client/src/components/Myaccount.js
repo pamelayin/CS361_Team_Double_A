@@ -1,10 +1,81 @@
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "reactstrap";
 import { Table, Tabs, Tab, TabContainer, Row, Col } from "react-bootstrap";
+import axios from "axios";
 import "./Myaccount.css";
 
+const PersonalInfo = props => (
+	<div className="user-info">
+  	<h5 id="lname-account">{"First Name: " + props.user.first_name}</h5>
+		<h5 id="lname-account">{"Last Name: " + props.user.last_name}</h5>
+		<h5 id="username-account">{"Username: " + props.user.username}</h5>
+		<h5 id="dob-account">{"Date of Birth: " + props.user.dob.substring(0, 10)}</h5>
+		<h5 id="email-account">{"Email: " + props.user.email}</h5>
+		<h5 id="pendingpoints-account">{"Pending Points: " + props.user.pending_points}</h5>
+		<h5 id="points-account">{"Points: " + props.user.points}</h5>
+	</div>
+)
+
+const History = props => (
+	<tr id="history-table">
+		<td>{props.book._id.substring(props.book._id.length - 3, props.book._id.length)}</td>
+		<td>{props.book.swap.request_date.substring(0,10)}</td>
+		<td>
+      {"Posting User: " + props.book.posting_user} <br/>
+      {"Requesting User: " + props.book.swap.requesting_user} <br/>
+    </td>
+		<td>{props.book.title}</td>
+		<div id="conditional">
+			{props.book.swap.received == true ? (<td>Swapped</td>) : (<td>Canceled</td>)}
+		</div>
+	</tr>
+)
+
 export class Myaccount extends Component {
+	constructor(props) {
+		super(props);
+		this.personalInfo = this.personalInfo.bind(this)
+		this.historyList = this.historyList.bind(this)
+		this.state = {
+			users: [],
+			books: []
+		};
+	}
+
+	componentDidMount() {
+		axios
+			.get("http://localhost:5000/users/")
+			.then((response) => {
+				this.setState({ users: response.data});
+			})
+			.catch((error) => {
+				console.log(error);
+			});
+			axios
+				.get("http://localhost:5000/books/")
+				.then((response) => {
+					this.setState({ books: response.data});
+				})
+				.catch((error) => {
+					console.log(error);
+				});
+	}
+
+	personalInfo() {
+		return this.state.users.map(currentuser => {
+      if(currentuser.username == "user1")
+        return <PersonalInfo user={currentuser} key={currentuser._id}/>;
+    })
+	}
+
+	historyList() {
+		return this.state.books.map(request => {
+      if(request.posting_user == "user1" || request.swap.requesting_user == "user1" && request.swap.requested == true)
+        return <History book={request} key={request._id}/>;
+    })
+	}
+
 	render() {
 		const historyHeader = () => {
 			let headerElement = ["id", "date", "name", "book", "status"];
@@ -28,54 +99,31 @@ export class Myaccount extends Component {
 			<div>
 				<h1 id="accountTitle">My Account</h1>
 				{/*TODO can't hard code date - need to populate*/}
-				<p>USER ID: test account</p>
-				<p>USABLE POINTS: 10pt</p>
-				<p>PENDING POINTS: 5pt</p>
-				<Tabs className="top-accountpage" defaultActiveKey="my-books">
-					{/*my books tab*/}
-					<Tab eventKey="my-books" title="My Books">
-						<Tab.Container id="my-books-tab" defaultActiveKey="my-books">
-							<Row>
-								<Col>
-									<div className="box1"></div>
-								</Col>
-								<Col>
-									<div className="box1"></div>
-								</Col>
-								<Col>
-									<div className="box1"></div>
-								</Col>
-							</Row>
-							<Row>
-								<Col>
-									{" "}
-									{/*TODO button functionality once clicked*/}
-									<Button id="button1" size="sm">
-										Delete
-									</Button>
-								</Col>
-								<Col>
-									<Button id="button1" size="sm">
-										Delete
-									</Button>
-								</Col>
-								<Col>
-									<Button id="button1" size="sm">
-										Delete
-									</Button>
-								</Col>
-							</Row>
+				<Tabs className="top-accountpage" defaultActiveKey="my-info">
+					{/*personal info tab*/}
+					<Tab eventKey="my-info" title="Personal Info">
+						<Tab.Container id="my-info-tab" defaultActiveKey="my-info">
+							<Tab.Content>
+								<Table className="my-info-table">
+									<thead>
+										<tr>{ this.personalInfo() }</tr>
+									</thead>
+								</Table>
+							</Tab.Content>
 						</Tab.Container>
 					</Tab>{" "}
-					{/*my books tab END*/}
+					{/*personal info tab END*/}
 					{/*history tab*/}
 					<Tab eventKey="history" title="History">
-						<Tab.Container id="history-tab" defaultActiveKey="my-books">
+						<Tab.Container id="history-tab" defaultActiveKey="history">
 							<Tab.Content>
 								<Table className="history-table">
 									<thead>
 										<tr>{historyHeader()}</tr>
 									</thead>
+									<tbody>
+										{ this.historyList() }
+									</tbody>
 								</Table>
 							</Tab.Content>
 						</Tab.Container>
