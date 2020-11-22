@@ -27,7 +27,24 @@ const History = props => (
     </td>
 		<td>{props.book.title}</td>
 		<div id="conditional">
-			{props.book.swap.received == true ? (<td>Swapped</td>) : (<td>Canceled</td>)}
+			{(() => {
+            if (props.book.swap.requested == true &&
+							props.book.swap.accepted == true &&
+							props.book.swap.received == true) {
+              return (
+                <td>Swapped</td>
+              )
+            } else if (props.book.swap.requested == true &&
+							props.book.swap.rejected == true) {
+              return (
+                <td>Canceled/Rejected</td>
+              )
+            } else {
+              return (
+                <td>Pending</td>
+              )
+            }
+        })()}
 		</div>
 	</tr>
 )
@@ -37,9 +54,11 @@ export class Myaccount extends Component {
 		super(props);
 		this.personalInfo = this.personalInfo.bind(this)
 		this.historyList = this.historyList.bind(this)
+
+		//this.onSubmit = this.onSubmit.bind(this)
 		this.state = {
 			users: [],
-			books: []
+			books: [],
 		};
 	}
 
@@ -62,6 +81,8 @@ export class Myaccount extends Component {
 				});
 	}
 
+
+
 	personalInfo() {
 		return this.state.users.map(currentuser => {
       if(currentuser.username == "user1")
@@ -71,7 +92,7 @@ export class Myaccount extends Component {
 
 	historyList() {
 		return this.state.books.map(request => {
-      if(request.posting_user == "user1" || request.swap.requesting_user == "user1" && request.swap.requested == true)
+      if((request.posting_user == "user1" || request.swap.requesting_user == "user1") && request.swap.requested == true)
         return <History book={request} key={request._id}/>;
     })
 	}

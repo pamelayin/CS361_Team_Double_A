@@ -58,14 +58,16 @@
   margin-right: 10px;
   }
 
-.nav-link {
-    color: gray !important;
-    }
+{/*.nav-link*/}
+#main-nav,
+#collasible-nav-dropdown {
+    color: white !important;
+}
 
-#qsLoginBtn {     
+#qsLoginBtn {
       background-color: Transparent;
       background-repeat:no-repeat;
       border: none;
       cursor:pointer;
-      overflow: hidden;        
+      overflow: hidden;
   }
