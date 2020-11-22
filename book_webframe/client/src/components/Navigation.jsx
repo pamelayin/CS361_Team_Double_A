@@ -51,7 +51,7 @@ const NavBar = () => {
           <NavbarToggler onClick={toggle} />
           <Collapse isOpen={isOpen} navbar>
             <Nav className="mr-auto" navbar>
-            <NavLink href="/Home">HOME</NavLink>
+            <NavLink id="main-nav" href="/Home">HOME</NavLink>
                     <NavDropdown title="BOOK SWAP" id="collasible-nav-dropdown"
                     show={show}
                     onMouseEnter={showDropdown}
@@ -61,8 +61,8 @@ const NavBar = () => {
                         <NavDropdown.Item href="/Booklist">Search Books</NavDropdown.Item>
                         <NavDropdown.Item href="/ManageRequests">Manage Requests</NavDropdown.Item>
                     </NavDropdown>
-                    <NavLink href="/Myaccount">MY ACCOUNT</NavLink>
-                    <NavLink href="/Cservice">Q&A</NavLink>
+                    <NavLink id="main-nav" href="/Myaccount">MY ACCOUNT</NavLink>
+                    <NavLink id="main-nav" href="/Cservice">Q&A</NavLink>
                     {isAuthenticated && (
                 <NavItem>
                   <NavLink
@@ -71,19 +71,18 @@ const NavBar = () => {
                     exact
                     activeClassName="router-link-exact-active"
                   >
-                     
                   </NavLink>
                 </NavItem>
               )}
             </Nav>
             <Nav className="d-none d-md-block" navbar>
               {!isAuthenticated && (
-                <NavItem >
-                  <Button 
+                <NavItem>
+                  <Button
                     id="qsLoginBtn"
                     color="primary"
                     className="btn-margin"
-                    onClick={() => loginWithRedirect({ action: 'signup' })}
+                    onClick={() => loginWithRedirect()}
                   >
                     Sign Up
                   </Button>
@@ -97,7 +96,7 @@ const NavBar = () => {
                     exact
                     activeClassName="router-link-exact-active"
                   >
-                    
+
                   </NavLink>
                 </NavItem>
               )}
@@ -206,5 +205,3 @@ const NavBar = () => {
 };
 
 export default NavBar;
-
-
