@@ -85,9 +85,13 @@ export class Request extends Component {
 			book.swap.request_date = Date.now();
 			console.log(book)
 		axios.post('http://localhost:5000/users/update/'+ user._id, user)
-		.then(response => { console.log(response.data)});
+		.then(response => { console.log(response.data)}).catch((error) => {
+			console.log(error);
+		});
 		axios.post('http://localhost:5000/books/update/'+ book._id, book)
-		.then(response => { console.log(response.data)});
+		.then(response => { console.log(response.data)}).catch((error) => {
+			console.log(error);
+		});
 	}
 
 	//check to user has enough points to submit request - this will change button color / disable
