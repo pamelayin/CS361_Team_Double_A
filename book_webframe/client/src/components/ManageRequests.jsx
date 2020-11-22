@@ -398,6 +398,7 @@ export class ManageRequests extends Component {
 	pReceivedList() {
 		return this.state.books.map((currentrequest) => {
 			if (
+				currentrequest.swap.requested == true &&
 				currentrequest.swap.accepted == false &&
 				currentrequest.swap.rejected == false &&
 				currentrequest.posting_user == "user1"
