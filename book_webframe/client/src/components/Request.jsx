@@ -4,9 +4,11 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import ReactTooltip from "react-tooltip";
 
-const user_id = "5fac8ee81577ff48d4652a82";
+// const user_id = "5fac8ee81577ff48d4652a82";
 // const user_id = "5fac9f7cdfb7ef2ac4336473";
 
+//final db
+const user_id = "5fb885beded3a615b4f96aa9";
 //ok so it works when the button is abled and the statement is false//
 export class Request extends Component {
 	
@@ -83,15 +85,26 @@ export class Request extends Component {
 			book.swap.requested = true;
 			book.swap.requesting_user = user.username;
 			book.swap.request_date = Date.now();
-			console.log(book)
-		axios.post('http://localhost:5000/users/update/'+ user._id, user)
-		.then(response => { console.log(response.data)}).catch((error) => {
-			console.log(error);
-		});
-		axios.post('http://localhost:5000/books/update/'+ book._id, book)
-		.then(response => { console.log(response.data)}).catch((error) => {
-			console.log(error);
-		});
+			console.log("book update:", book)
+			axios
+			.all([
+				axios.post('http://localhost:5000/users/update/'+ user._id, user),
+				axios.post('http://localhost:5000/books/update/'+ book._id, book)
+			])
+			.then(
+				axios.spread((user_update, book_update) =>
+					console.log(
+						"user update:",
+						user_update,
+						"book update:",
+						book_update
+					)
+				)
+			)
+			.catch((errors) => {
+				console.log(errors);
+			});
+		
 	}
 
 	//check to user has enough points to submit request - this will change button color / disable
