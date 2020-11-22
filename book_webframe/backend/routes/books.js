@@ -53,18 +53,23 @@ router.route("/add").post((req, res) => {
 });
 
 // Update a book field (currently used for accept and reject)
-router.route('/update/:id').post((req, res) => {
-  Book.findById(req.params.id)
-    .then(book => {
-      book.swap.accepted = req.body.swap.accepted;
+router.route("/update/:id").post((req, res) => {
+	Book.findById(req.params.id)
+		.then((book) => {
+			book.swap.accepted = req.body.swap.accepted;
 			book.swap.rejected = req.body.swap.rejected;
-			book.swap.shipped  = req.body.swap.shipped;
+			book.swap.shipped = req.body.swap.shipped;
 			book.swap.received = req.body.swap.received;
-      book.save()
-        .then(() => res.json('Book updated!'))
-        .catch(err => res.status(400).json('Error: ' + err));
-    })
-    .catch(err => res.status(400).json('Error: ' + err));
+			book.swap.requested = req.body.swap.requested;
+			book.available = req.body.available;
+			book.swap.requesting_user = req.body.swap.requesting_user;
+			book.swap.request_date = req.body.swap.request_date;
+			book
+				.save()
+				.then(() => res.json("Book updated!"))
+				.catch((err) => res.status(400).json("Error: " + err));
+		})
+		.catch((err) => res.status(400).json("Error: " + err));
 });
 
 module.exports = router;
