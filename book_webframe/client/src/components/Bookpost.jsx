@@ -1,17 +1,10 @@
 import React, { Component } from "react";
-import {
-	Jumbotron,
-	Container,
-	Form,
-	Row,
-	Col,
-	Button,
-	Tab,
-	Tabs,
-} from "react-bootstrap";
+import {Jumbotron, Container, Form, Row, Col, Button, Tab, Tabs } from "react-bootstrap";
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import UserStore from '../userStore/userStore'
+
 //final db
 const user_id = "5fb885beded3a615b4f96aa9";
 //test db
@@ -127,7 +120,7 @@ export class Bookpost extends Component {
 			this.setState({
 				bookCondition: e.target.value,
 				bookPrice: "30",
-			});
+            });
 		}
 
 		if (e.target.value === "Very Good") {
@@ -160,7 +153,7 @@ export class Bookpost extends Component {
 			title: this.state.bookTitle,
 			author: this.state.bookAuthor,
 			publishing_date: this.state.bookPublish,
-			posting_user: "user1",
+			posting_user: UserStore.username, //Loggedin user name "user1", 
 			condition: this.state.bookCondition,
 			book_points: this.state.bookPrice,
 			available: this.state.bookAvail,
@@ -182,7 +175,11 @@ export class Bookpost extends Component {
 		console.log("points after:", user.points)
 		axios
 			.post("http://localhost:5000/books/add", book)
-			.then((res) => console.log(res.data))
+            .then((res) => {
+                console.log("Book added"); 
+                UserStore.Delbookid = res.data;
+                console.log(UserStore.Delbookid);
+        })
 			.then(
 				this.setState({
 					isbn: "",
@@ -195,7 +192,7 @@ export class Bookpost extends Component {
 			.catch((error) => {
 				console.log(error);
 			});
-		window.location = "/PostConfirm";
+		//window.location = "/PostConfirm";
 	}
 
 	isQnaSection() {
@@ -470,7 +467,15 @@ export class Bookpost extends Component {
 												marginRight: "15px",
 												backgroundColor: "#dc3545",
 											}}
-											onClick={() => window.location.reload()}
+                                            onClick={(e) => {
+                                                if(window.confirm("Are sure to cancel the posting?")){
+                                                    e.preventDefault()
+                                                    window.location.reload()}
+                                                else{
+                                                    e.preventDefault()
+                                                }
+                                                } 
+                                            }
 										>
 											Cancel
 										</Button>

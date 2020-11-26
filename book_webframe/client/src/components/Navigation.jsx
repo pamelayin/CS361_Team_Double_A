@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import{NavLink as RouterNavLink} from 'react-router-dom';
-
-
+import UserStore from '../userStore/userStore'
 
 import {
   Collapse,
@@ -30,21 +29,36 @@ const NavBar = () => {
         setShow(false);
     }
   const [isOpen, setIsOpen] = useState(false);
+  
   const {
     user,
     isAuthenticated,
     loginWithRedirect,
     logout,
-  } = useAuth0();
+  } = useAuth0(
+  ); 
+  
+
   const toggle = () => setIsOpen(!isOpen);
 
   const logoutWithRedirect = () =>
-    logout({
+    logout(
+      UserStore.isLoggedIn = false,
+      UserStore.username = '',
+	  UserStore.Delbookid = '',
+      {
       returnTo: window.location.origin,
     });
 
+  const userSet = () =>{
+    UserStore.isLoggedIn = true;
+    UserStore.username = user.nickname;
+    console.log("called")
+  }  
+
   return (
     <div className="nav-container">
+      {isAuthenticated && userSet()}
       <Navbar expand="md" style={{ backgroundColor: "#000000" }}>
         <Container>
           <NavbarBrand className="logo" />
@@ -108,7 +122,7 @@ const NavBar = () => {
                     id="qsLoginBtn"
                     color="primary"
                     className="btn-margin"
-                    onClick={() => loginWithRedirect()}
+                    onClick={()=>loginWithRedirect()}
                   >
                     Log in
                   </Button>
