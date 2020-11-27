@@ -3,6 +3,7 @@ import {Jumbotron, Container, Form, Row, Col, Button, Tab, Tabs } from "react-bo
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { confirmAlert } from 'react-confirm-alert';
 import UserStore from '../userStore/userStore'
 
 //final db
@@ -18,10 +19,11 @@ export class Bookpost extends Component {
 	};
 	image = {
 		imgUrl: "http://zldzksk1.dothome.co.kr/image/howitworks3.jpg",
+		imgUrl2: "http://zldzksk1.dothome.co.kr/image/howitworks4.jpg",
 	};
 	state = {
 		googleApi: "AIzaSyBQfQo2qfxzIoUcw6fE6ShJdZFJDGBgwFU",
-
+		bookid:"",
 		button: "",
 		isbnModal: false,
 		book: false,
@@ -148,51 +150,61 @@ export class Bookpost extends Component {
 	onSubmit(e) {
 		e.preventDefault();
 
-		const book = {
-			isbn: this.state.getIsbn,
-			title: this.state.bookTitle,
-			author: this.state.bookAuthor,
-			publishing_date: this.state.bookPublish,
-			posting_user: UserStore.username, //Loggedin user name "user1", 
-			condition: this.state.bookCondition,
-			book_points: this.state.bookPrice,
-			available: this.state.bookAvail,
-			image: this.state.bookImg,
-			swap: {
-				requested: this.state.swap.requested,
-				accepted: this.state.swap.accepted,
-				shipped: this.state.swap.requested,
-				received: this.state.swap.requested,
-				request_date: this.state.swap.requested,
-				requesting_user: this.state.swap.requested,
-			},
-		};
-		//console.log(book);
-
-		const user = this.state.user;
-		console.log("points:", user.points);
-		user.points = user.points + 1;
-		console.log("points after:", user.points)
-		axios
-			.post("http://localhost:5000/books/add", book)
-            .then((res) => {
-                console.log("Book added"); 
-                UserStore.Delbookid = res.data;
-                console.log(UserStore.Delbookid);
-        })
-			.then(
-				this.setState({
-					isbn: "",
+		if(window.confirm("Are you sure to post your book?")){
+			const book = {
+				isbn: this.state.getIsbn,
+				title: this.state.bookTitle,
+				author: this.state.bookAuthor,
+				publishing_date: this.state.bookPublish,
+				posting_user: UserStore.username, //Loggedin user name "user1", 
+				condition: this.state.bookCondition,
+				book_points: this.state.bookPrice,
+				available: this.state.bookAvail,
+				image: this.state.bookImg,
+				swap: {
+					requested: this.state.swap.requested,
+					accepted: this.state.swap.accepted,
+					shipped: this.state.swap.requested,
+					received: this.state.swap.requested,
+					request_date: this.state.swap.requested,
+					requesting_user: this.state.swap.requested,
+				},
+			};
+			//console.log(book);
+	
+			const user = this.state.user;
+			console.log("points:", user.points);
+			user.points = user.points + 1;
+			console.log("points after:", user.points)
+			axios
+				.post("http://localhost:5000/books/add", book)
+				.then((res) => {
+					console.log("Book added");
+					//console.log(res.data._id);
+					const text = res.data._id;
+					this.setState({bookid:UserStore.Delbookid}, ()=>{ UserStore.Delbookid = this.state.bookid})
+					UserStore.Delbookid = "teste"
 				})
-			).catch((error) => {
-				console.log(error);
-			});
-		axios.post('http://localhost:5000/users/update/'+ user._id, user)
-			.then(response => { console.log(response.data)})
-			.catch((error) => {
-				console.log(error);
-			});
-		//window.location = "/PostConfirm";
+				.then(
+					this.setState({
+						isbn: "",
+					})
+				).catch((error) => {
+					console.log(error);
+				});
+	
+			axios.post('http://localhost:5000/users/update/'+ user._id, user)
+				.then(response => { console.log(response.data)})
+				.catch((error) => {
+					console.log(error);
+				});
+			
+			window.location = "/PostConfirm";
+		} else{
+			window.location.reload()
+		}		
+
+	
 	}
 
 	isQnaSection() {
@@ -201,8 +213,22 @@ export class Bookpost extends Component {
 				{/*my books tab*/}
 				<Tab eventKey="question" title="How it works?">
 					<Tab.Container id="question-tab" defaultActiveKey="question">
+						
+						<p style={{ padding: "10px" }}>
+							<strong>BINDER works in this way!</strong>
+						</p>
+						<ul>
+							<li><strong>Post</strong> your old book on BINDER </li>
+							<li><strong>Wait</strong>  until you have a book swap request</li>
+							<li><strong>Decide</strong>  whether accept the request or not </li>
+							<li>Once you <strong>accept</strong> the request, <strong>send</strong> your book to the user </li>
+							<li>If the user receieve the book, you will <strong>get</strong> points</li>
+							<li><strong>Find</strong>  a book you want, and <strong>send</strong> a request</li>
+							<li><strong>Get</strong>  your book and <strong>enjoy</strong>!!</li>
+						</ul>
+
 						<img
-							src={this.image.imgUrl}
+							src={this.image.imgUrl2}
 							style={{ width: "100%", marginTop: "15px" }}
 							fluid="true"
 						/>
@@ -214,7 +240,6 @@ export class Bookpost extends Component {
 					<Tab.Container id="faq-tab" defaultActiveKey="question">
 						<Tab.Content>
 							<p style={{ padding: "10px" }}>
-								{" "}
 								<strong>It seems you have more questions!</strong>
 							</p>
 							<p style={{ paddingLeft: "10px" }}>
