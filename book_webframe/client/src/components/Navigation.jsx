@@ -29,15 +29,15 @@ const NavBar = () => {
         setShow(false);
     }
   const [isOpen, setIsOpen] = useState(false);
-  
+
   const {
     user,
     isAuthenticated,
     loginWithRedirect,
     logout,
   } = useAuth0(
-  ); 
-  
+  );
+
 
   const toggle = () => setIsOpen(!isOpen);
 
@@ -46,15 +46,18 @@ const NavBar = () => {
       UserStore.isLoggedIn = false,
       UserStore.username = '',
       {
-      returnTo: window.location.origin,
-    });
+        returnTo: window.location.origin,
+      }
+    );
   }
 
   const userSet = () =>{
     UserStore.isLoggedIn = true;
     UserStore.username = user.nickname;
     console.log("called")
-  }  
+    
+    //console.log("nav-user: ", user.nickname)
+  }
   
   if(isAuthenticated){ // when login
     return (
@@ -72,7 +75,8 @@ const NavBar = () => {
                       onMouseEnter={showDropdown}
                       onMouseLeave={hideDropdown}
                       >
-                         <NavDropdown.Item>
+
+                          <NavDropdown.Item>
                             <className/>
                             <RouterNavLink
                               id="bookswap-link"
@@ -82,6 +86,7 @@ const NavBar = () => {
                               Post Books
                             </RouterNavLink>
                           </NavDropdown.Item>
+
                           <NavDropdown.Item>
                             <className/>
                             <RouterNavLink
@@ -92,6 +97,7 @@ const NavBar = () => {
                               Search Books
                             </RouterNavLink>
                           </NavDropdown.Item>
+
                           <NavDropdown.Item>
                             <className/>
                             <RouterNavLink
@@ -103,7 +109,8 @@ const NavBar = () => {
                             </RouterNavLink>
                           </NavDropdown.Item>
                       </NavDropdown>
-                       <NavLink id="main-nav">
+
+                      <NavLink id="main-nav">
                         <className/>
                         <RouterNavLink
                           id="myaccount-link"
@@ -113,6 +120,7 @@ const NavBar = () => {
                           MY ACCOUNT
                         </RouterNavLink>
                       </NavLink>
+                
                       <NavLink id="main-nav" href="/Cservice">Q&A</NavLink>
                       {isAuthenticated && (
                   <NavItem>
@@ -147,7 +155,7 @@ const NavBar = () => {
                       exact
                       activeClassName="router-link-exact-active"
                     >
-  
+
                     </NavLink>
                   </NavItem>
                 )}
@@ -308,7 +316,7 @@ const NavBar = () => {
                       exact
                       activeClassName="router-link-exact-active"
                     >
-  
+
                     </NavLink>
                   </NavItem>
                 )}
