@@ -37,7 +37,7 @@
 
 /*For Navigation*/
 .mr-auto a:hover {
-  background-color: black;
+  background-color: #88BF8B;
 }
 
 /*For Bookswap*/
@@ -63,7 +63,15 @@
 #collasible-nav-dropdown {
     color: white !important;
 }
-
+		
+#bookswap-link {	
+  color: black;	
+  text-decoration: none;	
+}	
+#myaccount-link {	
+  color: white;	
+  text-decoration: none;	
+}
 #qsLoginBtn {
       background-color: Transparent;
       background-repeat:no-repeat;

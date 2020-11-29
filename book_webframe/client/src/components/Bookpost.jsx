@@ -3,15 +3,22 @@ import {Jumbotron, Container, Form, Row, Col, Button, Tab, Tabs } from "react-bo
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import { Link } from "react-router-dom";
 import axios from "axios";
-import { confirmAlert } from 'react-confirm-alert';
+// import { confirmAlert } from 'react-confirm-alert';
 import UserStore from '../userStore/userStore'
+import Loading from "./Loading";
 
 //final db
-const user_id = "5fb885beded3a615b4f96aa9";
+// const user_id = "5fb885beded3a615b4f96aa9";
 //test db
 // const user_id = "5fac8ee81577ff48d4652a82";
 
 export class Bookpost extends Component {
+	constructor(props) {
+		super(props);
+		this.props = props;
+		this.state={loading: true}
+	}
+	
 	JumboStyle = {
 		padding: "30px 30px",
 		background: "linear-gradient(to right, #57d073, #0054d6)",
@@ -94,19 +101,26 @@ export class Bookpost extends Component {
 		}
 	}
 
+	async componentWillMount() {
+		await this.setState({ username: UserStore.username});
+	}
 	componentDidMount() {
 		axios
-			.get("http://localhost:5000/users/")
+			.get("http://localhost:5000/users/") 
 			.then((response) => {
 				this.setState({ users: response.data });
 				this.setState({
-					user: this.state.users.filter((user) => user._id === user_id)[0],
+					user: this.state.users.filter((user) => user.username === this.state.username)[0],
+				});
+				this.setState({
+					loading: false
 				});
 				console.log(this.state.user, "user");
 			})
 			.catch((error) => {
 				console.log(error);
-			});
+			})
+		
 	}
 
 	fillForm() {
@@ -156,7 +170,7 @@ export class Bookpost extends Component {
 				title: this.state.bookTitle,
 				author: this.state.bookAuthor,
 				publishing_date: this.state.bookPublish,
-				posting_user: UserStore.username, //Loggedin user name "user1", 
+				posting_user: this.state.user.username, //Loggedin user name "user1", 
 				condition: this.state.bookCondition,
 				book_points: this.state.bookPrice,
 				available: this.state.bookAvail,
@@ -258,9 +272,20 @@ export class Bookpost extends Component {
 	}
 
 	render() {
-		if (!this.state.book) {
-			return (
-				<div fluid="true">
+		// const { user } = this.props.auth0;
+		
+		// if (typeof user !== "undefined") {
+		// 	// this.setState({username: user.nickname})
+		// 	this.state.username = user.nickname;
+		// 	console.log(this.state.username);
+		// }
+		if (this.state.loading) {
+			return (<Loading />);
+		}
+		else {
+			if (!this.state.book) {
+			return (				
+				<div fluid="true">					
 					<div>
 						<Jumbotron style={this.JumboStyle} fluid="true">
 							<Container>
@@ -272,6 +297,7 @@ export class Bookpost extends Component {
 							</Container>
 						</Jumbotron>
 					</div>
+					{/* <div>Hello {user.username}</div> */}
 					<div>
 						<div style={{ float: "left", width: "45%" }}>
 							<Form>
@@ -523,6 +549,6 @@ export class Bookpost extends Component {
 					</div>
 				</div>
 			);
-		}
+		}}
 	}
 }

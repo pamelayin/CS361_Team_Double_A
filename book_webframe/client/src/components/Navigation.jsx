@@ -41,19 +41,21 @@ const NavBar = () => {
 
   const toggle = () => setIsOpen(!isOpen);
 
-  const logoutWithRedirect = () =>
+  const logoutWithRedirect = () => {
     logout(
       UserStore.isLoggedIn = false,
       UserStore.username = '',
       {
       returnTo: window.location.origin,
     });
+  }
 
   const userSet = () =>{
     UserStore.isLoggedIn = true;
     UserStore.username = user.nickname;
     console.log("called")
   }  
+  
   if(isAuthenticated){ // when login
     return (
       <div className="nav-container">
@@ -70,11 +72,47 @@ const NavBar = () => {
                       onMouseEnter={showDropdown}
                       onMouseLeave={hideDropdown}
                       >
-                          <NavDropdown.Item href="/Bookpost">Post Books</NavDropdown.Item>
-                          <NavDropdown.Item href="/Booklist">Search Books</NavDropdown.Item>
-                          <NavDropdown.Item href="/ManageRequests">Manage Requests</NavDropdown.Item>
+                         <NavDropdown.Item>
+                            <className/>
+                            <RouterNavLink
+                              id="bookswap-link"
+                              to="/Bookpost"
+                              activeClassName="router-link-exact-active"
+                            >
+                              Post Books
+                            </RouterNavLink>
+                          </NavDropdown.Item>
+                          <NavDropdown.Item>
+                            <className/>
+                            <RouterNavLink
+                              id="bookswap-link"
+                              to="/Booklist"
+                              activeClassName="router-link-exact-active"
+                            >
+                              Search Books
+                            </RouterNavLink>
+                          </NavDropdown.Item>
+                          <NavDropdown.Item>
+                            <className/>
+                            <RouterNavLink
+                              id="bookswap-link"
+                              to= "/ManageRequests"
+                              activeClassName="router-link-exact-active"
+                            >
+                              Manage Requests
+                            </RouterNavLink>
+                          </NavDropdown.Item>
                       </NavDropdown>
-                      <NavLink id="main-nav" href="/Myaccount">MY ACCOUNT</NavLink>
+                       <NavLink id="main-nav">
+                        <className/>
+                        <RouterNavLink
+                          id="myaccount-link"
+                          to="/Myaccount"
+                          activeClassName="router-link-exact-active"
+                        >
+                          MY ACCOUNT
+                        </RouterNavLink>
+                      </NavLink>
                       <NavLink id="main-nav" href="/Cservice">Q&A</NavLink>
                       {isAuthenticated && (
                   <NavItem>
@@ -377,6 +415,6 @@ const NavBar = () => {
       </div>
     );
   }
-};
+}
 
 export default NavBar;
