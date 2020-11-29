@@ -94,8 +94,8 @@
 
 {/*Hover feature for name*/}
 #name-table #name-text {
-  width: 110px;
-  margin-left: -75px;
+  width: 150px;
+  margin-left: -100px;
   margin-top: -45px;
 }
 
