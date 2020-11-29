@@ -35,9 +35,9 @@
   margin-top: 10px;
 }
 
-/*For Navigation*/
+/*For Navigation - 242429*/
 .mr-auto a:hover {
-  background-color: black;
+  background-color: #88BF8B;
 }
 
 /*For Bookswap*/
@@ -62,6 +62,16 @@
 #main-nav,
 #collasible-nav-dropdown {
     color: white !important;
+}
+
+#bookswap-link {
+  color: black;
+  text-decoration: none;
+}
+
+#myaccount-link {
+  color: white;
+  text-decoration: none;
 }
 
 #qsLoginBtn {

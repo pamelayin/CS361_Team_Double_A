@@ -4,6 +4,7 @@ import { Button } from "reactstrap";
 import { Table, Tabs, Tab, TabContainer, Row, Col } from "react-bootstrap";
 import axios from "axios";
 import "./Myaccount.css";
+import UserStore from '../userStore/userStore';
 
 const PersonalInfo = props => (
 	<div className="user-info">
@@ -35,9 +36,16 @@ const History = props => (
                 <td>Swapped</td>
               )
             } else if (props.book.swap.requested == true &&
+							props.book.swap.accepted == true &&
 							props.book.swap.rejected == true) {
               return (
-                <td>Canceled/Rejected</td>
+                <td>Canceled</td>
+              )
+            } else if (props.book.swap.requested == true &&
+							props.book.swap.accepted == false &&
+							props.book.swap.rejected == true) {
+              return (
+                <td>Rejected</td>
               )
             } else {
               return (
@@ -57,6 +65,7 @@ export class Myaccount extends Component {
 
 		//this.onSubmit = this.onSubmit.bind(this)
 		this.state = {
+			//user: UserStore.username,
 			users: [],
 			books: [],
 		};
@@ -85,14 +94,14 @@ export class Myaccount extends Component {
 
 	personalInfo() {
 		return this.state.users.map(currentuser => {
-      if(currentuser.username == "user1")
+      if(currentuser.username == UserStore.username)
         return <PersonalInfo user={currentuser} key={currentuser._id}/>;
     })
 	}
 
 	historyList() {
 		return this.state.books.map(request => {
-      if((request.posting_user == "user1" || request.swap.requesting_user == "user1") && request.swap.requested == true)
+      if((request.posting_user == UserStore.username || request.swap.requesting_user == UserStore.username) && request.swap.requested == true)
         return <History book={request} key={request._id}/>;
     })
 	}
@@ -103,7 +112,7 @@ export class Myaccount extends Component {
 			let hoverElement = [
 				"Unique request number.",
 				"Date the swap request was requested.",
-				"Name of person requesting book.",
+				"Name of user 'posting' and 'requesting' the book.",
 				"Book being requested.",
 				"Status of swap.",
 			];

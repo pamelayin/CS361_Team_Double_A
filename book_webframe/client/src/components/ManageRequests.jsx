@@ -14,7 +14,8 @@ import {
 } from "react-bootstrap";
 import "./ManageRequests.css";
 import axios from "axios";
-//logged in user = user1 on final db
+import UserStore from '../userStore/userStore';
+//import { useAuth0, withAuth0 } from '@auth0/auth0-react';
 
 const PReceived = (props) => (
 	<tr className="preceived_table">
@@ -137,6 +138,7 @@ const ASent = (props) => (
 );
 
 export class ManageRequests extends Component {
+
 	constructor(props) {
 		super(props);
 
@@ -170,6 +172,7 @@ export class ManageRequests extends Component {
 			.catch((error) => {
 				console.log(error);
 			});
+
 	}
 
 	acceptRequest(id) {
@@ -401,7 +404,7 @@ export class ManageRequests extends Component {
 				currentrequest.swap.requested == true &&
 				currentrequest.swap.accepted == false &&
 				currentrequest.swap.rejected == false &&
-				currentrequest.posting_user == "user1"
+				currentrequest.posting_user == UserStore.username
 			)
 				return (
 					<PReceived
@@ -411,6 +414,7 @@ export class ManageRequests extends Component {
 						key={currentrequest._id}
 					/>
 				);
+				console.log(UserStore.isLoggedIn, UserStore.username);
 		});
 	}
 
@@ -419,7 +423,7 @@ export class ManageRequests extends Component {
 		return this.state.books.map((currentrequest) => {
 			if (
 				currentrequest.swap.accepted == true &&
-				currentrequest.posting_user == "user1"
+				currentrequest.posting_user == UserStore.username
 			)
 				return (
 					<AReceived
@@ -439,7 +443,7 @@ export class ManageRequests extends Component {
 				currentrequest.swap.requested == true &&
 				currentrequest.swap.accepted == false &&
 				currentrequest.swap.rejected == false &&
-				currentrequest.swap.requesting_user == "user1"
+				currentrequest.swap.requesting_user == UserStore.username
 			)
 				return <PSent book={currentrequest} key={currentrequest._id} />;
 		});
@@ -451,7 +455,7 @@ export class ManageRequests extends Component {
 			if (
 				currentrequest.swap.accepted == true &&
 				currentrequest.swap.rejected == false &&
-				currentrequest.swap.requesting_user == "user1"
+				currentrequest.swap.requesting_user == UserStore.username
 			)
 				return (
 					<ASent
@@ -462,6 +466,7 @@ export class ManageRequests extends Component {
 				);
 		});
 	}
+
 
 	render() {
 		const pendingReceivedHeader = () => {
