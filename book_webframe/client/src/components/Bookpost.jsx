@@ -254,15 +254,15 @@ export class Bookpost extends Component {
 					<Tab.Container id="faq-tab" defaultActiveKey="question">
 						<Tab.Content>
 							<p style={{ padding: "10px" }}>
-								<strong>It seems you have more questions!</strong>
+								<strong>It seems like you have more questions!</strong>
 							</p>
 							<p style={{ paddingLeft: "10px" }}>
-								Please check out the "Frequently Asked Question" in order to
+								Please check out the "Frequently Asked Question" section in order to
 								find your answer! You can click the Q&A tap on the navigation
-								bar or please click a link below to access the FAQ page!
+								bar or please click the link below to access the FAQ page!
 							</p>
 							<a style={{ paddingLeft: "10px" }} href="/Cservice">
-								Please click here
+								Go to Q&A page
 							</a>
 						</Tab.Content>
 					</Tab.Container>
