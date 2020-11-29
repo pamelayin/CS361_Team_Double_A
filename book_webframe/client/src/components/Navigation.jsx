@@ -55,8 +55,10 @@ const NavBar = () => {
     UserStore.isLoggedIn = true;
     UserStore.username = user.nickname;
     console.log("called")
+    
     //console.log("nav-user: ", user.nickname)
   }
+  
   if(isAuthenticated){ // when login
     return (
       <div className="nav-container">
@@ -73,6 +75,7 @@ const NavBar = () => {
                       onMouseEnter={showDropdown}
                       onMouseLeave={hideDropdown}
                       >
+
                           <NavDropdown.Item>
                             <className/>
                             <RouterNavLink
@@ -117,7 +120,7 @@ const NavBar = () => {
                           MY ACCOUNT
                         </RouterNavLink>
                       </NavLink>
-
+                
                       <NavLink id="main-nav" href="/Cservice">Q&A</NavLink>
                       {isAuthenticated && (
                   <NavItem>
@@ -420,6 +423,6 @@ const NavBar = () => {
       </div>
     );
   }
-};
+}
 
 export default NavBar;

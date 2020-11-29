@@ -12,7 +12,7 @@ import { RequestConfirmation } from "./components/RequestConfirmation";
 import { Nomatch } from "./components/Nomatch";
 import { ManageRequests } from "./components/ManageRequests";
 import { Bookpost } from "./components/Bookpost";
-import {PostConfirm} from "./components/PostConfirm"
+import { PostConfirm } from "./components/PostConfirm";
 import { Login } from "./components/Login";
 import { Signin } from "./components/Signin";
 import UserStore from "./userStore/userStore";
@@ -30,43 +30,42 @@ class App extends Component {
 		display: "block",
 	};
 
-	
 	render() {
-			return (
-				<BrowserRouter>
-					<div className="container">
-						<div id="head">
-							<img
-								src={this.state.logoUrl}
-								style={this.imgStyle}
-								alt=""
-								className="img-fluid"
-							/>
-						</div>
-						<Navigation />
-						<Switch>
-							<Route path="/" component={Home} exact />
-							<Route path="/Home" component={Home} exact />
-							<Route path="/bookswap" component={Bookswap} exact />
-							<Route path="/Myaccount" component={Myaccount} exact />
-							<Route path="/Cservice" component={Cservice} exact />
-							<Route path="/Booklist" component={Booklist} exact />
-							<Route path="/Request/" component={Request} exact />
-							<Route
-								path="/RequestConfirmation"
-								component={RequestConfirmation}
-								exact
-							/>
-							<Route path="/ManageRequests" component={ManageRequests} exact />
-							<Route path="/Bookpost" component={Bookpost} exact />
-							<Route path="/PostConfirm" component={PostConfirm} exact />
-							<Route path="/Login" component={Login} exact />
-							<Route path="/Signin" component={Signin} exact />
-							<Route component={Nomatch} />
-						</Switch>
+		return (
+			<BrowserRouter>
+				<div className="container">
+					<div id="head">
+						<img
+							src={this.state.logoUrl}
+							style={this.imgStyle}
+							alt=""
+							className="img-fluid"
+						/>
 					</div>
-				</BrowserRouter>
-			);
+					<Navigation />
+					<Switch>
+						<Route path="/" component={Home} exact />
+						<Route path="/Home" component={Home} exact />
+						<Route path="/bookswap" component={Bookswap} exact />
+						<Route path="/Myaccount" component={Myaccount} exact />
+						<Route path="/Cservice" component={Cservice} exact />
+						<Route path="/Booklist" component={Booklist} exact />
+						<Route path="/Request/" component={Request} exact />
+						<Route
+							path="/RequestConfirmation"
+							component={RequestConfirmation}
+							exact
+						/>
+						<Route path="/ManageRequests" component={ManageRequests} exact />
+						<Route path="/Bookpost" component={Bookpost} exact />
+						<Route path="/PostConfirm" component={PostConfirm} exact />
+						<Route path="/Login" component={Login} exact />
+						<Route path="/Signin" component={Signin} exact />
+						<Route component={Nomatch} />
+					</Switch>
+				</div>
+			</BrowserRouter>
+		);
 	}
 }
 
