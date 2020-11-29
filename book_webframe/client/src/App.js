@@ -50,7 +50,7 @@ class App extends Component {
 						<Route path="/Myaccount" component={Myaccount} exact />
 						<Route path="/Cservice" component={Cservice} exact />
 						<Route path="/Booklist" component={Booklist} exact />
-						<Route path="/Request/" component={Request} exact />
+						<Route path="/Request" component={Request} exact />
 						<Route
 							path="/RequestConfirmation"
 							component={RequestConfirmation}
