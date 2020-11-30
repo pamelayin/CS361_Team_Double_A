@@ -54,7 +54,7 @@ export class Request extends Component {
 			.get("http://localhost:5000/books/")
 			.then((response) => {
 				this.setState({ books: response.data });
-				this.setState({ book: this.state.books.filter(book => book._id === this.props.location.state.book._id)[0]})
+				this.setState({ book: this.state.books.filter(book => book._id === this.props.location.state.data._id)[0]})
 				console.log(this.state.book)
 			})
 			.catch((error) => {
@@ -116,7 +116,7 @@ export class Request extends Component {
 
 }
 	render() {
-		const { image, isbn, title, author, publishing_date, posting_user, condition, book_points } = this.props.location.state.book; 
+		const { image, isbn, title, author, publishing_date, posting_user, condition, book_points } = this.props.location.state.data; 
 		// console.log(this.props.location.state.book, 'this.props')
 
 		
@@ -129,10 +129,10 @@ export class Request extends Component {
 					</Container>
 				</Jumbotron>
 
-				{this.state.user &&<Container>
+				{this.state.user && <Container>
 					<Row>
-						<Col sm={4} lg={3}>
-							<img style={this.CenterBlock} src={image} onError={(e)=>{e.target.src="http://zldzksk1.dothome.co.kr/image/noimage.jpg"}}className="py-5 mx-auto" />
+						<Col sm={4} lg={3} style={{display: "flex", alignItems: "center", justifyContent: "center"}}>
+							<img className="img-fluid" style={{height: "100%", width: "100%"}}src={image} onError={(e)=>{e.target.src="http://zldzksk1.dothome.co.kr/image/noimage.jpg"}}  />
 						</Col>
 						<Col sm={8} lg={5}>
 							<Table className="table-borderless">

@@ -12,9 +12,10 @@ import {
 	Card, CardBody, CardTitle, CardImg, CardSubtitle, CardText
 } from "reactstrap";
 import axios from "axios";
-import ReactDOM from "react-dom";
 import "../App.css";
 import UserStore from '../userStore/userStore';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSearch } from '@fortawesome/free-solid-svg-icons';
 
 //final db
 // const user_id = "5fb885beded3a615b4f96aa9";
@@ -24,7 +25,8 @@ import UserStore from '../userStore/userStore';
 export class Booklist extends Component {
 	constructor(props) {
 		super(props);
-		this.state = { books: [], available_books: [], users: [], user: [] };
+		this.state = { books: [], available_books: [], users: [], user: [], search: null };
+		this.searchSpace = this.searchSpace.bind(this)
 	}
 
 	async componentWillMount() {
@@ -54,46 +56,6 @@ export class Booklist extends Component {
 				console.log(error);
 			});
 	}
-	// https://dev.to/abdulbasit313/an-easy-way-to-create-a-customize-dynamic-table-in-react-js-3igg
-	renderData() {
-		return this.state.books.map((book, index) => {
-			const {
-				_id,
-				title,
-				author,
-				book_points,
-				image,
-				available,
-				posting_user
-			} = book; //destructuring
-			return (
-				//show books that are available and not posted by me
-				available && (posting_user !== this.state.username) && <Col lg={3} md={4} className="d-flex my-4">
-					<Card key={_id} body className="text-center">
-						<CardImg className="mx-auto" style={{width: "128px", height: "165px"}} src={image} alt="Not Available" onError={(e)=>{e.target.src="http://zldzksk1.dothome.co.kr/image/noimage.jpg"}}/>
-						<CardBody className="d-flex flex-column flex-fill">
-							<CardTitle tag="h5">{title}</CardTitle>
-							<CardSubtitle tag="h6" className="mb-2">By {author}</CardSubtitle>
-							<CardText>{book_points} Points</CardText>
-							<Button
-								className="btn btn-dark mt-auto algin-self-end"
-								onClick={() => {
-									this.props.history.push({
-										pathname: `/Request`,
-										state: { book },
-										
-									});
-								}}
-								>
-								Request
-							</Button>	
-						</CardBody>
-					</Card>
-				</Col>
-
-			);
-		});
-	}
 
 	JumboStyle = {
 		bannerUrl: "",
@@ -102,7 +64,50 @@ export class Booklist extends Component {
 		textAlign: "center",
 	};
 
+	searchSpace(event) {
+		event.preventDefault();
+		let keyword = event.target.value;
+		this.setState({search:keyword})
+	}
+
 	render() {
+		const items = this.state.available_books.filter((data)=>{
+			if (this.state.search == null) {
+				return data;
+			} else if (data.title.toLowerCase().includes(this.state.search.toLowerCase()) || 
+				data.author.toLowerCase().includes(this.state.search.toLowerCase()) ||
+				data.posting_user.toLowerCase().includes(this.state.search.toLowerCase()) ||
+				data.book_points.toString().includes(this.state.search.toLowerCase()) ||
+				data.isbn.toLowerCase().includes(this.state.search.toLowerCase()) ||
+				data.condition.toLowerCase().includes(this.state.search.toLowerCase())) {
+				return data;
+			}
+		}).map(data=>{
+			return(
+				data.available && (data.posting_user !== this.state.username) && <Col lg={3} md={4} className="d-flex my-4" key={data._id} >
+				<Card body className="text-center">
+					<CardImg className="mx-auto"  src={data.image} alt="Not Available" onError={(e)=>{e.target.src="http://zldzksk1.dothome.co.kr/image/noimage.jpg"}}/>
+					<CardBody className="d-flex flex-column flex-fill">
+						<CardTitle tag="h5">{data.title}</CardTitle>
+						<CardSubtitle tag="h6" className="mb-2">By {data.author}</CardSubtitle>
+						<CardText>{data.book_points} Points</CardText>
+						<Button
+							className="btn btn-dark mt-auto algin-self-end"
+							onClick={() => {
+								this.props.history.push({
+									pathname: `/Request`,
+									state: { data },
+									
+								});
+							}}
+							>
+							Request
+						</Button>	
+					</CardBody>
+				</Card>
+			</Col>
+			)
+		})
 		return (
 			<div>
 				<Jumbotron style={this.JumboStyle} fluid>
@@ -110,27 +115,32 @@ export class Booklist extends Component {
 						<h1>Book List</h1>
 						<br />
 						<p>Please select book you would like to request.</p>
-						{/* <SearchBar
-							filterText={this.state.filterText}
-							onUserInput={this.handleUserInput.bind(this)}
-						/> */}
 					</Container>
 				</Jumbotron>
 
-				<Form>
-					<FormGroup>
-						<Label for="exampleSearch">Search</Label>
-						<Input
-							type="search"
-							name="search"
-							id="exampleSearch"
-							placeholder="Search by ISBN, title, author, year, posting user, condition, or points"
-						/>
-					</FormGroup>
+				<Form inline style={{justifyContent: "center"}} >
+					<Label><FontAwesomeIcon icon={faSearch} />&nbsp;&nbsp;&nbsp;</Label>
+					<Input
+						type="text"
+						className="input"
+						id="search"
+						className="mr-sm-2 w-50"
+						placeholder="Search by ISBN, title, author, posting user, book points, or condition"
+						
+						onChange={(e)=>this.searchSpace(e)}
+					/>
 				</Form>
+				
 				<Container>
 					<Row className="my-4">
-						{this.renderData()}
+						{/* {this.state.search && <FilterResults value={this.state.search} data={book}
+						renderResults={results=> (
+							this.renderData()
+						)}
+						/>} */}
+						{/* {this.renderData()}
+						 */}
+						{items}
 					</Row>
 				</Container> 
 			</div>
