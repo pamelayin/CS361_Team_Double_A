@@ -64,12 +64,19 @@ router.route("/update/:id").post((req, res) => {
 			book.available = req.body.available;
 			book.swap.requesting_user = req.body.swap.requesting_user;
 			book.swap.request_date = req.body.swap.request_date;
+			//book.posting_user = req.body.posting_user;
 			book
 				.save()
 				.then(() => res.json("Book updated!"))
 				.catch((err) => res.status(400).json("Error: " + err));
 		})
 		.catch((err) => res.status(400).json("Error: " + err));
+});
+
+router.route('/:id').delete((req, res) => {
+  Book.findByIdAndDelete(req.params.id)
+    .then(() => res.json('Book deleted.'))
+    .catch(err => res.status(400).json('Error: ' + err));
 });
 
 module.exports = router;
