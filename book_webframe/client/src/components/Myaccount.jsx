@@ -1,7 +1,7 @@
 import React, { Component, useState } from "react";
 import { Link } from "react-router-dom";
-import { Button } from "reactstrap";
-import { Table, Tabs, Tab, TabContainer, Row, Col } from "react-bootstrap";
+import { Button, Card, CardBody, CardTitle, CardImg, CardSubtitle, CardText } from "reactstrap";
+import { Table, Tabs, Tab, TabContainer, Row, Col} from "react-bootstrap";
 import axios from "axios";
 import "./Myaccount.css";
 import UserStore from '../userStore/userStore';
@@ -68,7 +68,13 @@ export class Myaccount extends Component {
 			//user: UserStore.username,
 			users: [],
 			books: [],
+			//available_books: [],
+			user: [],
 		};
+	}
+
+	async componentWillMount() {
+		await this.setState({ username: UserStore.username});
 	}
 
 	componentDidMount() {
@@ -76,6 +82,9 @@ export class Myaccount extends Component {
 			.get("http://localhost:5000/users/")
 			.then((response) => {
 				this.setState({ users: response.data});
+				this.setState({
+					user: this.state.users.filter((user) => user.username === this.state.username)[0],
+				});
 			})
 			.catch((error) => {
 				console.log(error);
@@ -84,6 +93,7 @@ export class Myaccount extends Component {
 				.get("http://localhost:5000/books/")
 				.then((response) => {
 					this.setState({ books: response.data});
+					//this.setState({ available_books: this.state.books.filter(book => book.available === true)})
 				})
 				.catch((error) => {
 					console.log(error);
@@ -91,19 +101,108 @@ export class Myaccount extends Component {
 	}
 
 
-
+// UserStore.username
 	personalInfo() {
 		return this.state.users.map(currentuser => {
-      if(currentuser.username == UserStore.username)
+      if(currentuser.username == "user2")
         return <PersonalInfo user={currentuser} key={currentuser._id}/>;
     })
 	}
 
 	historyList() {
 		return this.state.books.map(request => {
-      if((request.posting_user == UserStore.username || request.swap.requesting_user == UserStore.username) && request.swap.requested == true)
+      if((request.posting_user == "user2" || request.swap.requesting_user == "user2") && request.swap.requested == true)
         return <History book={request} key={request._id}/>;
     })
+	}
+
+// Copied from Booklist renderData()
+	bookList() {
+		return this.state.books.map((book, index) => {
+			const {
+				_id,
+				title,
+				author,
+				book_points,
+				image,
+				available,
+				posting_user
+			} = book; //destructuring
+			return (
+				//show books that are posted by me
+				available && (posting_user == this.state.username) && <Col lg={3} md={4} className="d-flex my-4">
+					<Card key={_id} body className="text-center">
+						<CardImg className="mx-auto" style={{width: "128px", height: "165px"}} src={image} alt="Not Available" onError={(e)=>{e.target.src="http://zldzksk1.dothome.co.kr/image/noimage.jpg"}}/>
+						<CardBody className="d-flex flex-column flex-fill">
+							<CardTitle tag="h5">{title}</CardTitle>
+							<CardSubtitle tag="h6" className="mb-2">By {author}</CardSubtitle>
+							<CardText>{book_points} Points</CardText>
+							<Button
+								className="btn btn-dark mt-auto algin-self-end"
+								onClick={() => {
+									this.deleteBook(_id);
+								}}
+								>
+								Delete
+							</Button>
+						</CardBody>
+					</Card>
+				</Col>
+
+			);
+		});
+	}
+
+	deleteBook(id) {
+		alert(
+			"You have deleted the book. It will be removed from your account."
+		);
+		const book = {
+			// Get book field for this id
+			books: this.state.books.filter((x) => x._id === id)[0],
+		};
+		console.log("book", book.books.title);
+
+		//const posting_user_book = book.books;
+		//console.log("posting user", posting_user_book);
+
+		const current_user = this.state.user;
+		console.log("current user", current_user);
+
+		current_user.points = current_user.points - 1;
+		console.log("current user points", current_user.points);
+
+		//book.books.posting_user = "false";
+		//console.log("new posting user", posting_user_book.posting_user);
+
+		// Update book's "accepted" field with true
+		axios
+			.all([
+				//axios.post("http://localhost:5000/books/update/" + id, book.books),
+				axios.post("http://localhost:5000/users/update/" + current_user._id, current_user),
+			])
+			.then(
+				axios.spread((book_update, user_update) =>
+					console.log(
+						"book update:",
+						book_update,
+						"user update:",
+						user_update
+					)
+				)
+			)
+			.catch((errors) => {
+				console.log(errors);
+			});
+
+		axios.delete('http://localhost:5000/books/'+id)
+	     .then(response => { console.log(response.data)});
+
+		// Remove this specific request from pending table
+		this.setState({
+			books: this.state.books.filter((el) => el._id !== id),
+		});
+
 	}
 
 	render() {
@@ -159,7 +258,18 @@ export class Myaccount extends Component {
 						</Tab.Container>
 					</Tab>{" "}
 					{/*history tab END*/}
+					{/*books tab*/}
+					<Tab eventKey="my-books" title="My Books">
+						<Tab.Container id="my-books-tab" defaultActiveKey="my-books">
+							<Tab.Content>
+								<Row className="my-4">
+									{this.bookList()}
+								</Row>
+							</Tab.Content>
+						</Tab.Container>
+					</Tab>{" "}
 				</Tabs>{" "}
+				{/*books tab END*/}
 				{/*my books and history tab tag END*/}
 			</div>
 		);

@@ -13,12 +13,12 @@ import Loading from "./Loading";
 // const user_id = "5fac8ee81577ff48d4652a82";
 
 export class Bookpost extends Component {
+
 	constructor(props) {
 		super(props);
 		this.props = props;
-		this.state={loading: true}
 	}
-	
+
 	JumboStyle = {
 		padding: "30px 30px",
 		background: "linear-gradient(to right, #57d073, #0054d6)",
@@ -106,7 +106,7 @@ export class Bookpost extends Component {
 	}
 	componentDidMount() {
 		axios
-			.get("http://localhost:5000/users/") 
+			.get("http://localhost:5000/users/")
 			.then((response) => {
 				this.setState({ users: response.data });
 				this.setState({
@@ -120,7 +120,7 @@ export class Bookpost extends Component {
 			.catch((error) => {
 				console.log(error);
 			})
-		
+
 	}
 
 	fillForm() {
@@ -170,7 +170,7 @@ export class Bookpost extends Component {
 				title: this.state.bookTitle,
 				author: this.state.bookAuthor,
 				publishing_date: this.state.bookPublish,
-				posting_user: this.state.user.username, //Loggedin user name "user1", 
+				posting_user: this.state.username, //Loggedin user name "user1",
 				condition: this.state.bookCondition,
 				book_points: this.state.bookPrice,
 				available: this.state.bookAvail,
@@ -185,7 +185,7 @@ export class Bookpost extends Component {
 				},
 			};
 			//console.log(book);
-	
+
 			const user = this.state.user;
 			console.log("points:", user.points);
 			user.points = user.points + 1;
@@ -206,19 +206,19 @@ export class Bookpost extends Component {
 				).catch((error) => {
 					console.log(error);
 				});
-	
+
 			axios.post('http://localhost:5000/users/update/'+ user._id, user)
 				.then(response => { console.log(response.data)})
 				.catch((error) => {
 					console.log(error);
 				});
-			
+
 			window.location = "/PostConfirm";
 		} else{
 			window.location.reload()
-		}		
+		}
 
-	
+
 	}
 
 	isQnaSection() {
@@ -227,7 +227,7 @@ export class Bookpost extends Component {
 				{/*my books tab*/}
 				<Tab eventKey="question" title="How it works?">
 					<Tab.Container id="question-tab" defaultActiveKey="question">
-						
+
 						<p style={{ padding: "10px" }}>
 							<strong>BINDER works in this way!</strong>
 						</p>
@@ -273,7 +273,7 @@ export class Bookpost extends Component {
 
 	render() {
 		// const { user } = this.props.auth0;
-		
+
 		// if (typeof user !== "undefined") {
 		// 	// this.setState({username: user.nickname})
 		// 	this.state.username = user.nickname;
@@ -284,8 +284,8 @@ export class Bookpost extends Component {
 		}
 		else {
 			if (!this.state.book) {
-			return (				
-				<div fluid="true">					
+			return (
+				<div fluid="true">
 					<div>
 						<Jumbotron style={this.JumboStyle} fluid="true">
 							<Container>
@@ -525,7 +525,7 @@ export class Bookpost extends Component {
                                                 else{
                                                     e.preventDefault()
                                                 }
-                                                } 
+                                                }
                                             }
 										>
 											Cancel
