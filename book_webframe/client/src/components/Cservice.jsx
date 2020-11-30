@@ -25,7 +25,7 @@ export class Cservice extends Component
                 </div>
                 <Container fluid id="cominfo" >
                     <Row>
-                        <Col md={5}>
+                        <Col md={4}>
                             <Card>
                                 <Card.Img variant="top" src="http://zldzksk1.dothome.co.kr/image/support2.png" fluid="true" />
                                 <Card.Body fluid="true">
@@ -40,7 +40,7 @@ export class Cservice extends Component
                             </Card>
                             <br/>
                         </Col>
-                        <Col md={7}>
+                        <Col md={8}>
                             <Accordion defaultActiveKey="0" fluid="true">
                                 <Card>
                                     <Card.Header style={{backgroundColor: "#CCF0D5"}}>

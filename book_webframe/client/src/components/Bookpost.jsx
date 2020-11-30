@@ -112,9 +112,6 @@ export class Bookpost extends Component {
 				this.setState({
 					user: this.state.users.filter((user) => user.username === this.state.username)[0],
 				});
-				this.setState({
-					loading: false
-				});
 				console.log(this.state.user, "user");
 			})
 			.catch((error) => {
@@ -170,7 +167,7 @@ export class Bookpost extends Component {
 				title: this.state.bookTitle,
 				author: this.state.bookAuthor,
 				publishing_date: this.state.bookPublish,
-				posting_user: this.state.username, //Loggedin user name "user1",
+				posting_user: this.state.username, 
 				condition: this.state.bookCondition,
 				book_points: this.state.bookPrice,
 				available: this.state.bookAvail,

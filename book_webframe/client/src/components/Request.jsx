@@ -3,12 +3,13 @@ import { Jumbotron, Container, Table, Row, Col, Button } from "reactstrap";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import ReactTooltip from "react-tooltip";
+import UserStore from '../userStore/userStore';
 
 // const user_id = "5fac8ee81577ff48d4652a82";
 // const user_id = "5fac9f7cdfb7ef2ac4336473";
 
 //final db
-const user_id = "5fb885beded3a615b4f96aa9";
+// const user_id = "5fb885beded3a615b4f96aa9";
 //ok so it works when the button is abled and the statement is false//
 export class Request extends Component {
 	
@@ -40,12 +41,15 @@ export class Request extends Component {
 		this.requestPossible = this.requestPossible.bind(this);
 	}
 	
+	async componentWillMount() {
+		await this.setState({ username: UserStore.username});
+	}
 	componentDidMount() {
 		axios
 			.get("http://localhost:5000/users/")
 			.then((response) => {
 				this.setState({ users: response.data });
-				this.setState({ user: this.state.users.filter(user => user._id === user_id)[0]})
+				this.setState({ user: this.state.users.filter(user => user.username === this.state.username)[0]})
 			})
 			.catch((error) => {
 				console.log(error);
@@ -54,7 +58,7 @@ export class Request extends Component {
 			.get("http://localhost:5000/books/")
 			.then((response) => {
 				this.setState({ books: response.data });
-				this.setState({ book: this.state.books.filter(book => book._id === this.props.location.state.book._id)[0]})
+				this.setState({ book: this.state.books.filter(book => book._id === this.props.location.state.data._id)[0]})
 				console.log(this.state.book)
 			})
 			.catch((error) => {
@@ -110,13 +114,13 @@ export class Request extends Component {
 	//check to user has enough points to submit request - this will change button color / disable
 	requestPossible(book_points) {
 		const user = 
-		this.state.users.filter(user => user._id === user_id)[0]
+		this.state.users.filter(user => user.username === this.state.username)[0]
 		const updatedPoints = user.points - book_points;
 		return (updatedPoints >= 0);
 
 }
 	render() {
-		const { image, isbn, title, author, publishing_date, posting_user, condition, book_points } = this.props.location.state.book; 
+		const { image, isbn, title, author, publishing_date, posting_user, condition, book_points } = this.props.location.state.data; 
 		// console.log(this.props.location.state.book, 'this.props')
 
 		
@@ -129,10 +133,10 @@ export class Request extends Component {
 					</Container>
 				</Jumbotron>
 
-				{this.state.user &&<Container>
+				{this.state.user && <Container>
 					<Row>
-						<Col sm={4} lg={3}>
-							<img style={this.CenterBlock} src={image} onError={(e)=>{e.target.src="http://zldzksk1.dothome.co.kr/image/noimage.jpg"}}className="py-5 mx-auto" />
+						<Col sm={4} lg={3} style={{display: "flex", alignItems: "center", justifyContent: "center"}}>
+							<img className="img-fluid" style={{height: "100%", width: "100%"}}src={image} onError={(e)=>{e.target.src="http://zldzksk1.dothome.co.kr/image/noimage.jpg"}}  />
 						</Col>
 						<Col sm={8} lg={5}>
 							<Table className="table-borderless">
