@@ -3,12 +3,13 @@ import { Jumbotron, Container, Table, Row, Col, Button } from "reactstrap";
 import { Link } from "react-router-dom";
 import axios from "axios";
 import ReactTooltip from "react-tooltip";
+import UserStore from '../userStore/userStore';
 
 // const user_id = "5fac8ee81577ff48d4652a82";
 // const user_id = "5fac9f7cdfb7ef2ac4336473";
 
 //final db
-const user_id = "5fb885beded3a615b4f96aa9";
+// const user_id = "5fb885beded3a615b4f96aa9";
 //ok so it works when the button is abled and the statement is false//
 export class Request extends Component {
 	
@@ -40,12 +41,15 @@ export class Request extends Component {
 		this.requestPossible = this.requestPossible.bind(this);
 	}
 	
+	async componentWillMount() {
+		await this.setState({ username: UserStore.username});
+	}
 	componentDidMount() {
 		axios
 			.get("http://localhost:5000/users/")
 			.then((response) => {
 				this.setState({ users: response.data });
-				this.setState({ user: this.state.users.filter(user => user._id === user_id)[0]})
+				this.setState({ user: this.state.users.filter(user => user.username === this.state.username)[0]})
 			})
 			.catch((error) => {
 				console.log(error);
@@ -110,7 +114,7 @@ export class Request extends Component {
 	//check to user has enough points to submit request - this will change button color / disable
 	requestPossible(book_points) {
 		const user = 
-		this.state.users.filter(user => user._id === user_id)[0]
+		this.state.users.filter(user => user.username === this.state.username)[0]
 		const updatedPoints = user.points - book_points;
 		return (updatedPoints >= 0);
 
