@@ -104,14 +104,14 @@ export class Myaccount extends Component {
 // UserStore.username
 	personalInfo() {
 		return this.state.users.map(currentuser => {
-      if(currentuser.username == "user2")
+      if(currentuser.username == UserStore.username)
         return <PersonalInfo user={currentuser} key={currentuser._id}/>;
     })
 	}
 
 	historyList() {
 		return this.state.books.map(request => {
-      if((request.posting_user == "user2" || request.swap.requesting_user == "user2") && request.swap.requested == true)
+      if((request.posting_user == UserStore.username || request.swap.requesting_user == UserStore.username) && request.swap.requested == true)
         return <History book={request} key={request._id}/>;
     })
 	}

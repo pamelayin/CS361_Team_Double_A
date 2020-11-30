@@ -14,6 +14,7 @@ import {
 } from "react-bootstrap";
 import "./ManageRequests.css";
 import axios from "axios";
+import ReactDOM from "react-dom";
 import UserStore from '../userStore/userStore';
 //import { useAuth0, withAuth0 } from '@auth0/auth0-react';
 
@@ -63,7 +64,8 @@ const AReceived = (props) => (
 		<td>
 			{"Requesting User: " + props.book.swap.requesting_user} <br />
 			{"Posting User: " + props.book.posting_user} <br />
-			{"Book Title: " + props.book.title}
+			{"Book Title: " + props.book.title} <br />
+			{"Mailing Address: " + props.user.mailing_address}
 		</td>
 		<td>
 			<Button
@@ -120,7 +122,8 @@ const ASent = (props) => (
 		<td>
 			{"Posting User: " + props.book.posting_user} <br />
 			{"Requesting User: " + props.book.swap.requesting_user} <br />
-			{"Book Title: " + props.book.title}
+			{"Book Title: " + props.book.title} <br />
+			{"Mailing Address: " + props.user.mailing_address}
 		</td>
 		<td>
 			<Button
@@ -151,7 +154,12 @@ export class ManageRequests extends Component {
 		this.state = {
 			books: [],
 			users: [],
+			user: [],
 		};
+	}
+
+	async componentWillMount() {
+		await this.setState({ username: UserStore.username});
 	}
 
 	componentDidMount() {
@@ -168,6 +176,9 @@ export class ManageRequests extends Component {
 			.get("http://localhost:5000/users/")
 			.then((response) => {
 				this.setState({ users: response.data });
+				this.setState({
+					user: this.state.users.filter((user) => user.username === this.state.username)[0],
+				});
 			})
 			.catch((error) => {
 				console.log(error);
@@ -235,10 +246,7 @@ export class ManageRequests extends Component {
 		axios
 			.all([
 				axios.post("http://localhost:5000/books/update/" + id, book.books),
-				axios.post(
-					"http://localhost:5000/users/update/" + req_user_users._id,
-					req_user_users
-				),
+				axios.post("http://localhost:5000/users/update/" + req_user_users._id, req_user_users),
 			])
 			.then(
 				axios.spread((book_update, req_user_update) =>
@@ -258,6 +266,8 @@ export class ManageRequests extends Component {
 		this.setState({
 			books: this.state.books.filter((el) => el._id !== id),
 		});
+
+		window.location.reload(true); //upload the page immediately
 	}
 
 	shipped(id) {
@@ -404,7 +414,7 @@ export class ManageRequests extends Component {
 				currentrequest.swap.requested == true &&
 				currentrequest.swap.accepted == false &&
 				currentrequest.swap.rejected == false &&
-				currentrequest.posting_user == UserStore.username
+				currentrequest.posting_user == this.state.username
 			)
 				return (
 					<PReceived
@@ -414,7 +424,7 @@ export class ManageRequests extends Component {
 						key={currentrequest._id}
 					/>
 				);
-				console.log(UserStore.isLoggedIn, UserStore.username);
+				console.log(this.state.username);
 		});
 	}
 
@@ -423,10 +433,11 @@ export class ManageRequests extends Component {
 		return this.state.books.map((currentrequest) => {
 			if (
 				currentrequest.swap.accepted == true &&
-				currentrequest.posting_user == UserStore.username
+				currentrequest.posting_user == this.state.username
 			)
 				return (
 					<AReceived
+						user={this.state.user}
 						book={currentrequest}
 						shipped={this.shipped}
 						cancel={this.cancel}
@@ -443,7 +454,7 @@ export class ManageRequests extends Component {
 				currentrequest.swap.requested == true &&
 				currentrequest.swap.accepted == false &&
 				currentrequest.swap.rejected == false &&
-				currentrequest.swap.requesting_user == UserStore.username
+				currentrequest.swap.requesting_user == this.state.username
 			)
 				return <PSent book={currentrequest} key={currentrequest._id} />;
 		});
@@ -455,10 +466,11 @@ export class ManageRequests extends Component {
 			if (
 				currentrequest.swap.accepted == true &&
 				currentrequest.swap.rejected == false &&
-				currentrequest.swap.requesting_user == UserStore.username
+				currentrequest.swap.requesting_user == this.state.username
 			)
 				return (
 					<ASent
+						user={this.state.user}
 						book={currentrequest}
 						received={this.received}
 						key={currentrequest._id}

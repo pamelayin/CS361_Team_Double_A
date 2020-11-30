@@ -14,6 +14,7 @@ router.route("/add").post((req, res) => {
 	const password = req.body.password;
 	const dob = req.body.dob;
 	const email = req.body.email;
+	const mailing_address = req.body.mailing_address;
 	// const points = Number(req.body.points);
 	const points = 0;
 	// const pending_points = Number(req.body.pending_points);
@@ -26,6 +27,7 @@ router.route("/add").post((req, res) => {
 		password,
 		dob,
 		email,
+		mailing_address,
 		points,
 		pending_points,
 	});
