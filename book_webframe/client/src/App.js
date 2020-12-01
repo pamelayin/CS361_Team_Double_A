@@ -17,6 +17,7 @@ import { Login } from "./components/Login";
 import { Signin } from "./components/Signin";
 import UserStore from "./userStore/userStore";
 import { render } from "react-dom";
+import { EditProfile } from "./components/EditProfile";
 
 class App extends Component {
 	state = {
@@ -61,6 +62,7 @@ class App extends Component {
 						<Route path="/PostConfirm" component={PostConfirm} exact />
 						<Route path="/Login" component={Login} exact />
 						<Route path="/Signin" component={Signin} exact />
+						<Route path="/update/:id" component={EditProfile} exact />
 						<Route component={Nomatch} />
 					</Switch>
 				</div>

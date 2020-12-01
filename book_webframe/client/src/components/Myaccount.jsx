@@ -5,16 +5,62 @@ import { Table, Tabs, Tab, TabContainer, Row, Col} from "react-bootstrap";
 import axios from "axios";
 import "./Myaccount.css";
 import UserStore from '../userStore/userStore';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUserEdit } from '@fortawesome/free-solid-svg-icons';
 
 const PersonalInfo = props => (
-	<div className="user-info">
-  	<h5 id="lname-account">{"First Name: " + props.user.first_name}</h5>
-		<h5 id="lname-account">{"Last Name: " + props.user.last_name}</h5>
-		<h5 id="username-account">{"Username: " + props.user.username}</h5>
-		<h5 id="dob-account">{"Date of Birth: " + props.user.dob.substring(0, 10)}</h5>
-		<h5 id="email-account">{"Email: " + props.user.email}</h5>
-		<h5 id="pendingpoints-account">{"Pending Points: " + props.user.pending_points}</h5>
-		<h5 id="points-account">{"Points: " + props.user.points}</h5>
+	<div className="page-content page-container" id="page-content">
+		<div className="padding">
+			<div className="row container d-flex justify-content-center">
+				<div className="col-lg-8">
+					<div className="card user-card-full">
+						<div className="row m-l-0 m-r-0">
+							<div className="col-md-4 bg-c-lite-green user-profile">
+								<div className="card-block text-center text-white">
+									<div className="my-4"> <img src="https://img.icons8.com/bubbles/100/000000/user.png" className="img-radius" alt="User-Profile-Image"/></div>
+									<h4 className="f-w-600">{props.user.first_name} {props.user.last_name}</h4>
+									<p>{props.user.dob.substring(0,10)}</p><br />
+									<Link to={`/update/{props.user._id}`}
+										style={{color: "black"}}
+									><FontAwesomeIcon icon={faUserEdit} />&nbsp;Edit Profile</Link>
+								</div>
+							</div>
+							<div class="col-md-8">
+								<div class="card-block">
+									<h4 class="m-b-20 p-b-5 b-b-default f-w-600">User Information</h4>
+									<div class="row">
+										<div class="col-sm-6">
+											<p class="m-b-10 f-w-600">Email</p>
+											<h6 class="text-muted f-w-400">{props.user.email}</h6>
+										</div>
+										<div class="col-sm-6">
+											<p class="m-b-10 f-w-600">Username</p>
+											<h6 class="text-muted f-w-400">{props.user.username}</h6>
+										</div>
+									</div>
+									<h6 class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600">Points</h6>
+									<div class="row">
+										<div class="col-sm-6">
+											<p class="m-b-10 f-w-600">Available Points</p>
+											<h6 class="text-muted f-w-400">{props.user.points}</h6>
+										</div>
+										<div class="col-sm-6">
+											<p class="m-b-10 f-w-600">Pending Points</p>
+											<h6 class="text-muted f-w-400">{props.user.pending_points}</h6>
+										</div>
+									</div>
+									<ul class="social-link list-unstyled m-t-40 m-b-10">
+										<li><a href="#!" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="facebook" data-abc="true"><i class="mdi mdi-facebook feather icon-facebook facebook" aria-hidden="true"></i></a></li>
+										<li><a href="#!" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="twitter" data-abc="true"><i class="mdi mdi-twitter feather icon-twitter twitter" aria-hidden="true"></i></a></li>
+										<li><a href="#!" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="instagram" data-abc="true"><i class="mdi mdi-instagram feather icon-instagram instagram" aria-hidden="true"></i></a></li>
+									</ul>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 )
 
@@ -104,14 +150,14 @@ export class Myaccount extends Component {
 // UserStore.username
 	personalInfo() {
 		return this.state.users.map(currentuser => {
-      if(currentuser.username == UserStore.username)
+      if(currentuser.username === UserStore.username)
         return <PersonalInfo user={currentuser} key={currentuser._id}/>;
     })
 	}
 
 	historyList() {
 		return this.state.books.map(request => {
-      if((request.posting_user == UserStore.username || request.swap.requesting_user == UserStore.username) && request.swap.requested == true)
+      if((request.posting_user === UserStore.username || request.swap.requesting_user === UserStore.username) && request.swap.requested === true)
         return <History book={request} key={request._id}/>;
     })
 	}
@@ -130,7 +176,7 @@ export class Myaccount extends Component {
 			} = book; //destructuring
 			return (
 				//show books that are posted by me
-				available && (posting_user == this.state.username) && <Col lg={3} md={4} className="d-flex my-4">
+				available && (posting_user === this.state.username) && <Col lg={3} md={4} className="d-flex my-4">
 					<Card key={_id} body className="text-center">
 						<CardImg className="mx-auto" style={{width: "128px", height: "165px"}} src={image} alt="Not Available" onError={(e)=>{e.target.src="http://zldzksk1.dothome.co.kr/image/noimage.jpg"}}/>
 						<CardBody className="d-flex flex-column flex-fill">
