@@ -41,7 +41,6 @@ router.route("/add").post((req, res) => {
 router.route("/update/:id").post((req, res) => {
 	User.findById(req.params.id)
 		.then((user) => {
-			user.username = req.body.username;
 			user.password = req.body.password;
 			user.dob = Date.parse(req.body.dob);
 			user.mailing_address = req.body.mailing_address;

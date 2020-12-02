@@ -7,14 +7,12 @@ export default class EditMyaccount extends Component {
   constructor(props) {
     super(props);
 
-    this.onChangeUsername = this.onChangeUsername.bind(this);
     this.onChangePassword = this.onChangePassword.bind(this);
     this.onChangeDOB = this.onChangeDOB.bind(this);
     this.onChangeMailingAddress = this.onChangeMailingAddress.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
 
     this.state = {
-      username: '',
       password: '',
       dob: new Date(),
       mailing_address: '',
@@ -28,7 +26,6 @@ export default class EditMyaccount extends Component {
     axios.get('http://localhost:5000/users/'+this.props.match.params.id)
       .then(response => {
         this.setState({
-          username: response.data.username,
           password: response.data.password,
           dob: new Date(response.data.dob),
           mailing_address: response.data.mailing_address,
@@ -54,12 +51,6 @@ export default class EditMyaccount extends Component {
 
   }
 
-  onChangeUsername(e) {
-    this.setState({
-      username: e.target.value
-    })
-  }
-
   onChangePassword(e) {
     this.setState({
       password: e.target.value
@@ -81,7 +72,6 @@ export default class EditMyaccount extends Component {
   onSubmit(e) {
     e.preventDefault();
     const user = {
-      username: this.state.username,
       password: this.state.password,
       dob: this.state.dob,
       mailing_address: this.state.mailing_address,
@@ -101,17 +91,8 @@ export default class EditMyaccount extends Component {
     return (
     <div>
       <h3 style={{marginTop: 20}}>Edit Personal Info</h3>
-      <p style={{marginBottom: 20}}>You can edit your username, password, date of birth or mailing address.</p>
+      <p style={{marginBottom: 20}}>You can edit your password, date of birth and/or mailing address.</p>
       <form onSubmit={this.onSubmit}>
-        <div className="form-group">
-          <label>Username: </label>
-          <input ref="userInput"
-              required
-              className="form-control"
-              value={this.state.username}
-              onChange={this.onChangeUsername}>
-          </input>
-        </div>
 
         <div className="form-group">
           <label>Password: </label>
