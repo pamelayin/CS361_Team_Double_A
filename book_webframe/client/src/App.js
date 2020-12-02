@@ -5,6 +5,7 @@ import Navigation from "./components/Navigation";
 import { Home } from "./components/Home";
 import { Bookswap } from "./components/Bookswap";
 import { Myaccount } from "./components/Myaccount";
+import  EditMyaccount  from "./components/EditMyaccount"
 import { Cservice } from "./components/Cservice";
 import { Booklist } from "./components/Booklist";
 import { Request } from "./components/Request";
@@ -48,6 +49,7 @@ class App extends Component {
 						<Route path="/Home" component={Home} exact />
 						<Route path="/bookswap" component={Bookswap} exact />
 						<Route path="/Myaccount" component={Myaccount} exact />
+						<Route path="/EditMyaccount/:id" component={EditMyaccount} />
 						<Route path="/Cservice" component={Cservice} exact />
 						<Route path="/Booklist" component={Booklist} exact />
 						<Route path="/Request" component={Request} exact />

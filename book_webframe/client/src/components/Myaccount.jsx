@@ -11,10 +11,15 @@ const PersonalInfo = props => (
   	<h5 id="lname-account">{"First Name: " + props.user.first_name}</h5>
 		<h5 id="lname-account">{"Last Name: " + props.user.last_name}</h5>
 		<h5 id="username-account">{"Username: " + props.user.username}</h5>
+		<h5 id="password-account">{"Password: " + props.user.password}</h5>
 		<h5 id="dob-account">{"Date of Birth: " + props.user.dob.substring(0, 10)}</h5>
 		<h5 id="email-account">{"Email: " + props.user.email}</h5>
+		<h5 id="mailing-address-account">{"Mailing Address: " + props.user.mailing_address}</h5>
 		<h5 id="pendingpoints-account">{"Pending Points: " + props.user.pending_points}</h5>
 		<h5 id="points-account">{"Points: " + props.user.points}</h5>
+		<td>
+			<Link style={{marginBottom: 20}} color="primary" to={"/EditMyaccount/" + props.user._id}>Edit</Link>
+		</td>
 	</div>
 )
 
