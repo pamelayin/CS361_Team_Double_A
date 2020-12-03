@@ -69,7 +69,12 @@ const NavBar = () => {
             <NavbarToggler onClick={toggle} />
             <Collapse isOpen={isOpen} navbar>
               <Nav className="mr-auto" navbar>
-              <NavLink id="main-nav" href="/Home">HOME</NavLink>
+              <NavLink id="main-nav"> 
+              <RouterNavLink 
+              id="myaccount-link"
+              to="/Home">HOME
+              </RouterNavLink>
+              </NavLink>
                       <NavDropdown title="BOOK SWAP" id="collasible-nav-dropdown"
                       show={show}
                       onMouseEnter={showDropdown}
@@ -121,7 +126,14 @@ const NavBar = () => {
                         </RouterNavLink>
                       </NavLink>
                 
-                      <NavLink id="main-nav" href="/Cservice">Q&A</NavLink>
+                      <NavLink id="main-nav"> 
+                      <RouterNavLink
+                      id="myaccount-link"
+                        to="/Cservice">Q&A
+                      </RouterNavLink>
+                      </NavLink>
+
+
                       {isAuthenticated && (
                   <NavItem>
                     <NavLink
@@ -304,7 +316,7 @@ const NavBar = () => {
                       className="btn-margin"
                       onClick={() => loginWithRedirect({ action: 'signup' })}
                     >
-                      
+                      Sign Up
                     </Button>
                   </NavItem>
                 )}
@@ -330,7 +342,7 @@ const NavBar = () => {
                       className="btn-margin"
                       onClick={()=>loginWithRedirect()}
                     >
-                      
+                      Log in
                     </Button>
                   </NavItem>
                 )}
