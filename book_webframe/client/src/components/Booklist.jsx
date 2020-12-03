@@ -85,7 +85,7 @@ export class Booklist extends Component {
 			return(
 				data.available && (data.posting_user !== this.state.username) && <Col lg={3} md={4} className="d-flex my-4" key={data._id} >
 				<Card body className="text-center">
-					<CardImg className="mx-auto"  src={data.image} alt="Not Available" onError={(e)=>{e.target.src="http://zldzksk1.dothome.co.kr/image/noimage.jpg"}}/>
+					<CardImg className="mx-auto"  src={data.image} style={{width: "128px", height: "165px"}} alt="Not Available" onError={(e)=>{e.target.src="http://zldzksk1.dothome.co.kr/image/noimage.jpg"}}/>
 					<CardBody className="d-flex flex-column flex-fill">
 						<CardTitle tag="h5">{data.title}</CardTitle>
 						<CardSubtitle tag="h6" className="mb-2">By {data.author}</CardSubtitle>

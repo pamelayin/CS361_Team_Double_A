@@ -14,10 +14,10 @@ import UserStore from '../userStore/userStore';
 export class Request extends Component {
 	
 	JumboStyle = {
-		bannerUrl: "",
 		padding: "30px 30px",
-		background: "white",
-		textAlign: "center",
+		background: "linear-gradient(to right, #57d073, #0054d6)",
+		color: "white",
+		textAlign: "center"
 	};
 
 	CenterTable = {
@@ -187,7 +187,7 @@ export class Request extends Component {
 								<hr />
 							</div>
 							<Table className="table-borderless" style={this.CenterTable}>
-							<tbody style={{fontSize: "2em"}}>
+							<tbody style={{fontSize: "1.5em"}}>
 								
 								<tr className={this.requestPossible(book_points) ? "text-success" : "text-danger"}>
 									<th className={this.requestPossible(book_points) ? "text-success" : "text-danger"}>{this.updateUserPoints(book_points)}</th>
