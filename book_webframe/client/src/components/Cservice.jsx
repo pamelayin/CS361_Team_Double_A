@@ -5,9 +5,11 @@ import {Jumbotron, Container, Accordion, Card, Button, Row, Col} from 'react-boo
 export class Cservice extends Component
 {
     JumboStyle = {
-		padding: "30px 30px",
+        padding: "30px 30px",
+        marginBottom: "10px",
 		background: "linear-gradient(to right, #57d073, #0054d6)",
-		color: "white",
+        color: "white",
+        textAlign:"center",
     };
     
     render(){
@@ -15,17 +17,15 @@ export class Cservice extends Component
             <div>
                 <div fluid="true">
                     <Jumbotron style={this.JumboStyle} >
-                        <Container>
                             <h1>Frequently Asked Question</h1>
                             <p>
                                 If you have a question, please check the FAQ section below. Please contact us if you do not find satisfactory answer.
                             </p>
-                        </Container>
                     </Jumbotron>
                 </div>
-                <Container fluid id="cominfo" >
+                <Container fluid>
                     <Row>
-                        <Col md={4}>
+                        <Col md={4} style={{padding:"0px 5px 0px 0px"}}>
                             <Card>
                                 <Card.Img variant="top" src="http://zldzksk1.dothome.co.kr/image/support2.png" fluid="true" />
                                 <Card.Body fluid="true">
@@ -40,9 +40,9 @@ export class Cservice extends Component
                             </Card>
                             <br/>
                         </Col>
-                        <Col md={8}>
+                        <Col md={8} style={{padding:"0px 0px 0px 5px"}}>
                             <Accordion defaultActiveKey="0" fluid="true">
-                                <Card>
+                                <Card style={{marginBottom:"0px"}}>
                                     <Card.Header style={{backgroundColor: "#CCF0D5"}}>
                                     <Accordion.Toggle as={Button} variant="Dark" eventKey="0">
                                         What is the BINDER?
@@ -55,7 +55,7 @@ export class Cservice extends Component
                                     </Card.Body>
                                     </Accordion.Collapse>
                                 </Card>
-                                <Card>
+                                <Card style={{marginBottom:"0px"}}>
                                     <Card.Header style={{backgroundColor: "#CCF0D5"}}>
                                     <Accordion.Toggle as={Button} variant="Dark" eventKey="1">
                                         How does BINDER work?
@@ -71,7 +71,7 @@ export class Cservice extends Component
                                     </Card.Body>
                                     </Accordion.Collapse>
                                 </Card>
-                                <Card>
+                                <Card style={{marginBottom:"0px"}}>
                                     <Card.Header style={{backgroundColor: "#CCF0D5"}}>
                                     <Accordion.Toggle as={Button} variant="Dark" eventKey="2">
                                         How can I send books?
@@ -84,7 +84,7 @@ export class Cservice extends Component
                                     </Card.Body>
                                     </Accordion.Collapse>
                                 </Card>
-                                <Card>
+                                <Card style={{marginBottom:"0px"}}>
                                     <Card.Header style={{backgroundColor: "#CCF0D5"}}>
                                     <Accordion.Toggle as={Button} variant="Dark" eventKey="3">
                                         How do I know if requesting user received my book?
@@ -96,7 +96,7 @@ export class Cservice extends Component
                                     </Card.Body>
                                     </Accordion.Collapse>
                                 </Card>
-                                <Card>
+                                <Card style={{marginBottom:"0px"}}>
                                     <Card.Header style={{backgroundColor: "#CCF0D5"}}>
                                     <Accordion.Toggle as={Button} variant="Dark" eventKey="4">
                                         What should I do if the recipient does not confirm the request?  
@@ -108,7 +108,7 @@ export class Cservice extends Component
                                     </Card.Body>
                                     </Accordion.Collapse>
                                 </Card>
-                                <Card>
+                                <Card style={{marginBottom:"0px"}}>
                                     <Card.Header style={{backgroundColor: "#CCF0D5"}}>
                                     <Accordion.Toggle as={Button} variant="Dark" eventKey="5">
                                         I cannot find answer to my question here.
@@ -121,8 +121,8 @@ export class Cservice extends Component
                                     </Accordion.Collapse>
                                 </Card>
                             </Accordion>  
-                </Col>              
-                </Row>
+                         </Col>              
+                    </Row>
                 </Container>
             </div>  
         )

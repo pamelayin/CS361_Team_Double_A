@@ -3,14 +3,9 @@ import {Jumbotron, Container, Form, Row, Col, Button, Tab, Tabs } from "react-bo
 import { Modal, ModalHeader, ModalBody, ModalFooter } from "reactstrap";
 import { Link } from "react-router-dom";
 import axios from "axios";
-// import { confirmAlert } from 'react-confirm-alert';
 import UserStore from '../userStore/userStore'
 import Loading from "./Loading";
 
-//final db
-// const user_id = "5fb885beded3a615b4f96aa9";
-//test db
-// const user_id = "5fac8ee81577ff48d4652a82";
 
 export class Bookpost extends Component {
 
@@ -23,11 +18,14 @@ export class Bookpost extends Component {
 		padding: "30px 30px",
 		background: "linear-gradient(to right, #57d073, #0054d6)",
 		color: "white",
+		textAlign: "center"
 	};
+
 	image = {
 		imgUrl: "http://zldzksk1.dothome.co.kr/image/howitworks3.jpg",
 		imgUrl2: "http://zldzksk1.dothome.co.kr/image/howitworks4.jpg",
 	};
+
 	state = {
 		googleApi: "AIzaSyBQfQo2qfxzIoUcw6fE6ShJdZFJDGBgwFU",
 		bookid:"",
@@ -58,12 +56,14 @@ export class Bookpost extends Component {
 		});
 	}
 
+	// if user didn't enter the isbn#, set the modal title as warning msg
 	async getbook() {
 		if (this.state.getIsbn === "") {
 			this.setState({
 				bookTitle: "Please enter ISBN#",
 			});
 		} else {
+			//if user entered the correct isbn, get book infomation and set the variable accordingly 
 			axios
 				.get(
 					"https://www.googleapis.com/books/v1/volumes?q=isbn:" +
@@ -104,6 +104,7 @@ export class Bookpost extends Component {
 	async componentWillMount() {
 		await this.setState({ username: UserStore.username});
 	}
+
 	componentDidMount() {
 		axios
 			.get("http://localhost:5000/users/")
@@ -128,6 +129,7 @@ export class Bookpost extends Component {
 		});
 	}
 
+	//evaluate the bookd price
 	onChangeCondition(e) {
 		if (e.target.value === "As New") {
 			this.setState({
@@ -155,7 +157,6 @@ export class Bookpost extends Component {
 				bookCondition: e.target.value,
 			});
 		}
-		//console.log(this.state.bookcondition);
 	}
 
 	onSubmit(e) {
@@ -285,21 +286,21 @@ export class Bookpost extends Component {
 				<div fluid="true">
 					<div>
 						<Jumbotron style={this.JumboStyle} fluid="true">
-							<Container>
 								<h1>Post your book</h1>
 								<p>
 									You can post your book in public and share it with users.
 									Start posting your book by entering ISBN# here!
 								</p>
-							</Container>
 						</Jumbotron>
 					</div>
 					{/* <div>Hello {user.username}</div> */}
-					<div>
-						<div style={{ float: "left", width: "45%" }}>
-							<Form>
+					<Container style={{paddingBottom:"7%"}} fluid>
+					<Row >
+						<Col >
+						{/* it is to sparate the */}
+							<Form >
 								<Form.Group controlId="formBasicEmail">
-									<Row>
+									<Row style={{paddingTop:"10px"}}>
 										<Col>
 											<Form.Control
 												type="text"
@@ -373,19 +374,12 @@ export class Bookpost extends Component {
 									</Row>
 								</Form.Group>
 							</Form>
-						</div>
-						<div
-							style={{
-								float: "left",
-								width: "50%",
-								paddingLeft: "30px",
-								marginTop: "-10px",
-							}}
-							fluid="true"
-						>
+						</Col>
+						<Col>
 							{this.isQnaSection()}
-						</div>
-					</div>
+						</Col>
+					</Row>
+					</Container>
 				</div>
 			);
 		} else if (this.state.book) {
@@ -393,157 +387,151 @@ export class Bookpost extends Component {
 				<div fluid="true">
 					<div>
 						<Jumbotron style={this.JumboStyle} fluid="true">
-							<Container>
 								<h1>Post your book</h1>
 								<p>
 									This is a modified jumbotron that occupies the entire
 									horizontal space of its parent.
 								</p>
-							</Container>
 						</Jumbotron>
 					</div>
-					<div style={{ float: "left", width: "45%", paddingLeft: "15px" }}>
-						<h2>Post Form</h2>
-						<Form onSubmit={this.onSubmit.bind(this)}>
-							<Form.Group as={Row}>
-								<Form.Label column sm={2}>
-									{" "}
-									Title{" "}
-								</Form.Label>
-								<Col sm={10}>
-									<Form.Control
-										type="text"
-										name="bookTitle"
-										value={this.state.bookTitle}
-										disabled={!this.state.button}
-									/>
-								</Col>
-							</Form.Group>
-							<Form.Group as={Row}>
-								<Form.Label column sm={2}>
-									{" "}
-									Author{" "}
-								</Form.Label>
-								<Col sm={10}>
-									<Form.Control
-										type="text"
-										name="bookTitle"
-										value={this.state.bookAuthor}
-										disabled={!this.state.button}
-									/>
-								</Col>
-							</Form.Group>
-							<Form.Group as={Row}>
-								<Form.Label column sm={2}>
-									{" "}
-									Year{" "}
-								</Form.Label>
-								<Col sm={10}>
-									<Form.Control
-										type="text"
-										name="bookPublish"
-										value={this.state.bookPublish}
-										disabled={!this.state.button}
-									/>
-								</Col>
-							</Form.Group>
-							<Form.Group as={Row}>
-								<Form.Label column sm={2}>
-									{" "}
-									ISBN#{" "}
-								</Form.Label>
-								<Col sm={10}>
-									<Form.Control
-										type="text"
-										name="getIsbn"
-										value={this.state.getIsbn}
-										disabled={!this.state.button}
-									/>
-								</Col>
-							</Form.Group>
-							<fieldset>
+					<Container style={{paddingBottom:"7%"}} fluid>
+					<Row>
+						<Col style={{paddingTop:"10px"}}>
+							<h2 style={{marginBottom:"35px"}}>Post Form</h2>
+							<Form onSubmit={this.onSubmit.bind(this)}>
 								<Form.Group as={Row}>
-									<Form.Label as="legend" column sm={2}>
-										Book Condition
+									<Form.Label column sm={2}>
+										{" "}
+										Title{" "}
 									</Form.Label>
-									<Col sm={10}>
-										<Form.Check
-											type="radio"
-											label="As New"
-											name="condition"
-											id="condition1"
-											value="As New"
-											checked={this.state.bookCondition === "As New"}
-											onChange={this.onChangeCondition.bind(this)}
-										/>
-										<Form.Check
-											type="radio"
-											label="Very Good"
-											name="condition"
-											id="condition2"
-											value="Very Good"
-											checked={this.state.bookCondition === "Very Good"}
-											onChange={this.onChangeCondition.bind(this)}
-										/>
-										<Form.Check
-											type="radio"
-											label="Good"
-											name="condition"
-											id="condition3"
-											value="Good"
-											checked={this.state.bookCondition === "Good"}
-											onChange={this.onChangeCondition.bind(this)}
-										/>
-										<Form.Check
-											type="radio"
-											label="Fair"
-											name="condition"
-											id="condition3"
-											value="Fair"
-											checked={this.state.bookCondition === "Fair"}
-											onChange={this.onChangeCondition.bind(this)}
+									<Col sm={8}>
+										<Form.Control
+											type="text"
+											name="bookTitle"
+											value={this.state.bookTitle}
+											disabled={!this.state.button}
 										/>
 									</Col>
 								</Form.Group>
-							</fieldset>
-							<Form.Group as={Row}>
-								<Col sm={{ span: 10, offset: 2 }}>
-									<Link to="/Home">
-										<Button
-											type="Button"
-											style={{
-												marginRight: "15px",
-												backgroundColor: "#dc3545",
-											}}
-                                            onClick={(e) => {
-                                                if(window.confirm("Are sure to cancel the posting?")){
-                                                    e.preventDefault()
-                                                    window.location.reload()}
-                                                else{
-                                                    e.preventDefault()
-                                                }
-                                                }
-                                            }
-										>
-											Cancel
-										</Button>
-									</Link>
-									<Button type="submit">Post</Button>
-								</Col>
-							</Form.Group>
-						</Form>
-					</div>
-					<div
-						style={{
-							float: "left",
-							width: "50%",
-							paddingLeft: "30px",
-							marginTop: "-10px",
-						}}
-						fluid="true"
-					>
-						{this.isQnaSection()}
-					</div>
+								<Form.Group as={Row}>
+									<Form.Label column sm={2}>
+										{" "}
+										Author{" "}
+									</Form.Label>
+									<Col sm={8}>
+										<Form.Control
+											type="text"
+											name="bookTitle"
+											value={this.state.bookAuthor}
+											disabled={!this.state.button}
+										/>
+									</Col>
+								</Form.Group>
+								<Form.Group as={Row}>
+									<Form.Label column sm={2}>
+										{" "}
+										Year{" "}
+									</Form.Label>
+									<Col sm={8}>
+										<Form.Control
+											type="text"
+											name="bookPublish"
+											value={this.state.bookPublish}
+											disabled={!this.state.button}
+										/>
+									</Col>
+								</Form.Group>
+								<Form.Group as={Row}>
+									<Form.Label column sm={2}>
+										{" "}
+										ISBN#{" "}
+									</Form.Label>
+									<Col sm={8}>
+										<Form.Control
+											type="text"
+											name="getIsbn"
+											value={this.state.getIsbn}
+											disabled={!this.state.button}
+										/>
+									</Col>
+								</Form.Group>
+								<fieldset>
+									<Form.Group as={Row}>
+										<Form.Label as="legend" column sm={2}>
+											Book Condition
+										</Form.Label>
+										<Col sm={10}>
+											<Form.Check
+												type="radio"
+												label="As New"
+												name="condition"
+												id="condition1"
+												value="As New"
+												checked={this.state.bookCondition === "As New"}
+												onChange={this.onChangeCondition.bind(this)}
+											/>
+											<Form.Check
+												type="radio"
+												label="Very Good"
+												name="condition"
+												id="condition2"
+												value="Very Good"
+												checked={this.state.bookCondition === "Very Good"}
+												onChange={this.onChangeCondition.bind(this)}
+											/>
+											<Form.Check
+												type="radio"
+												label="Good"
+												name="condition"
+												id="condition3"
+												value="Good"
+												checked={this.state.bookCondition === "Good"}
+												onChange={this.onChangeCondition.bind(this)}
+											/>
+											<Form.Check
+												type="radio"
+												label="Fair"
+												name="condition"
+												id="condition3"
+												value="Fair"
+												checked={this.state.bookCondition === "Fair"}
+												onChange={this.onChangeCondition.bind(this)}
+											/>
+										</Col>
+									</Form.Group>
+								</fieldset>
+								<Form.Group as={Row}>
+									<Col sm={{ span: 10, offset: 2 }}>
+										<Link to="/Home">
+											<Button
+												type="Button"
+												style={{
+													marginRight: "15px",
+													backgroundColor: "#dc3545",
+												}}
+												onClick={(e) => {
+													if(window.confirm("Are sure to cancel the posting?")){
+														e.preventDefault()
+														window.location.reload()}
+													else{
+														e.preventDefault()
+													}
+													}
+												}
+											>
+												Cancel
+											</Button>
+										</Link>
+										<Button type="submit">Post</Button>
+									</Col>
+								</Form.Group>
+							</Form>
+						</Col>
+						<Col>
+							{this.isQnaSection()}
+						</Col>
+					</Row>
+					</Container>
 				</div>
 			);
 		}}

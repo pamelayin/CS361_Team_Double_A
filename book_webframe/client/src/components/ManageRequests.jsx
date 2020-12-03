@@ -1,20 +1,18 @@
 
 import React, { Component } from "react";
-import { Link } from "react-router-dom";
-import { Button, ButtonGroup } from "reactstrap";
+import { Button } from "reactstrap";
 import {
 	Table,
 	Tabs,
 	Tab,
-	TabBar,
-	TabContainer,
 	Nav,
 	Row,
 	Col,
+	Jumbotron,
+	Container,
 } from "react-bootstrap";
 import "./ManageRequests.css";
 import axios from "axios";
-import ReactDOM from "react-dom";
 import UserStore from '../userStore/userStore';
 //import { useAuth0, withAuth0 } from '@auth0/auth0-react';
 
@@ -563,12 +561,16 @@ export class ManageRequests extends Component {
 
 		return (
 			<div>
-				<p id="note">
+				<Jumbotron style={{  padding: "30px 30px", background: "linear-gradient(to right, #57d073, #0054d6)", color: "white", textAlign: "center"}}>
+					<h1>Manage Requests</h1>
+					<p >
 					Note: Hover over each feature/action to get quick description of what
 					it does or shows.
-				</p>
-				<h1 id="requestTitle">Manage Requests</h1>
+					</p>					
+				</Jumbotron>
+
 				{/*pending and accepted tab*/}
+				<div style={{paddingBottom:"20%"}}>
 				<Tabs className="top">
 					{/*pending tab*/}
 					<Tab eventKey="pending" title="Pending">
@@ -652,6 +654,7 @@ export class ManageRequests extends Component {
 					{/*accepted tab END*/}
 				</Tabs>{" "}
 				{/*pending and accepted tab tag END*/}
+				</div> 
 			</div>
 		);
 	}
