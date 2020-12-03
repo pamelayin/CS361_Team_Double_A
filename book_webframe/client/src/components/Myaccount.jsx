@@ -9,6 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUserEdit } from '@fortawesome/free-solid-svg-icons';
 
 const PersonalInfo = props => (
+
 	<div className="page-content page-container" id="page-content">
 		<div className="padding">
 			<div className="row container d-flex justify-content-center">
@@ -20,7 +21,7 @@ const PersonalInfo = props => (
 									<div className="my-4"> <img src="https://img.icons8.com/bubbles/100/000000/user.png" className="img-radius" alt="User-Profile-Image"/></div>
 									<h4 className="f-w-600">{props.user.first_name} {props.user.last_name}</h4>
 									<p>{props.user.dob.substring(0,10)}</p><br />
-									<Link to={`/update/{props.user._id}`}
+									<Link to={`/EditMyaccount/{props.user._id}`}
 										style={{color: "black"}}
 									><FontAwesomeIcon icon={faUserEdit} />&nbsp;Edit Profile</Link>
 								</div>
@@ -61,6 +62,20 @@ const PersonalInfo = props => (
 				</div>
 			</div>
 		</div>
+
+	{/* <div className="user-info">
+  	<h5 id="lname-account">{"First Name: " + props.user.first_name}</h5>
+		<h5 id="lname-account">{"Last Name: " + props.user.last_name}</h5>
+		<h5 id="username-account">{"Username: " + props.user.username}</h5>
+		<h5 id="password-account">{"Password: " + props.user.password}</h5>
+		<h5 id="dob-account">{"Date of Birth: " + props.user.dob.substring(0, 10)}</h5>
+		<h5 id="email-account">{"Email: " + props.user.email}</h5>
+		<h5 id="mailing-address-account">{"Mailing Address: " + props.user.mailing_address}</h5>
+		<h5 id="pendingpoints-account">{"Pending Points: " + props.user.pending_points}</h5>
+		<h5 id="points-account">{"Points: " + props.user.points}</h5>
+		<td>
+			<Link style={{marginBottom: 20}} color="primary" to={"/EditMyaccount/" + props.user._id}>Edit</Link>
+		</td> */}
 	</div>
 )
 
