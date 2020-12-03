@@ -5,7 +5,7 @@ import Navigation from "./components/Navigation";
 import { Home } from "./components/Home";
 import { Bookswap } from "./components/Bookswap";
 import { Myaccount } from "./components/Myaccount";
-import  EditMyaccount  from "./components/EditMyaccount"
+import EditMyaccount from "./components/EditMyaccount";
 import { Cservice } from "./components/Cservice";
 import { Booklist } from "./components/Booklist";
 import { Request } from "./components/Request";
@@ -16,9 +16,6 @@ import { Bookpost } from "./components/Bookpost";
 import { PostConfirm } from "./components/PostConfirm";
 import { Login } from "./components/Login";
 import { Signin } from "./components/Signin";
-import UserStore from "./userStore/userStore";
-import { render } from "react-dom";
-import { EditProfile } from "./components/EditProfile";
 
 class App extends Component {
 	state = {
@@ -64,7 +61,6 @@ class App extends Component {
 						<Route path="/PostConfirm" component={PostConfirm} exact />
 						<Route path="/Login" component={Login} exact />
 						<Route path="/Signin" component={Signin} exact />
-						<Route path="/update/:id" component={EditProfile} exact />
 						<Route component={Nomatch} />
 					</Switch>
 				</div>
