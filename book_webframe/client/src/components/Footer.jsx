@@ -6,7 +6,7 @@ export class Footer extends Component {
     FooterStyle={
         marginTop:"1%",
         padding: "7px",
-        background: "black",
+        background: "#222222",
         color: "white",
         fontSize: "12px",
     }
