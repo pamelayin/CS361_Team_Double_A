@@ -41,6 +41,8 @@ router.route("/add").post((req, res) => {
 router.route("/update/:id").post((req, res) => {
 	User.findById(req.params.id)
 		.then((user) => {
+			user.first_name = req.body.first_name;
+			user.last_name = req.body.last_name;
 			user.password = req.body.password;
 			user.dob = Date.parse(req.body.dob);
 			user.mailing_address = req.body.mailing_address;
@@ -54,10 +56,10 @@ router.route("/update/:id").post((req, res) => {
 		.catch((err) => res.status(400).json("Error: " + err));
 });
 
-router.route('/:id').get((req, res) => {
-  User.findById(req.params.id)
-    .then(user => res.json(user))
-    .catch(err => res.status(400).json('Error: ' + err));
+router.route("/:id").get((req, res) => {
+	User.findById(req.params.id)
+		.then((user) => res.json(user))
+		.catch((err) => res.status(400).json("Error: " + err));
 });
 
 module.exports = router;

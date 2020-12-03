@@ -21,7 +21,7 @@ const PersonalInfo = props => (
 									<div className="my-4"> <img src="https://img.icons8.com/bubbles/100/000000/user.png" className="img-radius" alt="User-Profile-Image"/></div>
 									<h4 className="f-w-600">{props.user.first_name} {props.user.last_name}</h4>
 									<p>{props.user.dob.substring(0,10)}</p><br />
-									<Link to={`/EditMyaccount/{props.user._id}`}
+									<Link to={"/EditMyaccount/" + props.user._id}
 										style={{color: "black"}}
 									><FontAwesomeIcon icon={faUserEdit} />&nbsp;Edit Profile</Link>
 								</div>
@@ -50,11 +50,6 @@ const PersonalInfo = props => (
 											<h6 class="text-muted f-w-400">{props.user.pending_points}</h6>
 										</div>
 									</div>
-									<ul class="social-link list-unstyled m-t-40 m-b-10">
-										<li><a href="#!" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="facebook" data-abc="true"><i class="mdi mdi-facebook feather icon-facebook facebook" aria-hidden="true"></i></a></li>
-										<li><a href="#!" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="twitter" data-abc="true"><i class="mdi mdi-twitter feather icon-twitter twitter" aria-hidden="true"></i></a></li>
-										<li><a href="#!" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="instagram" data-abc="true"><i class="mdi mdi-instagram feather icon-instagram instagram" aria-hidden="true"></i></a></li>
-									</ul>
 								</div>
 							</div>
 						</div>
@@ -146,6 +141,7 @@ export class Myaccount extends Component {
 				this.setState({
 					user: this.state.users.filter((user) => user.username === this.state.username)[0],
 				});
+				console.log(this.state.user)
 			})
 			.catch((error) => {
 				console.log(error);

@@ -6,13 +6,16 @@ import "react-datepicker/dist/react-datepicker.css";
 export default class EditMyaccount extends Component {
   constructor(props) {
     super(props);
-
+    this.onChangeFirstName = this.onChangeFirstName.bind(this);
+    this.onChangeLastName = this.onChangeLastName.bind(this);
     this.onChangePassword = this.onChangePassword.bind(this);
     this.onChangeDOB = this.onChangeDOB.bind(this);
     this.onChangeMailingAddress = this.onChangeMailingAddress.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
 
     this.state = {
+      first_name: '',
+      last_name: '',
       password: '',
       dob: new Date(),
       mailing_address: '',
@@ -23,9 +26,11 @@ export default class EditMyaccount extends Component {
   }
 
   componentDidMount() {
-    axios.get('http://localhost:5000/users/'+this.props.match.params.id)
+    axios.get('http://localhost:5000/users/'+ this.props.match.params.id)
       .then(response => {
         this.setState({
+          first_name: response.data.first_name,
+          last_name: response.data.last_name,
           password: response.data.password,
           dob: new Date(response.data.dob),
           mailing_address: response.data.mailing_address,
@@ -36,19 +41,18 @@ export default class EditMyaccount extends Component {
       .catch(function (error) {
         console.log(error);
       })
+  }
 
-    axios.get('http://localhost:5000/users/')
-      .then(response => {
-        if (response.data.length > 0) {
-          this.setState({
-            users: response.data.map(user => user.username),
-          })
-        }
-      })
-      .catch((error) => {
-        console.log(error);
-      })
+  onChangeFirstName(e) {
+    this.setState({
+      first_name: e.target.value
+    })
+  }
 
+  onChangeLastName(e) {
+    this.setState({
+      last_name: e.target.value
+    })
   }
 
   onChangePassword(e) {
@@ -72,6 +76,8 @@ export default class EditMyaccount extends Component {
   onSubmit(e) {
     e.preventDefault();
     const user = {
+      first_name: this.state.first_name,
+      last_name: this.state.last_name,
       password: this.state.password,
       dob: this.state.dob,
       mailing_address: this.state.mailing_address,
@@ -85,15 +91,35 @@ export default class EditMyaccount extends Component {
       .then(res => console.log(res.data));
 
     window.location = '/';
+    window.alert("Your profile has been updated.")
   }
 
   render() {
     return (
     <div>
-      <h3 style={{marginTop: 20}}>Edit Personal Info</h3>
-      <p style={{marginBottom: 20}}>You can edit your password, date of birth and/or mailing address.</p>
+      <div style={{textAlign: "center", padding: "20px"}}>
+        <h3 style={{marginTop: 20}}>Edit Personal Info</h3>
+        <p style={{marginBottom: 20}}>You can edit your name, password, date of birth and/or mailing address.</p>
+      </div>
       <form onSubmit={this.onSubmit}>
-
+        <div className="form-group">
+          <label>First Name: </label>
+          <input type="text"
+              required
+              className="form-control"
+              value={this.state.first_name}
+              onChange={this.onChangeFirstName}>
+          </input>
+        </div>
+        <div className="form-group">
+          <label>Last Name: </label>
+          <input type="text"
+              required
+              className="form-control"
+              value={this.state.last_name}
+              onChange={this.onChangeLastName}>
+          </input>
+        </div>
         <div className="form-group">
           <label>Password: </label>
           <input ref="userInput"
