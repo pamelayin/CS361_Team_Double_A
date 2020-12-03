@@ -63,7 +63,7 @@ const NavBar = () => {
     return (
       <div className="nav-container">
         {userSet()}
-        <Navbar expand="md" style={{ backgroundColor: "#000000" }}>
+        <Navbar expand="md" style={{ backgroundColor: "#222222", padding:"4px" }}>
           <Container>
             <NavbarBrand className="logo" />
             <NavbarToggler onClick={toggle} />
