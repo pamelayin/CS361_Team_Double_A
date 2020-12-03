@@ -5,9 +5,60 @@ import { Table, Tabs, Tab, TabContainer, Row, Col} from "react-bootstrap";
 import axios from "axios";
 import "./Myaccount.css";
 import UserStore from '../userStore/userStore';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUserEdit } from '@fortawesome/free-solid-svg-icons';
 
 const PersonalInfo = props => (
-	<div className="user-info">
+
+	<div className="page-content page-container" id="page-content">
+		<div className="padding">
+			<div className="row container d-flex justify-content-center">
+				<div className="col-lg-8">
+					<div className="card user-card-full">
+						<div className="row m-l-0 m-r-0">
+							<div className="col-md-4 bg-c-lite-green user-profile">
+								<div className="card-block text-center text-white">
+									<div className="my-4"> <img src="https://img.icons8.com/bubbles/100/000000/user.png" className="img-radius" alt="User-Profile-Image"/></div>
+									<h4 className="f-w-600">{props.user.first_name} {props.user.last_name}</h4>
+									<p>{props.user.dob.substring(0,10)}</p><br />
+									<Link to={"/EditMyaccount/" + props.user._id}
+										style={{color: "black"}}
+									><FontAwesomeIcon icon={faUserEdit} />&nbsp;Edit Profile</Link>
+								</div>
+							</div>
+							<div class="col-md-8">
+								<div class="card-block">
+									<h4 class="m-b-20 p-b-5 b-b-default f-w-600">User Information</h4>
+									<div class="row">
+										<div class="col-sm-6">
+											<p class="m-b-10 f-w-600">Email</p>
+											<h6 class="text-muted f-w-400">{props.user.email}</h6>
+										</div>
+										<div class="col-sm-6">
+											<p class="m-b-10 f-w-600">Username</p>
+											<h6 class="text-muted f-w-400">{props.user.username}</h6>
+										</div>
+									</div>
+									<h6 class="m-b-20 m-t-40 p-b-5 b-b-default f-w-600">Points</h6>
+									<div class="row">
+										<div class="col-sm-6">
+											<p class="m-b-10 f-w-600">Available Points</p>
+											<h6 class="text-muted f-w-400">{props.user.points}</h6>
+										</div>
+										<div class="col-sm-6">
+											<p class="m-b-10 f-w-600">Pending Points</p>
+											<h6 class="text-muted f-w-400">{props.user.pending_points}</h6>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	{/* <div className="user-info">
   	<h5 id="lname-account">{"First Name: " + props.user.first_name}</h5>
 		<h5 id="lname-account">{"Last Name: " + props.user.last_name}</h5>
 		<h5 id="username-account">{"Username: " + props.user.username}</h5>
@@ -19,7 +70,7 @@ const PersonalInfo = props => (
 		<h5 id="points-account">{"Points: " + props.user.points}</h5>
 		<td>
 			<Link style={{marginBottom: 20}} color="primary" to={"/EditMyaccount/" + props.user._id}>Edit</Link>
-		</td>
+		</td> */}
 	</div>
 )
 
@@ -90,6 +141,7 @@ export class Myaccount extends Component {
 				this.setState({
 					user: this.state.users.filter((user) => user.username === this.state.username)[0],
 				});
+				console.log(this.state.user)
 			})
 			.catch((error) => {
 				console.log(error);
@@ -109,14 +161,14 @@ export class Myaccount extends Component {
 // UserStore.username
 	personalInfo() {
 		return this.state.users.map(currentuser => {
-      if(currentuser.username == UserStore.username)
+      if(currentuser.username === UserStore.username)
         return <PersonalInfo user={currentuser} key={currentuser._id}/>;
     })
 	}
 
 	historyList() {
 		return this.state.books.map(request => {
-      if((request.posting_user == UserStore.username || request.swap.requesting_user == UserStore.username) && request.swap.requested == true)
+      if((request.posting_user === UserStore.username || request.swap.requesting_user === UserStore.username) && request.swap.requested === true)
         return <History book={request} key={request._id}/>;
     })
 	}
@@ -135,7 +187,7 @@ export class Myaccount extends Component {
 			} = book; //destructuring
 			return (
 				//show books that are posted by me
-				available && (posting_user == this.state.username) && <Col lg={3} md={4} className="d-flex my-4">
+				available && (posting_user === this.state.username) && <Col lg={3} md={4} className="d-flex my-4">
 					<Card key={_id} body className="text-center">
 						<CardImg className="mx-auto" style={{width: "128px", height: "165px"}} src={image} alt="Not Available" onError={(e)=>{e.target.src="http://zldzksk1.dothome.co.kr/image/noimage.jpg"}}/>
 						<CardBody className="d-flex flex-column flex-fill">
