@@ -1,6 +1,6 @@
 import "./App.css";
 import { Component } from "react";
-import { BrowserRouter, Route, Router, Switch } from "react-router-dom";
+import { BrowserRouter, Route, Switch } from "react-router-dom";
 import Navigation from "./components/Navigation";
 import { Home } from "./components/Home";
 import { Bookswap } from "./components/Bookswap";
@@ -16,6 +16,8 @@ import { Bookpost } from "./components/Bookpost";
 import { PostConfirm } from "./components/PostConfirm";
 import { Login } from "./components/Login";
 import { Signin } from "./components/Signin";
+import {Footer} from "./components/Footer";
+
 
 class App extends Component {
 	state = {
@@ -63,6 +65,7 @@ class App extends Component {
 						<Route path="/Signin" component={Signin} exact />
 						<Route component={Nomatch} />
 					</Switch>
+					<Footer />
 				</div>
 			</BrowserRouter>
 		);

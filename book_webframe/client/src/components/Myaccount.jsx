@@ -1,7 +1,7 @@
-import React, { Component, useState } from "react";
+import React, { Component,} from "react";
 import { Link } from "react-router-dom";
 import { Button, Card, CardBody, CardTitle, CardImg, CardSubtitle, CardText } from "reactstrap";
-import { Table, Tabs, Tab, TabContainer, Row, Col} from "react-bootstrap";
+import { Table, Tabs, Tab, Jumbotron, Row, Col} from "react-bootstrap";
 import axios from "axios";
 import "./Myaccount.css";
 import UserStore from '../userStore/userStore';
@@ -187,7 +187,8 @@ export class Myaccount extends Component {
 			} = book; //destructuring
 			return (
 				//show books that are posted by me
-				available && (posting_user === this.state.username) && <Col lg={3} md={4} className="d-flex my-4">
+				available && (posting_user === this.state.username) && 
+				<Col lg={3} md={4} className="d-flex my-4" >
 					<Card key={_id} body className="text-center">
 						<CardImg className="mx-auto" style={{width: "128px", height: "165px"}} src={image} alt="Not Available" onError={(e)=>{e.target.src="http://zldzksk1.dothome.co.kr/image/noimage.jpg"}}/>
 						<CardBody className="d-flex flex-column flex-fill">
@@ -205,7 +206,6 @@ export class Myaccount extends Component {
 						</CardBody>
 					</Card>
 				</Col>
-
 			);
 		});
 	}
@@ -283,14 +283,19 @@ export class Myaccount extends Component {
 		};
 		return (
 			<div>
-				<h1 id="accountTitle">My Account</h1>
+				<Jumbotron style={{  padding: "30px 30px", background: "linear-gradient(to right, #57d073, #0054d6)", color: "white", textAlign: "center"}}>
+					<h1 id="accountTitle">My Account</h1>
+					<p >
+						You are able to check all your user information and books 
+					</p>
+				</Jumbotron>
 				{/*TODO can't hard code date - need to populate*/}
 				<Tabs className="top-accountpage" defaultActiveKey="my-info">
 					{/*personal info tab*/}
 					<Tab eventKey="my-info" title="Personal Info">
 						<Tab.Container id="my-info-tab" defaultActiveKey="my-info">
 							<Tab.Content>
-								<Table className="my-info-table">
+								<Table className="my-info-table" style={{marginBottom:"5%"}}>
 									<thead>
 										<tr>{ this.personalInfo() }</tr>
 									</thead>
@@ -303,7 +308,7 @@ export class Myaccount extends Component {
 					<Tab eventKey="history" title="History">
 						<Tab.Container id="history-tab" defaultActiveKey="history">
 							<Tab.Content>
-								<Table className="history-table">
+								<Table className="history-table" style={{marginBottom:"10%"}}>
 									<thead>
 										<tr>{historyHeader()}</tr>
 									</thead>
@@ -317,10 +322,10 @@ export class Myaccount extends Component {
 					{/*history tab END*/}
 					{/*books tab*/}
 					<Tab eventKey="my-books" title="My Books">
-						<Tab.Container id="my-books-tab" defaultActiveKey="my-books">
+						<Tab.Container id="my-books-tab" defaultActiveKey="my-books" >
 							<Tab.Content>
 								<Row className="my-4">
-									{this.bookList()}
+										{this.bookList()}
 								</Row>
 							</Tab.Content>
 						</Tab.Container>

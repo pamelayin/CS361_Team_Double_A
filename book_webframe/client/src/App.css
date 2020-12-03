@@ -37,7 +37,8 @@
 
 /*For Navigation - 242429*/
 .mr-auto a:hover {
-  background-color: #88BF8B;
+  background-color: #88bf8b;
+  padding: "0px";
 }
 
 /*For Bookswap*/
@@ -56,12 +57,12 @@
 
 .nav-item {
   margin-right: 10px;
-  }
+}
 
-{/*.nav-link*/}
+/*.nav-link*/
 #main-nav,
 #collasible-nav-dropdown {
-    color: white !important;
+  color: white !important;
 }
 
 #bookswap-link {
@@ -75,9 +76,9 @@
 }
 
 #qsLoginBtn {
-      background-color: Transparent;
-      background-repeat:no-repeat;
-      border: none;
-      cursor:pointer;
-      overflow: hidden;
-  }
+  background-color: Transparent;
+  background-repeat: no-repeat;
+  border: none;
+  cursor: pointer;
+  overflow: hidden;
+}

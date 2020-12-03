@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import axios from 'axios'
-import {Button, Jumbotron, Container, Form, Row, Col} from 'react-bootstrap';
+import {Button} from 'react-bootstrap';
 
 export class PostConfirm extends Component
 {

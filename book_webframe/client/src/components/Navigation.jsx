@@ -63,7 +63,7 @@ const NavBar = () => {
     return (
       <div className="nav-container">
         {userSet()}
-        <Navbar expand="md" style={{ backgroundColor: "#000000" }}>
+        <Navbar expand="md" style={{ backgroundColor: "#222222", padding:"4px" }}>
           <Container>
             <NavbarBrand className="logo" />
             <NavbarToggler onClick={toggle} />
@@ -192,7 +192,7 @@ const NavBar = () => {
                         src={user.picture}
                         alt="Profile"
                         className="nav-user-profile rounded-circle"
-                        width="50"
+                        width="30"
                       />
                     </DropdownToggle>
                     <DropdownMenu>
@@ -242,7 +242,7 @@ const NavBar = () => {
                         src={user.picture}
                         alt="Profile"
                         className="nav-user-profile d-inline-block rounded-circle mr-3"
-                        width="50"
+                        width="30"
                       />
                       <h6 className="d-inline-block">{user.name}</h6>
                     </span>
@@ -353,7 +353,7 @@ const NavBar = () => {
                         src={user.picture}
                         alt="Profile"
                         className="nav-user-profile rounded-circle"
-                        width="50"
+                        width="30"
                       />
                     </DropdownToggle>
                     <DropdownMenu>
@@ -403,7 +403,7 @@ const NavBar = () => {
                         src={user.picture}
                         alt="Profile"
                         className="nav-user-profile d-inline-block rounded-circle mr-3"
-                        width="50"
+                        width="30"
                       />
                       <h6 className="d-inline-block">{user.name}</h6>
                     </span>

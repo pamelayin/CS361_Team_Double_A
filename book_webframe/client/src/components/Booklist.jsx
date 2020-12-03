@@ -4,7 +4,6 @@ import {
 	Container,
 	Button,
 	Form,
-	FormGroup,
 	Label,
 	Input,
 	Row,
@@ -58,10 +57,10 @@ export class Booklist extends Component {
 	}
 
 	JumboStyle = {
-		bannerUrl: "",
 		padding: "30px 30px",
-		background: "white",
-		textAlign: "center",
+		background: "linear-gradient(to right, #57d073, #0054d6)",
+		color: "white",
+		textAlign: "center"
 	};
 
 	searchSpace(event) {
@@ -111,11 +110,8 @@ export class Booklist extends Component {
 		return (
 			<div>
 				<Jumbotron style={this.JumboStyle} fluid>
-					<Container>
 						<h1>Book List</h1>
-						<br />
 						<p>Please select book you would like to request.</p>
-					</Container>
 				</Jumbotron>
 
 				<Form inline style={{justifyContent: "center"}} >
@@ -130,7 +126,8 @@ export class Booklist extends Component {
 						onChange={(e)=>this.searchSpace(e)}
 					/>
 				</Form>
-				
+
+				<div style={{overflow:"auto"}}>
 				<Container>
 					<Row className="my-4">
 						{/* {this.state.search && <FilterResults value={this.state.search} data={book}
@@ -143,6 +140,7 @@ export class Booklist extends Component {
 						{items}
 					</Row>
 				</Container> 
+				</div>
 			</div>
 		);
 	}

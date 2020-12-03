@@ -1,8 +1,3 @@
-#requestTitle {
-  text-align: center;
-  margin-top: 10px;
-}
-
 .flex-column {
   margin-top: 20px;
 }
@@ -20,6 +15,12 @@ Table {
 }
 
 Table th {
+  border: 1px solid #ddd;
+  text-align: center;
+  color: black;
+}
+
+Table td {
   border: 1px solid #ddd;
   text-align: center;
   color: black;
@@ -77,21 +78,27 @@ Table th {
   opacity: 1;
 }
 
-{/*Hover feature for ID*/}
+ {
+  /*Hover feature for ID*/
+}
 #id #id-text {
   width: 100px;
   margin-left: -60px;
   margin-top: -45px;
 }
 
-{/*Hover feature for date*/}
+ {
+  /*Hover feature for date*/
+}
 #date #date-text {
   width: 100px;
   margin-left: -70px;
   margin-top: -60px;
 }
 
-{/*Hover feature for name*/}
+ {
+  /*Hover feature for name*/
+}
 .pr-requests #requesting-user-text {
   width: 110px;
   margin-left: -130px;
@@ -104,14 +111,18 @@ Table th {
   margin-top: -60px;
 }
 
-{/*Hover feature for book*/}
+ {
+  /*Hover feature for book*/
+}
 #book #book-text {
   width: 100px;
   margin-left: -75px;
   margin-top: -45px;
 }
 
-{/*Hover feature for action: PENDING*/}
+ {
+  /*Hover feature for action: PENDING*/
+}
 .pr-requests #action-text {
   width: 130px;
   margin-left: -95px;
@@ -124,7 +135,9 @@ Table th {
   margin-top: -45px;
 }
 
-{/*Hover feature for action: ACCEPTED*/}
+ {
+  /*Hover feature for action: ACCEPTED*/
+}
 .ar-requests #action-text {
   width: 180px;
   margin-left: -120px;
@@ -137,7 +150,9 @@ Table th {
   margin-top: -60px;
 }
 
-{/*Hover feature for details*/}
+ {
+  /*Hover feature for details*/
+}
 .ar-requests #details-text {
   width: 150px;
   margin-left: -110px;
