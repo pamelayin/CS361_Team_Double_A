@@ -10,11 +10,17 @@
 #fname-account,
 #lname-account,
 #username-account,
+#password-account,
 #dob-account,
 #email-account,
+#mailing-address-account,
 #pendingpoints-account,
 #points-account {
   margin-top: 20px;
+}
+
+#points-account {
+  margin-bottom: 20px;
 }
 
 #history-table {

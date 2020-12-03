@@ -65,7 +65,7 @@ const AReceived = (props) => (
 			{"Requesting User: " + props.book.swap.requesting_user} <br />
 			{"Posting User: " + props.book.posting_user} <br />
 			{"Book Title: " + props.book.title} <br />
-			{"Mailing Address: " + props.user.mailing_address}
+		{"Mailing Address: " + props.user.mailing_address}
 		</td>
 		<td>
 			<Button
@@ -416,6 +416,7 @@ export class ManageRequests extends Component {
 				currentrequest.swap.rejected == false &&
 				currentrequest.posting_user == this.state.username
 			)
+
 				return (
 					<PReceived
 						book={currentrequest}
@@ -431,13 +432,18 @@ export class ManageRequests extends Component {
 	// Populate table for accepted received tab
 	aReceivedList() {
 		return this.state.books.map((currentrequest) => {
+			const req_user = {
+				user: this.state.users.filter((x) => (x.username === currentrequest.swap.requesting_user) &&
+			x.username !== this.state.username),
+			}
+			//console.log("USER", req_user.user[0])
 			if (
 				currentrequest.swap.accepted == true &&
 				currentrequest.posting_user == this.state.username
 			)
 				return (
 					<AReceived
-						user={this.state.user}
+						user={req_user.user[0]}
 						book={currentrequest}
 						shipped={this.shipped}
 						cancel={this.cancel}
@@ -478,7 +484,6 @@ export class ManageRequests extends Component {
 				);
 		});
 	}
-
 
 	render() {
 		const pendingReceivedHeader = () => {
